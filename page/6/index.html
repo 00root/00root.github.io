@@ -1,0 +1,1527 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="John Doe">
+    
+
+    
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://example.com/page/6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:example.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/21/ubuntu/" title="ubuntu" itemprop="url">ubuntu</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-09-21T13:19:19.000Z" itemprop="datePublished"> Published 2016-09-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Setup-Java-Development-Environment-in-Ubuntu"><a href="#Setup-Java-Development-Environment-in-Ubuntu" class="headerlink" title="Setup Java Development Environment in Ubuntu"></a>Setup Java Development Environment in Ubuntu</h1><p>Ubuntu: ubuntu-16.04-desktop-amd64</p>
+<h2 id="Install-Oracle-Java-on-Ubuntu-Linux"><a href="#Install-Oracle-Java-on-Ubuntu-Linux" class="headerlink" title="Install Oracle Java on Ubuntu Linux"></a>Install Oracle Java on Ubuntu Linux</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># apt-get upgrade -y</span></span><br><span class="line"><span class="comment"># apt-get install ssh -y</span></span><br></pre></td></tr></table></figure>
+<h2 id="1-Check-to-see-if-your-Ubuntu-Linux-operating-system-architecture-is-32-bit-or-64-bit"><a href="#1-Check-to-see-if-your-Ubuntu-Linux-operating-system-architecture-is-32-bit-or-64-bit" class="headerlink" title="1. Check to see if your Ubuntu Linux operating system architecture is 32-bit or 64-bit"></a>1. Check to see if your Ubuntu Linux operating system architecture is 32-bit or 64-bit</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@stan-virtual-machine:~<span class="comment"># file /sbin/init</span></span><br><span class="line">/sbin/init: symbolic link to /lib/systemd/systemd</span><br><span class="line">root@stan-virtual-machine:~<span class="comment"># file /lib/systemd/systemd</span></span><br><span class="line">/lib/systemd/systemd: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, <span class="keyword">for</span> GNU/Linux 2.6.32, BuildID[sha1]=03b9d43299696aa6b67b92f1225fa6045b978cb2, stripped</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-Check-if-you-have-Java-installed-on-your-system"><a href="#2-Check-if-you-have-Java-installed-on-your-system" class="headerlink" title="2. Check if you have Java installed on your system"></a>2. Check if you have Java installed on your system</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">root@stan-virtual-machine:~<span class="comment"># java -version</span></span><br><span class="line">The program <span class="string">&#x27;java&#x27;</span> can be found <span class="keyword">in</span> the following packages:</span><br><span class="line"> * default-jre</span><br><span class="line"> * gcj-5-jre-headless</span><br><span class="line"> * openjdk-8-jre-headless</span><br><span class="line"> * gcj-4.8-jre-headless</span><br><span class="line"> * gcj-4.9-jre-headless</span><br><span class="line"> * openjdk-9-jre-headless</span><br><span class="line">Try: apt install &lt;selected package&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-Completely-remove-the-OpenJDK-JRE-from-your-system-and-create-a-directory-to-hold-your-Oracle-Java-JDK-JRE-binaries"><a href="#3-Completely-remove-the-OpenJDK-JRE-from-your-system-and-create-a-directory-to-hold-your-Oracle-Java-JDK-JRE-binaries" class="headerlink" title="3. Completely remove the OpenJDK/JRE from your system and create a directory to hold your Oracle Java JDK/JRE binaries."></a>3. Completely remove the OpenJDK/JRE from your system and create a directory to hold your Oracle Java JDK/JRE binaries.</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@stan-virtual-machine:~<span class="comment"># apt-get purge openjdk-\*</span></span><br><span class="line">root@stan-virtual-machine:~<span class="comment"># mkdir -p /usr/local/java</span></span><br></pre></td></tr></table></figure>
+<p>Go to link: <a target="_blank" rel="noopener" href="http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html">http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html</a><br>download <a target="_blank" rel="noopener" href="http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz">http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-x64.tar.gz</a></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">root@stan-virtual-machine:/home/stan/Downloads<span class="comment"># cp -r jdk-8u101-linux-x64.tar.gz /usr/local/java</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># tar xvzf jdk-8u101-linux-x64.tar.gz</span></span><br><span class="line"><span class="comment"># vim /etc/profile     #add into end of the file</span></span><br><span class="line">JAVA_HOME=/usr/<span class="built_in">local</span>/java/jdk1.8.0_101</span><br><span class="line">JRE_HOME=<span class="variable">$JAVA_HOME</span>/jre</span><br><span class="line">PATH=<span class="variable">$PATH</span>:<span class="variable">$JAVA_HOME</span>/bin:<span class="variable">$JRE_HOME</span>/bin</span><br><span class="line"><span class="built_in">export</span> JAVA_HOME</span><br><span class="line"><span class="built_in">export</span> JRE_HOME</span><br><span class="line"><span class="built_in">export</span> PATH</span><br><span class="line"></span><br><span class="line"><span class="comment"># update-alternatives --install &quot;/usr/bin/java&quot; &quot;java&quot; &quot;/usr/local/java/jdk1.8.0_101/jre/bin/java&quot; 1</span></span><br><span class="line"><span class="comment"># update-alternatives --install &quot;/usr/bin/javac&quot; &quot;javac&quot; &quot;/usr/local/java/jdk1.8.0_101/bin/javac&quot; 1</span></span><br><span class="line"><span class="comment"># update-alternatives --set java /usr/local/java/jdk1.8.0_101/jre/bin/java</span></span><br><span class="line"><span class="comment"># update-alternatives --set javac /usr/local/java/jdk1.8.0_101/bin/javac</span></span><br><span class="line"><span class="built_in">source</span> /etc/profile</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-Check"><a href="#4-Check" class="headerlink" title="4.Check##"></a>4.Check##</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">root@stan-virtual-machine:/usr/<span class="built_in">local</span>/java<span class="comment"># java -version</span></span><br><span class="line">java version <span class="string">&quot;1.8.0_101&quot;</span></span><br><span class="line">Java(TM) SE Runtime Environment (build 1.8.0_101-b13)</span><br><span class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.101-b13, mixed mode)</span><br><span class="line">root@stan-virtual-machine:/usr/<span class="built_in">local</span>/java<span class="comment"># javac -version</span></span><br><span class="line">javac 1.8.0_101</span><br></pre></td></tr></table></figure>
+
+
+<hr>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/ubuntu/">ubuntu</a><a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/18/saltstackminion/" title="saltstack minion" itemprop="url">saltstack minion</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-09-18T07:58:08.000Z" itemprop="datePublished"> Published 2016-09-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="1-Install-minion"><a href="#1-Install-minion" class="headerlink" title="1. Install minion:"></a>1. Install minion:</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@chatswood ~]<span class="comment"># rpm -ivh http://mirrors.aliyun.com/epel/epel-release-latest-6.noarch.rpm</span></span><br><span class="line">Retrieving http://mirrors.aliyun.com/epel/epel-release-latest-6.noarch.rpm</span><br><span class="line">warning: /var/tmp/rpm-tmp.nKEP1w: Header V3 RSA/SHA256 Signature, key ID 0608b895: NOKEY</span><br><span class="line">Preparing...                <span class="comment">########################################### [100%]</span></span><br><span class="line">   1:epel-release           <span class="comment">########################################### [100%]</span></span><br><span class="line">   </span><br><span class="line">[root@chatswood ~]<span class="comment"># yum install -y salt-minion</span></span><br><span class="line">[root@chatswood ~]<span class="comment"># chkconfig salt-minion on</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-Configuration"><a href="#2-Configuration" class="headerlink" title="2. Configuration:"></a>2. Configuration:</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@chatswood ~]<span class="comment"># sed -n 16p /etc/salt/minion</span></span><br><span class="line"><span class="comment">#master: salt</span></span><br><span class="line">[root@chatswood ~]<span class="comment"># sed -i &#x27;16s#\#master: salt#master: 192.168.0.100#&#x27; /etc/salt/minion</span></span><br><span class="line">[root@chatswood ~]<span class="comment"># sed -n 16p /etc/salt/minion</span></span><br><span class="line">master: 192.168.0.100</span><br><span class="line">[root@chatswood ~]<span class="comment"># cat /etc/hosts</span></span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">192.168.0.100   toad</span><br><span class="line">192.168.0.168   salt-minion01</span><br><span class="line">192.168.0.80    macadamina</span><br><span class="line">192.168.0.49    chatswood</span><br><span class="line">[root@chatswood ~]<span class="comment"># /etc/init.d/salt-minion start</span></span><br></pre></td></tr></table></figure>
+<p>On salt master side:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">[root@toad tomcat-formula]<span class="comment"># cat /etc/hosts</span></span><br><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line">192.168.0.100   toad</span><br><span class="line">192.168.0.168   salt-minion01</span><br><span class="line">192.168.0.80    macadamina</span><br><span class="line">192.168.0.49    chatswood</span><br><span class="line">[root@toad tomcat-formula]<span class="comment"># service salt-master restart</span></span><br><span class="line">Stopping salt-master daemon:                               [  OK  ]</span><br><span class="line">Starting salt-master daemon:                               [  OK  ]</span><br><span class="line">[root@toad tomcat-formula]<span class="comment"># salt-key</span></span><br><span class="line">Accepted Keys:</span><br><span class="line">macadamina</span><br><span class="line">salt-minion01</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">chatswood</span><br><span class="line">Rejected Keys:</span><br><span class="line">[root@toad tomcat-formula]<span class="comment"># salt-key -A</span></span><br><span class="line">The following keys are going to be accepted:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">chatswood</span><br><span class="line">Proceed? [n/Y] Y</span><br><span class="line">Key <span class="keyword">for</span> minion chatswood accepted.</span><br><span class="line">[root@toad tomcat-formula]<span class="comment"># salt-key</span></span><br><span class="line">Accepted Keys:</span><br><span class="line">chatswood</span><br><span class="line">macadamina</span><br><span class="line">salt-minion01</span><br><span class="line">Denied Keys:</span><br><span class="line">Unaccepted Keys:</span><br><span class="line">Rejected Keys:</span><br></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/saltstack/">saltstack</a><a href="/tags/minion/">minion</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/18/saltstackformula/" title="saltstack formula" itemprop="url">saltstack formula</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-09-18T04:23:21.000Z" itemprop="datePublished"> Published 2016-09-18</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="1-Get-formulat"><a href="#1-Get-formulat" class="headerlink" title="1. Get formulat:"></a>1. Get formulat:</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@toad formulas]<span class="comment"># cd /srv/formulas</span></span><br><span class="line">    </span><br><span class="line">[root@toad formulas]<span class="comment"># git clone https://github.com/saltstack-formulas/nginx-formula</span></span><br></pre></td></tr></table></figure>
+<h3 id="2-Setup-top-file"><a href="#2-Setup-top-file" class="headerlink" title="2. Setup top file:"></a>2. Setup top file:</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@toad salt]<span class="comment"># cat top.sls</span></span><br><span class="line">base:</span><br><span class="line">   <span class="string">&#x27;*&#x27;</span>:</span><br><span class="line">       - nginx</span><br><span class="line">```       </span><br><span class="line">Add the new directory to file_roots:</span><br><span class="line">```sh</span><br><span class="line">[root@toad salt]<span class="comment"># vim /etc/salt/master</span></span><br><span class="line">file_roots:</span><br><span class="line">  base:</span><br><span class="line">    - /srv/salt</span><br><span class="line">    - /srv/formulas/tomcat-formula</span><br><span class="line">    - /srv/formulas/mysql-formula</span><br><span class="line">    - /srv/formulas/nginx-formula</span><br></pre></td></tr></table></figure>
+<p>Restart the Salt Master.</p>
+<h3 id="3-Run"><a href="#3-Run" class="headerlink" title="3. Run:"></a>3. Run:</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br></pre></td><td class="code"><pre><span class="line">[root@toad formulas]<span class="comment"># salt &#x27;macadamina&#x27; state.highstate</span></span><br><span class="line">macadamina:</span><br><span class="line">----------</span><br><span class="line">          ID: nginx</span><br><span class="line">    Function: pkg.installed</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Package nginx is already installed.</span><br><span class="line">     Started: 11:45:55.019357</span><br><span class="line">    Duration: 3498.284 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: /var/www</span><br><span class="line">    Function: file.directory</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Directory /var/www is <span class="keyword">in</span> the correct state</span><br><span class="line">     Started: 11:45:58.518393</span><br><span class="line">    Duration: 1.548 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: /usr/share/nginx</span><br><span class="line">    Function: file.directory</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Directory /usr/share/nginx is <span class="keyword">in</span> the correct state</span><br><span class="line">     Started: 11:45:58.520140</span><br><span class="line">    Duration: 0.699 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: /etc/nginx/conf.d/default.conf</span><br><span class="line">    Function: file.absent</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: File /etc/nginx/conf.d/default.conf is not present</span><br><span class="line">     Started: 11:45:58.520983</span><br><span class="line">    Duration: 0.554 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: /etc/nginx/conf.d/example_ssl.conf</span><br><span class="line">    Function: file.absent</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: File /etc/nginx/conf.d/example_ssl.conf is not present</span><br><span class="line">     Started: 11:45:58.521693</span><br><span class="line">    Duration: 0.486 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: /etc/nginx</span><br><span class="line">    Function: file.directory</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Directory /etc/nginx is <span class="keyword">in</span> the correct state</span><br><span class="line">     Started: 11:45:58.522309</span><br><span class="line">    Duration: 1.041 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: /etc/nginx/nginx.conf</span><br><span class="line">    Function: file.managed</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: File /etc/nginx/nginx.conf updated</span><br><span class="line">     Started: 11:45:58.524655</span><br><span class="line">    Duration: 132.936 ms</span><br><span class="line">     Changes:</span><br><span class="line">              ----------</span><br><span class="line">              diff:</span><br><span class="line">                  ---</span><br><span class="line">                  +++</span><br><span class="line">                  @@ -41,15 +41,7 @@</span><br><span class="line">                               allow 127.0.0.1;</span><br><span class="line">                               deny all;</span><br><span class="line">                           &#125;</span><br><span class="line">                  -     location / &#123;</span><br><span class="line">                  -             root html;</span><br><span class="line">                  -             index index.jsp index.html index.htm;</span><br><span class="line">                  -             proxy_pass http://web_server;</span><br><span class="line">                  -     &#125;</span><br><span class="line">                       &#125;</span><br><span class="line">                  -    upstream web_server &#123;</span><br><span class="line">                  -     server 127.0.0.1:8080;</span><br><span class="line">                  -     &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">                       include /etc/nginx/conf.d/*.conf;</span><br><span class="line">----------</span><br><span class="line">          ID: /etc/nginx/sites-enabled</span><br><span class="line">    Function: file.directory</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Directory /etc/nginx/sites-enabled is <span class="keyword">in</span> the correct state</span><br><span class="line">     Started: 11:45:58.657818</span><br><span class="line">    Duration: 1.969 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: /etc/nginx/sites-available</span><br><span class="line">    Function: file.directory</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Directory /etc/nginx/sites-available is <span class="keyword">in</span> the correct state</span><br><span class="line">     Started: 11:45:58.659985</span><br><span class="line">    Duration: 1.662 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: /var/<span class="built_in">log</span>/nginx/access.log</span><br><span class="line">    Function: file.absent</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: File /var/<span class="built_in">log</span>/nginx/access.log is not present</span><br><span class="line">     Started: 11:45:58.661843</span><br><span class="line">    Duration: 0.709 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: nginx-logger-access</span><br><span class="line">    Function: file.managed</span><br><span class="line">        Name: /etc/init/nginx-logger-access.conf</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: File /etc/init/nginx-logger-access.conf is <span class="keyword">in</span> the correct state</span><br><span class="line">     Started: 11:45:58.662778</span><br><span class="line">    Duration: 26.583 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: nginx-logger-access</span><br><span class="line">    Function: service.running</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Service nginx-logger-access is already enabled, and is running</span><br><span class="line">     Started: 11:45:58.712813</span><br><span class="line">    Duration: 32.548 ms</span><br><span class="line">     Changes:</span><br><span class="line">              ----------</span><br><span class="line">              nginx-logger-access:</span><br><span class="line">                  True</span><br><span class="line">----------</span><br><span class="line">          ID: /var/<span class="built_in">log</span>/nginx/error.log</span><br><span class="line">    Function: file.absent</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Removed file /var/<span class="built_in">log</span>/nginx/error.log</span><br><span class="line">     Started: 11:45:58.745946</span><br><span class="line">    Duration: 2.21 ms</span><br><span class="line">     Changes:</span><br><span class="line">              ----------</span><br><span class="line">              removed:</span><br><span class="line">                  /var/<span class="built_in">log</span>/nginx/error.log</span><br><span class="line">----------</span><br><span class="line">          ID: nginx-logger-error</span><br><span class="line">    Function: file.managed</span><br><span class="line">        Name: /etc/init/nginx-logger-error.conf</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: File /etc/init/nginx-logger-error.conf is <span class="keyword">in</span> the correct state</span><br><span class="line">     Started: 11:45:58.748406</span><br><span class="line">    Duration: 26.15 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: nginx-logger-error</span><br><span class="line">    Function: service.running</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Service nginx-logger-error is already enabled, and is running</span><br><span class="line">     Started: 11:45:58.776206</span><br><span class="line">    Duration: 28.481 ms</span><br><span class="line">     Changes:</span><br><span class="line">              ----------</span><br><span class="line">              nginx-logger-error:</span><br><span class="line">                  True</span><br><span class="line">----------</span><br><span class="line">          ID: /etc/logrotate.d/nginx</span><br><span class="line">    Function: file.absent</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: File /etc/logrotate.d/nginx is not present</span><br><span class="line">     Started: 11:45:58.805766</span><br><span class="line">    Duration: 1.142 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: htpasswd</span><br><span class="line">    Function: pkg.installed</span><br><span class="line">        Name: httpd-tools</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Package httpd-tools is already installed.</span><br><span class="line">     Started: 11:45:58.807193</span><br><span class="line">    Duration: 1.447 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: nginx-old-init</span><br><span class="line">    Function: file.rename</span><br><span class="line">        Name: /usr/share/nginx/init.d</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Source file <span class="string">&quot;/etc/init.d/nginx&quot;</span> has already been moved out of place</span><br><span class="line">     Started: 11:45:58.809509</span><br><span class="line">    Duration: 0.872 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: nginx-old-init-disable</span><br><span class="line">    Function: cmd.run</span><br><span class="line">        Name: chkconfig --del nginx</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: onlyif execution failed</span><br><span class="line">     Started: 11:45:58.822906</span><br><span class="line">    Duration: 10.906 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: nginx-old-init</span><br><span class="line">    Function: module.wait</span><br><span class="line">        Name: cmd.run</span><br><span class="line">      Result: True</span><br><span class="line">     Comment:</span><br><span class="line">     Started: 11:45:58.835556</span><br><span class="line">    Duration: 1.147 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: nginx</span><br><span class="line">    Function: file.managed</span><br><span class="line">        Name: /etc/init/nginx.conf</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: File /etc/init/nginx.conf is <span class="keyword">in</span> the correct state</span><br><span class="line">     Started: 11:45:58.839171</span><br><span class="line">    Duration: 41.314 ms</span><br><span class="line">     Changes:</span><br><span class="line">----------</span><br><span class="line">          ID: nginx</span><br><span class="line">    Function: service.running</span><br><span class="line">      Result: True</span><br><span class="line">     Comment: Service nginx is already enabled, and is running</span><br><span class="line">     Started: 11:45:58.886379</span><br><span class="line">    Duration: 53.53 ms</span><br><span class="line">     Changes:</span><br><span class="line">              ----------</span><br><span class="line">              nginx:</span><br><span class="line">                  True</span><br><span class="line"></span><br><span class="line">Summary</span><br><span class="line">-------------</span><br><span class="line">Succeeded: 22 (changed=5)</span><br><span class="line">Failed:     0</span><br><span class="line">-------------</span><br><span class="line">Total states run:     22</span><br><span class="line"></span><br><span class="line">```    </span><br><span class="line"><span class="comment">### 4. Test</span></span><br><span class="line">``` sh</span><br><span class="line">[root@macadamina ~]<span class="comment"># /usr/share/nginx/init.d status</span></span><br><span class="line">nginx (pid  2092) is running...</span><br><span class="line">[root@macadamina ~]<span class="comment"># lsof -i :80</span></span><br><span class="line">COMMAND  PID  USER   FD   TYPE DEVICE SIZE/OFF NODE NAME</span><br><span class="line">nginx   2092  root    6u  IPv4  13922      0t0  TCP localhost:http (LISTEN)</span><br><span class="line">nginx   2093 nginx    6u  IPv4  13922      0t0  TCP localhost:http (LISTEN)</span><br><span class="line">[root@macadamina ~]<span class="comment"># wget 127.0.0.1</span></span><br><span class="line">--2016-09-18 14:19:32--  http://127.0.0.1/</span><br><span class="line">Connecting to 127.0.0.1:80... connected.</span><br><span class="line">HTTP request sent, awaiting response... 200 OK</span><br><span class="line">Length: 3698 (3.6K) [text/html]</span><br><span class="line">Saving to: “index.html”</span><br><span class="line"></span><br><span class="line">100%[========================================================================================================&gt;] 3,698       --.-K/s   <span class="keyword">in</span> 0.007s</span><br><span class="line"></span><br><span class="line">2016-09-18 14:19:32 (545 KB/s) - “index.html” saved [3698/3698]</span><br><span class="line">[root@macadamina ~]<span class="comment"># curl 127.0.0.1</span></span><br><span class="line">&lt;!DOCTYPE html PUBLIC <span class="string">&quot;-//W3C//DTD XHTML 1.1//EN&quot;</span> <span class="string">&quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;html xmlns=<span class="string">&quot;http://www.w3.org/1999/xhtml&quot;</span> xml:lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;title&gt;Test Page <span class="keyword">for</span> the Nginx HTTP Server on EPEL&lt;/title&gt;</span><br><span class="line">        &lt;meta http-equiv=<span class="string">&quot;Content-Type&quot;</span> content=<span class="string">&quot;text/html; charset=UTF-8&quot;</span> /&gt;</span><br><span class="line">        &lt;style <span class="built_in">type</span>=<span class="string">&quot;text/css&quot;</span>&gt;</span><br><span class="line">            /*&lt;![CDATA[*/</span><br><span class="line">            body &#123;</span><br><span class="line">                background-color: <span class="comment">#fff;</span></span><br><span class="line">                color: <span class="comment">#000;</span></span><br><span class="line">                font-size: 0.9em;</span><br><span class="line">                font-family: sans-serif,helvetica;</span><br><span class="line">                margin: 0;</span><br><span class="line">                padding: 0;</span><br><span class="line">            &#125;</span><br><span class="line">            :link &#123;</span><br><span class="line">                color: <span class="comment">#c00;</span></span><br><span class="line">            &#125;</span><br><span class="line">            :visited &#123;</span><br><span class="line">                color: <span class="comment">#c00;</span></span><br><span class="line">            &#125;</span><br><span class="line">            a:hover &#123;</span><br><span class="line">                color: <span class="comment">#f50;</span></span><br><span class="line">            &#125;</span><br><span class="line">            h1 &#123;</span><br><span class="line">                text-align: center;</span><br><span class="line">                margin: 0;</span><br><span class="line">                padding: 0.6em 2em 0.4em;</span><br><span class="line">                background-color: <span class="comment">#294172;</span></span><br><span class="line">                color: <span class="comment">#fff;</span></span><br><span class="line">                font-weight: normal;</span><br><span class="line">                font-size: 1.75em;</span><br><span class="line">                border-bottom: 2px solid <span class="comment">#000;</span></span><br><span class="line">            &#125;</span><br><span class="line">            h1 strong &#123;</span><br><span class="line">                font-weight: bold;</span><br><span class="line">                font-size: 1.5em;</span><br><span class="line">            &#125;</span><br><span class="line">            h2 &#123;</span><br><span class="line">                text-align: center;</span><br><span class="line">                background-color: <span class="comment">#3C6EB4;</span></span><br><span class="line">                font-size: 1.1em;</span><br><span class="line">                font-weight: bold;</span><br><span class="line">                color: <span class="comment">#fff;</span></span><br><span class="line">                margin: 0;</span><br><span class="line">                padding: 0.5em;</span><br><span class="line">                border-bottom: 2px solid <span class="comment">#294172;</span></span><br><span class="line">            &#125;</span><br><span class="line">            hr &#123;</span><br><span class="line">                display: none;</span><br><span class="line">            &#125;</span><br><span class="line">            .content &#123;</span><br><span class="line">                padding: 1em 5em;</span><br><span class="line">            &#125;</span><br><span class="line">            .alert &#123;</span><br><span class="line">                border: 2px solid <span class="comment">#000;</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            img &#123;</span><br><span class="line">                border: 2px solid <span class="comment">#fff;</span></span><br><span class="line">                padding: 2px;</span><br><span class="line">                margin: 2px;</span><br><span class="line">            &#125;</span><br><span class="line">            a:hover img &#123;</span><br><span class="line">                border: 2px solid <span class="comment">#294172;</span></span><br><span class="line">            &#125;</span><br><span class="line">            .logos &#123;</span><br><span class="line">                margin: 1em;</span><br><span class="line">                text-align: center;</span><br><span class="line">            &#125;</span><br><span class="line">            /*]]&gt;*/</span><br><span class="line">        &lt;/style&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line"></span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;h1&gt;Welcome to &lt;strong&gt;nginx&lt;/strong&gt; on EPEL!&lt;/h1&gt;</span><br><span class="line"></span><br><span class="line">        &lt;div class=<span class="string">&quot;content&quot;</span>&gt;</span><br><span class="line">            &lt;p&gt;This page is used to <span class="built_in">test</span> the proper operation of the</span><br><span class="line">            &lt;strong&gt;nginx&lt;/strong&gt; HTTP server after it has been</span><br><span class="line">            installed. If you can <span class="built_in">read</span> this page, it means that the</span><br><span class="line">            web server installed at this site is working</span><br><span class="line">            properly.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">            &lt;div class=<span class="string">&quot;alert&quot;</span>&gt;</span><br><span class="line">                &lt;h2&gt;Website Administrator&lt;/h2&gt;</span><br><span class="line">                &lt;div class=<span class="string">&quot;content&quot;</span>&gt;</span><br><span class="line">                    &lt;p&gt;This is the default &lt;tt&gt;index.html&lt;/tt&gt; page that</span><br><span class="line">                    is distributed with &lt;strong&gt;nginx&lt;/strong&gt; on</span><br><span class="line">                    EPEL.  It is located <span class="keyword">in</span></span><br><span class="line">                    &lt;tt&gt;/usr/share/nginx/html&lt;/tt&gt;.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">                    &lt;p&gt;You should now put your content <span class="keyword">in</span> a location of</span><br><span class="line">                    your choice and edit the &lt;tt&gt;root&lt;/tt&gt; configuration</span><br><span class="line">                    directive <span class="keyword">in</span> the &lt;strong&gt;nginx&lt;/strong&gt;</span><br><span class="line">                    configuration file</span><br><span class="line">                    &lt;tt&gt;/etc/nginx/nginx.conf&lt;/tt&gt;.&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line"></span><br><span class="line">            &lt;div class=<span class="string">&quot;logos&quot;</span>&gt;</span><br><span class="line">                &lt;a href=<span class="string">&quot;http://nginx.net/&quot;</span>&gt;&lt;img</span><br><span class="line">                    src=<span class="string">&quot;nginx-logo.png&quot;</span></span><br><span class="line">                    alt=<span class="string">&quot;[ Powered by nginx ]&quot;</span></span><br><span class="line">                    width=<span class="string">&quot;121&quot;</span> height=<span class="string">&quot;32&quot;</span> /&gt;&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">                &lt;a href=<span class="string">&quot;http://fedoraproject.org/&quot;</span>&gt;&lt;img</span><br><span class="line">                    src=<span class="string">&quot;poweredby.png&quot;</span></span><br><span class="line">                    alt=<span class="string">&quot;[ Powered by Fedora EPEL ]&quot;</span></span><br><span class="line">                    width=<span class="string">&quot;88&quot;</span> height=<span class="string">&quot;31&quot;</span> /&gt;&lt;/a&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/saltstack/">saltstack</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/09/15/saltstack/" title="saltstack" itemprop="url">saltstack</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-09-15T01:28:58.000Z" itemprop="datePublished"> Published 2016-09-15</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="bug-01"><a href="#bug-01" class="headerlink" title="bug 01:"></a>bug 01:</h2><pre><code>[root@toad salt]# salt &#39;*&#39; state.sls upload_data
+salt-minion01:
+Data failed to compile:
+----------
+Pillar failed to render with the following messages:
+----------
+Error encountered while render pillar top file.
+macadamina:
+Data failed to compile:
+----------
+Pillar failed to render with the following messages:
+----------
+Error encountered while render pillar top file.
+</code></pre>
+<h2 id="Fix-01"><a href="#Fix-01" class="headerlink" title="Fix 01:"></a>Fix 01:</h2><pre><code>[root@toad salt]# salt &quot;*&quot; saltutil.refresh_pillar
+macadamina:
+True
+salt-minion01:
+True
+</code></pre>
+<hr>
+<h2 id="copy-the-file-to-spe-location"><a href="#copy-the-file-to-spe-location" class="headerlink" title="copy the file to spe. location:"></a>copy the file to spe. location:</h2><pre><code>[root@toad salt]# tree
+.
+├── contab.sls
+├── createdir.sls
+├── createuser.sls
+├── del_cron.sls
+├── files
+│   ├── hosts
+│   ├── wgzy.sql
+│   └── zfgtai.zip
+├── host_file.sls
+├── nginx_install.sls
+├── top.sls
+├── upload_data.sls
+└── upload_mysql.sls
+
+[root@toad salt]# cat upload_mysql.sls
+/usr/share/tomcat/webapps/wgzy.sql:
+  file.managed:
+- source: salt://files/wgzy.sql
+- user: root
+- group: root
+- mode: 644
+
+[root@toad salt]# salt &#39;*&#39; state.sls upload_mysql
+salt-minion01:
+----------
+  ID: /usr/share/tomcat/webapps/wgzy.sql
+Function: file.managed
+  Result: True
+ Comment: File /usr/share/tomcat/webapps/wgzy.sql updated
+ Started: 17:11:02.739156
+Duration: 298.114 ms
+ Changes:
+  ----------
+  diff:
+  New file
+  mode:
+  0644
+
+Summary
+------------
+Succeeded: 1 (changed=1)
+Failed:0
+------------
+Total states run: 1
+macadamina:
+----------
+  ID: /usr/share/tomcat/webapps/wgzy.sql
+Function: file.managed
+  Result: True
+ Comment: File /usr/share/tomcat/webapps/wgzy.sql updated
+ Started: 17:11:05.274496
+Duration: 254.31 ms
+ Changes:
+  ----------
+  diff:
+  New file
+  mode:
+  0644
+
+Summary
+------------
+Succeeded: 1 (changed=1)
+Failed:0
+------------
+Total states run: 1
+</code></pre>
+<p>Modify /etc/tomcat/server.xml<br> <Host name="localhost"  appBase="webapps"
+            unpackWARs="true" autoDeploy="true"></p>
+<p>to<br> <Host name="localhost"  appBase="/deploy/source/aofa_pro"
+            unpackWARs="true" autoDeploy="true"></p>
+<hr>
+<h2 id="saltstack-run-command"><a href="#saltstack-run-command" class="headerlink" title="saltstack run command:"></a>saltstack run command:</h2><pre><code>[root@toad salt]# cat modscript.sls
+sed -i &#39;125s#appBase=&quot;.*&quot;# appBase=&quot;/deploy/source/aofa_pro&quot;#&#39; /etc/tomcat/server.xml:
+  cmd.run
+
+
+[root@toad salt]# salt &#39;*&#39; state.sls modscript
+macadamina:
+----------
+  ID: sed -i &#39;125s#appBase=&quot;.*&quot;# appBase=&quot;/deploy/source/aofa_pro&quot;#&#39; /etc/tomcat/server.xml
+Function: cmd.run
+  Result: True
+ Comment: Command &quot;sed -i &#39;125s#appBase=&quot;.*&quot;# appBase=&quot;/deploy/source/aofa_pro&quot;#&#39; /etc/tomcat/server.xml&quot; run
+ Started: 11:06:15.245454
+Duration: 38.108 ms
+ Changes:
+  ----------
+  pid:
+  38516
+  retcode:
+  0
+  stderr:
+  stdout:
+
+Summary
+------------
+Succeeded: 1 (changed=1)
+Failed:0
+------------
+Total states run: 1
+salt-minion01:
+----------
+  ID: sed -i &#39;125s#appBase=&quot;.*&quot;# appBase=&quot;/deploy/source/aofa_pro&quot;#&#39; /etc/tomcat/server.xml
+Function: cmd.run
+  Result: True
+ Comment: Command &quot;sed -i &#39;125s#appBase=&quot;.*&quot;# appBase=&quot;/deploy/source/aofa_pro&quot;#&#39; /etc/tomcat/server.xml&quot; run
+ Started: 11:06:16.505044
+Duration: 28.841 ms
+ Changes:
+  ----------
+  pid:
+  37702
+  retcode:
+  0
+  stderr:
+  stdout:
+
+Summary
+------------
+Succeeded: 1 (changed=1)
+Failed:0
+------------
+Total states run: 1
+</code></pre>
+<p>check result:<br>    [root@toad salt]# salt ‘*’ cmd.run ‘sed -n 125p /etc/tomcat/server.xml’<br>    macadamina:<br>      &lt;Host name=”localhost”   appBase=”/deploy/source/aofa_pro”<br>    salt-minion01:<br>      &lt;Host name=”localhost”   appBase=”/deploy/source/aofa_pro”</p>
+<hr>
+<p>copy the file form master to minion:<br>    [root@toad salt]# salt ‘macadamina’ cp.get_file salt://files/zfgtai.zip /deploy/source/aofa_pro/zfgtai.zip<br>    macadamina:<br>    /deploy/source/aofa_pro/zfgtai.zip</p>
+<p>Append text into file:</p>
+<pre><code>[root@salt-minion01 ~]# sed -i &#39;34 a&lt;Valve className=&quot;com.orangefunction.tomcat.redissessions.RedisSessionHandlerValve&quot; /&gt; &lt;Manager className=&quot;com.orangefunction.tomcat.redissessions.RedisSessionManager&quot; host=&quot;localhost&quot; port=&quot;6379&quot; database=&quot;0&quot; maxInactiveInterval=&quot;60&quot; /&gt;&#39; context.xml
+</code></pre>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/saltstack/">saltstack</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/29/unattend-install/" title="PXE + kickstart unattend install centos 6" itemprop="url">PXE + kickstart unattend install centos 6</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-29T06:25:00.000Z" itemprop="datePublished"> Published 2016-08-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="PXE-kickstart-unattend-install-centos-6"><a href="#PXE-kickstart-unattend-install-centos-6" class="headerlink" title="PXE + kickstart unattend install centos 6"></a>PXE + kickstart unattend install centos 6</h3><h5 id="Step-1-Install-and-configure-DNSMASQ-Server"><a href="#Step-1-Install-and-configure-DNSMASQ-Server" class="headerlink" title="Step 1: Install and configure DNSMASQ Server"></a>Step 1: Install and configure DNSMASQ Server</h5><h6 id="1-INSTALL-DNSMASQ-DEAMON"><a href="#1-INSTALL-DNSMASQ-DEAMON" class="headerlink" title="1. INSTALL DNSMASQ DEAMON"></a>1. INSTALL DNSMASQ DEAMON</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#yum install dnsmasq</span><br></pre></td></tr></table></figure>
+
+<h6 id="2-Edit-dnsmasq-conf-file"><a href="#2-Edit-dnsmasq-conf-file" class="headerlink" title="2. Edit dnsmasq conf file"></a>2. Edit dnsmasq conf file</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"># mv &#x2F;etc&#x2F;dnsmasq.conf  &#x2F;etc&#x2F;dnsmasq.conf.backup</span><br><span class="line"># vim &#x2F;etc&#x2F;dnsmasq.conf</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">interface&#x3D;eth0,lo</span><br><span class="line">#bind-interfaces</span><br><span class="line">domain&#x3D;centos6.lan</span><br><span class="line"># DHCP range-leases</span><br><span class="line">dhcp-range&#x3D; eth0,192.168.0.3,192.168.0.253,255.255.255.0,1h</span><br><span class="line"># PXE</span><br><span class="line">dhcp-boot&#x3D;pxelinux.0,pxeserver,192.168.0.132</span><br><span class="line"># Gateway</span><br><span class="line">dhcp-option&#x3D;3,192.168.0.1</span><br><span class="line"># DNS</span><br><span class="line">dhcp-option&#x3D;6,192.168.0.1, 8.8.8.8</span><br><span class="line">server&#x3D;8.8.4.4</span><br><span class="line"># Broadcast Address</span><br><span class="line">dhcp-option&#x3D;28,192.168.0.255</span><br><span class="line"># NTP Server</span><br><span class="line">dhcp-option&#x3D;42,0.0.0.0</span><br><span class="line">pxe-prompt&#x3D;&quot;Press F8 for menu.&quot;, 60</span><br><span class="line">pxe-service&#x3D;x86PC, &quot;Install CentOS 6 from network server 192.168.0.132&quot;, pxelinux</span><br><span class="line">enable-tftp</span><br><span class="line">tftp-root&#x3D;&#x2F;var&#x2F;lib&#x2F;tftpboot</span><br></pre></td></tr></table></figure>
+
+<p>interface – Interfaces that the server should listen and provide services.</p>
+<p>bind-interfaces – Uncomment to bind only on this interface.</p>
+<p>domain – Replace it with your domain name.</p>
+<p>dhcp-range – Replace it with IP range defined by your network mask on this segment.</p>
+<p>dhcp-boot – Replace the IP statement with your interface IP Address.</p>
+<p>dhcp-option=3,192.168.0.1 – Replace the IP Address with your network segment Gateway.</p>
+<p>dhcp-option=6,92.168.0.1 – Replace the IP Address with your DNS Server IP – several DNS IPs can be defined.</p>
+<p>server=8.8.4.4 – Put your DNS forwarders IPs Addresses.</p>
+<p>dhcp-option=28,192.168.0.255 – Replace the IP Address with network broadcast address –optionally.</p>
+<p>dhcp-option=42,0.0.0.0 – Put your network time servers – optionally (0.0.0.0 Address is for self-reference).</p>
+<p>pxe-prompt – Leave it as default – means to hit F8 key for entering menu 60 with seconds wait time..</p>
+<p>pxe=service – Use x86PC for 32-bit/64-bit architectures and enter a menu description prompt under string quotes. Other values types can be: PC98, IA64EFI, Alpha, Arcx86, IntelLeanClient, IA32EFI, BCEFI, XscaleEFI and X86-64EFI.</p>
+<p>enable-tftp – Enables the build-in TFTP server.</p>
+<p>tftp-root – Use /var/lib/tftpboot – the location for all netbooting files.</p>
+<p>read more dnsmasq manual</p>
+<h5 id="STEP-2-INSTALL-SYSLINUX-BOOTLOADERS"><a href="#STEP-2-INSTALL-SYSLINUX-BOOTLOADERS" class="headerlink" title="STEP 2: INSTALL SYSLINUX BOOTLOADERS"></a>STEP 2: INSTALL SYSLINUX BOOTLOADERS</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># yum install syslinux</span><br><span class="line"># ls &#x2F;usr&#x2F;share&#x2F;syslinux</span><br></pre></td></tr></table></figure>
+
+<h5 id="STEP-3-INSTALL-TFTP-SERVER-AND-POPULATE-IT-WITH-SYSLINUX-BOOTLOADERS"><a href="#STEP-3-INSTALL-TFTP-SERVER-AND-POPULATE-IT-WITH-SYSLINUX-BOOTLOADERS" class="headerlink" title="STEP 3: INSTALL TFTP-SERVER AND POPULATE IT WITH SYSLINUX BOOTLOADERS"></a>STEP 3: INSTALL TFTP-SERVER AND POPULATE IT WITH SYSLINUX BOOTLOADERS</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># yum install tftp-server</span><br><span class="line"># cp -r &#x2F;usr&#x2F;share&#x2F;syslinux&#x2F;* &#x2F;var&#x2F;lib&#x2F;tftpboot</span><br></pre></td></tr></table></figure>
+
+<h5 id="STEP-4-SETUP-PXE-SERVER-CONFIGURATION-FILE"><a href="#STEP-4-SETUP-PXE-SERVER-CONFIGURATION-FILE" class="headerlink" title="STEP 4: SETUP PXE SERVER CONFIGURATION FILE"></a>STEP 4: SETUP PXE SERVER CONFIGURATION FILE</h5><p>Typically the PXE Server reads its configuration from a group of specific files (GUID files – first, MAC files – next, Default file – last) hosted in a folder called pxelinux.cfg, which must be located in the directory specified in tftp-root statement from DNSMASQ main configuration file.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"># mkdir &#x2F;var&#x2F;lib&#x2F;tftpboot&#x2F;pxelinux.cfg</span><br><span class="line"># vim &#x2F;var&#x2F;lib&#x2F;tftpboot&#x2F;pxelinux.cfg&#x2F;default</span><br><span class="line">default menu.c32</span><br><span class="line">prompt 0</span><br><span class="line">timeout 300# 30 seconds</span><br><span class="line">ONTIMEOUT local</span><br><span class="line">menu title ########## PXE Boot Menu ##########</span><br><span class="line">label 1</span><br><span class="line">menu label ^1) Install or upgrade CentOS 6 x64 </span><br><span class="line">kernel centos6&#x2F;vmlinuz</span><br><span class="line">append initrd&#x3D;centos6&#x2F;initrd.img ks&#x3D;ftp:&#x2F;&#x2F;192.168.0.132&#x2F;ks.cfg</span><br><span class="line">label 2</span><br><span class="line">menu label ^2) Install CentOS 6 x64 with http:&#x2F;&#x2F;mirror.centos.org Repo</span><br><span class="line">kernel centos6&#x2F;vmlinuz</span><br><span class="line">append initrd&#x3D;centos6&#x2F;initrd.img method&#x3D;http:&#x2F;&#x2F;mirror.centos.org&#x2F;centos&#x2F;6&#x2F;os&#x2F;x86_64&#x2F; devfs&#x3D;nomount ip&#x3D;dhcp</span><br><span class="line">label 3</span><br><span class="line">menu label ^3) Install CentOS 6 x64 with Local Repo using VNC</span><br><span class="line">kernel centos6&#x2F;vmlinuz</span><br><span class="line">append  initrd&#x3D;centos6&#x2F;initrd.img method&#x3D;ftp:&#x2F;&#x2F;192.168.0.132&#x2F;pub devfs&#x3D;nomount inst.vnc inst.vncpassword&#x3D;password</span><br><span class="line">label 4</span><br><span class="line">menu label ^4) Boot from local drive</span><br></pre></td></tr></table></figure>
+
+<h5 id="STEP-5-ADD-CENTOS-7-BOOT-IMAGES-TO-PXE-SERVER"><a href="#STEP-5-ADD-CENTOS-7-BOOT-IMAGES-TO-PXE-SERVER" class="headerlink" title="STEP 5: ADD CENTOS 7 BOOT IMAGES TO PXE SERVER"></a>STEP 5: ADD CENTOS 7 BOOT IMAGES TO PXE SERVER</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># mount -o loop &#x2F;root&#x2F;CentOS-6.8-x86-bin-DVD1.iso  &#x2F;mnt</span><br><span class="line"># ls &#x2F;mnt</span><br><span class="line"># mkdir &#x2F;var&#x2F;lib&#x2F;tftpboot&#x2F;centos6</span><br><span class="line"># cp &#x2F;mnt&#x2F;images&#x2F;pxeboot&#x2F;vmlinuz  &#x2F;var&#x2F;lib&#x2F;tftpboot&#x2F;centos6</span><br><span class="line"># cp &#x2F;mnt&#x2F;images&#x2F;pxeboot&#x2F;initrd.img  &#x2F;var&#x2F;lib&#x2F;tftpboot&#x2F;centos6</span><br></pre></td></tr></table></figure>
+
+<h5 id="STEP-6-CREATE-CENTOS-7-LOCAL-MIRROR-INSTALLATION-SOURCE"><a href="#STEP-6-CREATE-CENTOS-7-LOCAL-MIRROR-INSTALLATION-SOURCE" class="headerlink" title="STEP 6: CREATE CENTOS 7 LOCAL MIRROR INSTALLATION SOURCE"></a>STEP 6: CREATE CENTOS 7 LOCAL MIRROR INSTALLATION SOURCE</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># yum install vsftpd</span><br><span class="line"># cp -r &#x2F;mnt&#x2F;*  &#x2F;var&#x2F;ftp&#x2F;pub&#x2F;</span><br><span class="line"># chmod -R 755 &#x2F;var&#x2F;ftp&#x2F;pub</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>Prepare local repo file</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># wget -O &#x2F;var&#x2F;ftp&#x2F;pub&#x2F;Centos-6.repo http:&#x2F;&#x2F;mirrors.aliyun.com&#x2F;repo&#x2F;Centos-6.repo</span><br></pre></td></tr></table></figure>
+
+<h5 id="STEP-7-CREATE-KS-CFG-FILE"><a href="#STEP-7-CREATE-KS-CFG-FILE" class="headerlink" title="STEP 7: CREATE KS.CFG FILE"></a>STEP 7: CREATE KS.CFG FILE</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br></pre></td><td class="code"><pre><span class="line"># vim &#x2F;var&#x2F;ftp&#x2F;ks.cfg</span><br><span class="line">#platform&#x3D;x86, AMD64, or Intel EM64T</span><br><span class="line">#version&#x3D;DEVEL</span><br><span class="line"># Firewall configuration</span><br><span class="line">firewall --disabled</span><br><span class="line"># Install OS instead of upgrade</span><br><span class="line">install</span><br><span class="line"># Use network installation</span><br><span class="line">url --url&#x3D;&quot;ftp:&#x2F;&#x2F;192.168.0.132&#x2F;pub&quot;</span><br><span class="line"># Root password</span><br><span class="line">rootpw --iscrypted $1$MzJZISZ7$wX0pW3sFy&#x2F;5y80l2BAQD81</span><br><span class="line"># System authorization information</span><br><span class="line">auth  --useshadow  --passalgo&#x3D;sha512</span><br><span class="line"># Use graphical install</span><br><span class="line">#graphical</span><br><span class="line">text</span><br><span class="line"></span><br><span class="line">%include &#x2F;tmp&#x2F;network.ks</span><br><span class="line"></span><br><span class="line">firstboot --disable</span><br><span class="line"># System keyboard</span><br><span class="line">keyboard us</span><br><span class="line"># System language</span><br><span class="line">lang en_US</span><br><span class="line"># SELinux configuration</span><br><span class="line">selinux --disabled</span><br><span class="line"># Installation logging level</span><br><span class="line">logging --level&#x3D;info</span><br><span class="line"># Reboot after installation</span><br><span class="line">#reboot</span><br><span class="line"># System timezone</span><br><span class="line">timezone  Australia&#x2F;Sydney</span><br><span class="line"># Network information</span><br><span class="line">network  --bootproto&#x3D;dhcp --device&#x3D;eth0 --onboot&#x3D;on</span><br><span class="line"># System bootloader configuration</span><br><span class="line">bootloader --location&#x3D;mbr</span><br><span class="line"># Clear the Master Boot Record</span><br><span class="line">zerombr</span><br><span class="line"># Partition clearing information</span><br><span class="line">clearpart --all --initlabel </span><br><span class="line"># Disk partitioning information</span><br><span class="line">part &#x2F;boot --asprimary --fstype&#x3D;&quot;ext4&quot; --size&#x3D;250</span><br><span class="line">part swap --asprimary --fstype&#x3D;&quot;swap&quot; --size&#x3D;1024</span><br><span class="line">part &#x2F; --asprimary --fstype&#x3D;&quot;ext4&quot; --grow --size&#x3D;1</span><br><span class="line"></span><br><span class="line">%packages</span><br><span class="line">@base</span><br><span class="line">@chinese-support</span><br><span class="line">@compat-libraries</span><br><span class="line">@debugging</span><br><span class="line">@development</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">%pre</span><br><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line">exec &lt; &#x2F;dev&#x2F;tty3 &gt; &#x2F;dev&#x2F;tty3 2&gt;&amp;1</span><br><span class="line">chvt 3</span><br><span class="line">hn&#x3D;&quot;&quot;</span><br><span class="line"></span><br><span class="line">while [ &quot;$hn&quot; &#x3D;&#x3D; &quot;&quot; ]; do</span><br><span class="line"> clear</span><br><span class="line"> echo &quot; *** Please enter the following details: *** &quot;</span><br><span class="line"> echo</span><br><span class="line"> read -p &quot;Hostname: &quot; hn</span><br><span class="line">done</span><br><span class="line">clear</span><br><span class="line">chvt 1</span><br><span class="line">echo &quot;network --device eth0 --bootproto dhcp --hostname $&#123;hn&#125;&quot; &gt; &#x2F;tmp&#x2F;network.ks</span><br><span class="line"></span><br><span class="line">%post</span><br><span class="line">sed -i &#39;s#ONBOOT&#x3D;no#ONEBOOT&#x3D;yes#g&#39; &#x2F;etc&#x2F;sysconfig&#x2F;network-scripts&#x2F;ifcfg-eth0</span><br><span class="line">cp &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo.old</span><br><span class="line">wget -O &#x2F;etc&#x2F;yum.repos.d&#x2F;CentOS-Base.repo ftp:&#x2F;&#x2F;192.168.0.132&#x2F;pub&#x2F;Centos-6.repo</span><br><span class="line">rpm --import &#x2F;etc&#x2F;pki&#x2F;rpm-gpg&#x2F;RPM-GPG-KEY*</span><br><span class="line">yum update -y</span><br><span class="line">sleep 30</span><br><span class="line">runlevel</span><br><span class="line">chkconfig --list|grep 3:on |grep -vE &quot;crond|sshd|network|rsyslog|systat&quot; |awk &#39;&#123;print &quot;chkconfig &quot; $1 &quot; off&quot;&#125;&#39;|bash</span><br><span class="line">&#x2F;etc&#x2F;init.d&#x2F;iptables stop</span><br><span class="line">service ntpd stop</span><br><span class="line">&#x2F;usr&#x2F;sbin&#x2F;ntpdate au.pool.ntp.org</span><br><span class="line">date</span><br><span class="line">echo &#39;#time sync by stan zhou&#39; &gt;&gt; &#x2F;var&#x2F;spool&#x2F;cron&#x2F;root</span><br><span class="line">echo &#39;*&#x2F;5 * * * * &#x2F;usr&#x2F;sbin&#x2F;ntpdate au.pool.ntp.org &gt; &#x2F;dev&#x2F;null 2&gt;&amp;1&#39; &gt;&gt; &#x2F;var&#x2F;spool&#x2F;cron&#x2F;root</span><br><span class="line">crontab -l</span><br><span class="line">echo &quot;UseDNS no&quot; &gt;&gt; &#x2F;etc&#x2F;ssh&#x2F;sshd_config</span><br><span class="line">echo &#39;*        -    nofile        65535&#39; &gt;&gt; &#x2F;etc&#x2F;security&#x2F;limits.conf</span><br><span class="line">echo &quot;net.ipv4.tcp_fin_timeout &#x3D; 2</span><br><span class="line">net.ipv4.tcp_tw_reuse &#x3D; 1</span><br><span class="line">net.ipv4.tcp_tw_recycle &#x3D; 1</span><br><span class="line">net.ipv4.tcp_syncookies &#x3D; 1</span><br><span class="line">net.ipv4.tcp_keepalive_time &#x3D; 600</span><br><span class="line">net.ipv4.ip_local_port_range &#x3D; 4000 65000</span><br><span class="line">net.ipv4.tcp_max_syn_backlog &#x3D; 16384</span><br><span class="line">net.ipv4.tcp_max_tw_buckets &#x3D; 36000</span><br><span class="line">net.ipv4.route.gc_timeout &#x3D; 100</span><br><span class="line">net.ipv4.tcp_syn_retries &#x3D; 1</span><br><span class="line">net.ipv4.tcp_synack_retries &#x3D; 1</span><br><span class="line">net.core.somaxconn &#x3D; 16384</span><br><span class="line">net.core.netdev_max_backlog &#x3D; 16384</span><br><span class="line">net.ipv4.tcp_max_orphans &#x3D; 16384&quot; &gt;&gt; &#x2F;etc&#x2F;sysctl.conf</span><br><span class="line">sysctl -p</span><br><span class="line">wget http:&#x2F;&#x2F;download.fedoraproject.org&#x2F;pub&#x2F;epel&#x2F;6&#x2F;x86_64&#x2F;epel-release-6-8.noarch.rpm</span><br><span class="line">rpm -ivh epel-release-6-8.noarch.rpm</span><br><span class="line">%end</span><br></pre></td></tr></table></figure>
+
+<p>Read more about kickstart CentOS6</p>
+<h5 id="STEP-7-START-AND-ENABLE-DAEMONS-SYSTEM-WIDE"><a href="#STEP-7-START-AND-ENABLE-DAEMONS-SYSTEM-WIDE" class="headerlink" title="STEP 7: START AND ENABLE DAEMONS SYSTEM-WIDE"></a>STEP 7: START AND ENABLE DAEMONS SYSTEM-WIDE</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#service dnsmasq start</span><br><span class="line">#service vsftpd start</span><br><span class="line">#chkconfig dnsmasq on</span><br><span class="line">#chkconfig vsftpd on</span><br></pre></td></tr></table></figure>
+
+<h5 id="STEP-8-MYSQL-INSTALL-SCRIPT"><a href="#STEP-8-MYSQL-INSTALL-SCRIPT" class="headerlink" title="STEP 8: MYSQL INSTALL SCRIPT"></a>STEP 8: MYSQL INSTALL SCRIPT</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">#vim &#x2F;var&#x2F;ftp&#x2F;pub&#x2F;install_mysql</span><br><span class="line">groupadd mysql</span><br><span class="line">useradd -s &#x2F;sbin&#x2F;nologin -g mysql -M mysql</span><br><span class="line">tail -1 &#x2F;etc&#x2F;passwd</span><br><span class="line">id mysql</span><br><span class="line"># setup the tar file download add</span><br><span class="line">wget ftp:&#x2F;&#x2F;192.168.0.134&#x2F;pub&#x2F;mysql-5.5.50-linux2.6-x86_64.tar.gz</span><br><span class="line">tar xf mysql-5.5.50-linux2.6-x86_64.tar.gz</span><br><span class="line">mkdir -p &#x2F;application&#x2F;</span><br><span class="line">mv mysql-5.5.50-linux2.6-x86_64 &#x2F;application&#x2F;mysql-5.5.50</span><br><span class="line">ln -s &#x2F;application&#x2F;mysql-5.5.50&#x2F; &#x2F;application&#x2F;mysql</span><br><span class="line">ls -l &#x2F;application&#x2F;</span><br><span class="line">cd &#x2F;application&#x2F;mysql&#x2F;</span><br><span class="line">ls -l support-files&#x2F;*.cnf</span><br><span class="line">&#x2F;bin&#x2F;cp support-files&#x2F;my-medium.cnf &#x2F;etc&#x2F;my.cnf</span><br><span class="line">mkdir -p &#x2F;application&#x2F;mysql&#x2F;data</span><br><span class="line">chown -R mysql.mysql &#x2F;application&#x2F;mysql&#x2F;</span><br><span class="line">&#x2F;application&#x2F;mysql&#x2F;scripts&#x2F;mysql_install_db --basedir&#x3D;&#x2F;application&#x2F;mysql --datadir&#x3D;&#x2F;application&#x2F;mysql&#x2F;data&#x2F; --user&#x3D;mysql</span><br><span class="line">&#x2F;bin&#x2F;cp support-files&#x2F;mysql.server &#x2F;etc&#x2F;init.d&#x2F;mysqld</span><br><span class="line">chmod +x &#x2F;etc&#x2F;init.d&#x2F;mysqld</span><br><span class="line">sed -i &#39;s#&#x2F;usr&#x2F;local&#x2F;mysql#&#x2F;application&#x2F;mysql#g&#39; &#x2F;application&#x2F;mysql&#x2F;bin&#x2F;mysqld_safe &#x2F;etc&#x2F;init.d&#x2F;mysqld</span><br><span class="line"></span><br><span class="line">&#x2F;etc&#x2F;init.d&#x2F;mysqld start</span><br><span class="line">netstat -lntup|grep mysql</span><br><span class="line"></span><br><span class="line">chkconfig --add mysqld</span><br><span class="line">chkconfig mysqld on</span><br><span class="line">chkconfig --list mysqld</span><br><span class="line"></span><br><span class="line">echo &#39;export PATH&#x3D;&#x2F;application&#x2F;mysql&#x2F;bin:$PATH&#39; &gt;&gt; &#x2F;etc&#x2F;profile</span><br><span class="line">tail -1 &#x2F;etc&#x2F;profile</span><br><span class="line">source &#x2F;etc&#x2F;profile</span><br><span class="line">echo $PATH</span><br><span class="line"># after install run the following command</span><br><span class="line">#&#x2F;application&#x2F;mysql&#x2F;bin&#x2F;mysql_secure_installation</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/pxe/">pxe</a><a href="/tags/kickstart/">kickstart</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/29/centos7/" title="centos7" itemprop="url">centos7</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-29T06:18:03.000Z" itemprop="datePublished"> Published 2016-08-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="CentOS-quck-start-guide"><a href="#CentOS-quck-start-guide" class="headerlink" title="CentOS quck start guide"></a>CentOS quck start guide</h3><h2 id="Analyzing-syslog-entries"><a href="#Analyzing-syslog-entries" class="headerlink" title="Analyzing syslog entries"></a>Analyzing syslog entries</h2><p><img src="https://i.imgur.com/X4FxDgT.png" alt="log file standard format"></p>
+<h3 id="1-Stop-and-Start-RHEL7-firewall"><a href="#1-Stop-and-Start-RHEL7-firewall" class="headerlink" title="1. Stop and Start RHEL7 firewall"></a>1. Stop and Start RHEL7 firewall</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel7 ~]# service firewalld stop</span><br><span class="line">Redirecting to &#x2F;bin&#x2F;systemctl stop  firewalld.service</span><br><span class="line"></span><br><span class="line">[root@rhel7 ~]# service firewalld start</span><br><span class="line">Redirecting to &#x2F;bin&#x2F;systemctl start  firewalld.service</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="2-Disable-and-Enable-RHEL7-firewall"><a href="#2-Disable-and-Enable-RHEL7-firewall" class="headerlink" title="2. Disable and Enable RHEL7 firewall"></a>2. Disable and Enable RHEL7 firewall</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel7 ~]# systemctl disable firewalld</span><br><span class="line">rm &#39;&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;dbus-org.fedoraproject.FirewallD1.service&#39;</span><br><span class="line">rm &#39;&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;basic.target.wants&#x2F;firewalld.service&#39;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[root@rhel7 ~]# systemctl enable firewalld</span><br><span class="line">ln -s &#39;&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;firewalld.service&#39; &#39;&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;dbus-org.fedoraproject.FirewallD1.service&#39;</span><br><span class="line">ln -s &#39;&#x2F;usr&#x2F;lib&#x2F;systemd&#x2F;system&#x2F;firewalld.service&#39; &#39;&#x2F;etc&#x2F;systemd&#x2F;system&#x2F;basic.target.wants&#x2F;firewalld.service&#39;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-Set-hostname"><a href="#3-Set-hostname" class="headerlink" title="3. Set hostname"></a>3. Set hostname</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@rhel7 ~]# hostnamectl</span><br><span class="line"></span><br><span class="line">[root@rhel7 ~]# hostnamectl set-hostname nameyoulike</span><br></pre></td></tr></table></figure>
+
+<h1 id="Signals"><a href="#Signals" class="headerlink" title="Signals"></a>Signals</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-5-191 ~]# kill -l</span><br><span class="line"> 1) SIGHUP	 2) SIGINT	 3) SIGQUIT	 4) SIGILL	 5) SIGTRAP</span><br><span class="line"> 6) SIGABRT	 7) SIGBUS	 8) SIGFPE	 9) SIGKILL	10) SIGUSR1</span><br><span class="line">11) SIGSEGV	12) SIGUSR2	13) SIGPIPE	14) SIGALRM	15) SIGTERM</span><br><span class="line">16) SIGSTKFLT	17) SIGCHLD	18) SIGCONT	19) SIGSTOP	20) SIGTSTP</span><br><span class="line">21) SIGTTIN	22) SIGTTOU	23) SIGURG	24) SIGXCPU	25) SIGXFSZ</span><br><span class="line">26) SIGVTALRM	27) SIGPROF	28) SIGWINCH	29) SIGIO	30) SIGPWR</span><br><span class="line">31) SIGSYS	34) SIGRTMIN	35) SIGRTMIN+1	36) SIGRTMIN+2	37) SIGRTMIN+3</span><br><span class="line">38) SIGRTMIN+4	39) SIGRTMIN+5	40) SIGRTMIN+6	41) SIGRTMIN+7	42) SIGRTMIN+8</span><br><span class="line">43) SIGRTMIN+9	44) SIGRTMIN+10	45) SIGRTMIN+11	46) SIGRTMIN+12	47) SIGRTMIN+13</span><br><span class="line">48) SIGRTMIN+14	49) SIGRTMIN+15	50) SIGRTMAX-14	51) SIGRTMAX-13	52) SIGRTMAX-12</span><br><span class="line">53) SIGRTMAX-11	54) SIGRTMAX-10	55) SIGRTMAX-9	56) SIGRTMAX-8	57) SIGRTMAX-7</span><br><span class="line">58) SIGRTMAX-6	59) SIGRTMAX-5	60) SIGRTMAX-4	61) SIGRTMAX-3	62) SIGRTMAX-2</span><br><span class="line">63) SIGRTMAX-1	64) SIGRTMAX</span><br></pre></td></tr></table></figure>
+<h2 id="SIGKILL-signal"><a href="#SIGKILL-signal" class="headerlink" title="SIGKILL signal"></a>SIGKILL signal</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-5-191 ~]# sleep 10000 &amp;</span><br><span class="line">[1] 19559</span><br><span class="line">[root@ip-172-31-5-191 ~]# ps aux|grep sleep</span><br><span class="line">root     19559  0.0  0.0 107952   356 pts&#x2F;0    S    07:48   0:00 sleep 10000</span><br><span class="line">root     19564  0.0  0.0 112708   976 pts&#x2F;0    S+   07:48   0:00 grep --color&#x3D;auto sleep</span><br><span class="line">[root@ip-172-31-5-191 ~]# kill -9 19559</span><br><span class="line">[1]+  Killed                  sleep 10000</span><br><span class="line">[root@ip-172-31-5-191 ~]# ps aux|grep sleep</span><br><span class="line">root     19596  0.0  0.0 112708   980 pts&#x2F;0    S+   07:49   0:00 grep --color&#x3D;auto sleep</span><br></pre></td></tr></table></figure>
+
+<h2 id="SIGHUP-signal"><a href="#SIGHUP-signal" class="headerlink" title="SIGHUP signal"></a>SIGHUP signal</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-5-191 ~]# nohup sleep 1000 &amp;</span><br><span class="line">[1] 19786</span><br><span class="line">[root@ip-172-31-5-191 ~]# nohup: ignoring input and appending output to ‘nohup.out’</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bash-Shell-Variables"><a href="#Bash-Shell-Variables" class="headerlink" title="Bash Shell Variables"></a>Bash Shell Variables</h2><p>Put variable into the file <code>/etc/environment</code></p>
+<p>Another very important rule is that a child process will never be able to change the parent’s environment variables, because the child and parent are independent from each other and the child only has a local copy of the parent’s environment:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-5-191 ~]# mkdir ~&#x2F;scripts</span><br><span class="line">[root@ip-172-31-5-191 ~]# printf &#39;#!&#x2F;bin&#x2F;bash\nexport CHILDVAR&#x3D;Hello_from_child\n&#39; &gt; ~&#x2F;scripts&#x2F;child.sh</span><br><span class="line">[root@ip-172-31-5-191 ~]# cat ~&#x2F;scripts&#x2F;child.sh</span><br><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">export CHILDVAR&#x3D;Hello_from_child</span><br><span class="line">[root@ip-172-31-5-191 ~]# chmod +x ~&#x2F;scripts&#x2F;child.sh</span><br><span class="line">[root@ip-172-31-5-191 ~]# ~&#x2F;scripts&#x2F;child.sh</span><br><span class="line">[root@ip-172-31-5-191 ~]# echo $CHILDVAR</span><br></pre></td></tr></table></figure>
+
+<h2 id="Bash-Shell-Scripting"><a href="#Bash-Shell-Scripting" class="headerlink" title="Bash Shell Scripting"></a>Bash Shell Scripting</h2><h3 id="Functions"><a href="#Functions" class="headerlink" title="Functions"></a>Functions</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-5-191 ~]# say_hello() &#123;</span><br><span class="line">&gt; echo &quot;My name is $1&quot;;</span><br><span class="line">&gt; &#125;</span><br><span class="line"></span><br><span class="line">[root@ip-172-31-5-191 ~]# say_hello Stan</span><br><span class="line">My name is Stan</span><br><span class="line">[root@ip-172-31-5-191 ~]# say_another_thing() &#123;</span><br><span class="line">&gt; say_hello Stan</span><br><span class="line">&gt; echo &quot;I like CentOS 7&quot;;</span><br><span class="line">&gt; &#125;</span><br><span class="line"></span><br><span class="line">[root@ip-172-31-5-191 ~]# say_another_thing</span><br><span class="line">My name is Stan</span><br><span class="line">I like CentOS 7</span><br></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-5-191 ~]# cat run.sh</span><br><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">echo &quot;Hello world&quot;</span><br><span class="line">echo &quot;-----------&quot;</span><br><span class="line">if [[ $# -lt 2 ]]</span><br><span class="line">then</span><br><span class="line">  echo &quot;Usage $0 param1 param2&quot;</span><br><span class="line">  exit 1</span><br><span class="line">fi</span><br><span class="line">echo $1</span><br><span class="line">echo $2</span><br><span class="line">echo $0</span><br><span class="line">echo $#</span><br></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@ip-172-31-5-191 ~]# PASSWORD&#x3D;&quot;tt4321&quot;</span><br><span class="line">[root@ip-172-31-5-191 ~]# if [[ $PASSWORD -eq &quot;hello_world&quot; || $PASSWORD -eq &quot;tt4321&quot; ]]; then echo &quot;password correct&quot;; fi</span><br><span class="line">password correct</span><br></pre></td></tr></table></figure>
+<h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if [[ $EXIT -eq 0 ]]</span><br><span class="line">if ! [[ $EXIT -eq 0 ]]</span><br><span class="line">if [[ $PASSWORD &#x3D;&#x3D; &quot;Hello_world&quot; ]]</span><br><span class="line">if [[ $PASSWORD -eq &quot;hello_world&quot; || $PASSWORD -eq &quot;tt4321&quot; ]]</span><br><span class="line"></span><br><span class="line">STRING&#x3D;&quot;Lorem ipsum dolor sit&quot;</span><br><span class="line">if [[ $STRING &#x3D;~ ^..rem ]]</span><br><span class="line">if [[ $NUMBER -lt 10 ]]  ##-lt less than</span><br><span class="line">if [[ $NUMBER -gt 10 ]]  ##-gt greater than</span><br></pre></td></tr></table></figure>
+<h3 id="file-or-diri-tests"><a href="#file-or-diri-tests" class="headerlink" title="file or diri tests"></a>file or diri tests</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">if [[ -a $FILE ]]</span><br><span class="line">if [[ -d $DIR ]]</span><br></pre></td></tr></table></figure>
+<p><strong>for read the bash manual</strong><br><code>man bash</code> /CONDITIONAL EXPRESSIONS</p>
+<h3 id="else-statement"><a href="#else-statement" class="headerlink" title="else statement"></a>else statement</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if [[ $EXIT -eq 0 ]]</span><br><span class="line">then</span><br><span class="line">  echo &quot;whatever&quot;</span><br><span class="line">else</span><br><span class="line">  echo &quot;cannot access the files&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="if-elif-statement"><a href="#if-elif-statement" class="headerlink" title="if elif statement"></a>if elif statement</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if [[ $VALUE -gt 5 ]]</span><br><span class="line">then</span><br><span class="line">  echo &quot;value is bigger than 5&quot;</span><br><span class="line">elif [[ $VALUE -eq 5 ]]</span><br><span class="line">then </span><br><span class="line">  echo &quot;value is equal to 5&quot;</span><br><span class="line">elif [[ $VALUE -lt 5 ]]</span><br><span class="line">then</span><br><span class="line">  echo &quot;value is less than 5&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<h3 id="Loops-statement"><a href="#Loops-statement" class="headerlink" title="Loops statement"></a>Loops statement</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">for count in 1 2 3 4</span><br><span class="line">do</span><br><span class="line">  echo $count</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for number in $(seq 1 20)</span><br><span class="line">do</span><br><span class="line"> echo &quot;This is $number&quot;</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">for number in &#123;1..20&#125;</span><br><span class="line">do</span><br><span class="line"> echo &quot;This is $number&quot;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>change multi file names</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir ~&#x2F;stuff</span><br><span class="line">touch ~&#x2F;stuff&#x2F;1.txt ~&#x2F;stuff&#x2F;2.txt ~&#x2F;stuff&#x2F;3.txt ~&#x2F;stuff&#x2F;4.txt ~&#x2F;stuff&#x2F;5.txt</span><br><span class="line">for file in ~&#x2F;stuff&#x2F;*.txt</span><br><span class="line">do</span><br><span class="line">  mv $file ~&#x2F;stuff&#x2F;$(basename $file .txt).doc</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<h3 id="Automate-script-execution"><a href="#Automate-script-execution" class="headerlink" title="Automate script execution"></a>Automate script execution</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">cat scripts&#x2F;motd-commandlinefu-update.sh</span><br><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">wget -O &#x2F;etc&#x2F;motd http:&#x2F;&#x2F;www.commandlinefu.com&#x2F;commands&#x2F;random&#x2F;plaintext</span><br><span class="line">ls &#x2F;etc&#x2F;cron* -d</span><br><span class="line">&#x2F;etc&#x2F;cron.d  &#x2F;etc&#x2F;cron.daily  &#x2F;etc&#x2F;cron.hourly  &#x2F;etc&#x2F;cron.monthly  &#x2F;etc&#x2F;crontab  &#x2F;etc&#x2F;cron.weekly</span><br><span class="line">root@stan-OptiPlex-380:~|⇒  cd &#x2F;etc&#x2F;cron.daily</span><br><span class="line">root@stan-OptiPlex-380:&#x2F;etc&#x2F;cron.daily|</span><br><span class="line">⇒  ln -s &#x2F;root&#x2F;scripts&#x2F;motd-commandlinefu-update.sh</span><br><span class="line">root@stan-OptiPlex-380:&#x2F;etc&#x2F;cron.daily|</span><br><span class="line">⇒  ll</span><br><span class="line">total 72</span><br><span class="line">drwxr-xr-x   2 root root  4096 Jun 20 10:47 .&#x2F;</span><br><span class="line">drwxr-xr-x 150 root root 12288 Jun 20 10:44 ..&#x2F;</span><br><span class="line">-rwxr-xr-x   1 root root   311 May 30  2017 0anacron*</span><br><span class="line">-rwxr-xr-x   1 root root   539 Oct 11  2018 apache2*</span><br><span class="line">-rwxr-xr-x   1 root root   376 Nov 21  2017 apport*</span><br><span class="line">-rwxr-xr-x   1 root root  1478 Apr 20  2018 apt-compat*</span><br><span class="line">-rwxr-xr-x   1 root root   314 Jan 17  2018 aptitude*</span><br><span class="line">-rwxr-xr-x   1 root root   355 Dec 29  2017 bsdmainutils*</span><br><span class="line">-rwxr-xr-x   1 root root   384 Dec 13  2012 cracklib-runtime*</span><br><span class="line">-rwxr-xr-x   1 root root  1176 Nov  3  2017 dpkg*</span><br><span class="line">-rwxr-xr-x   1 root root   372 Aug 22  2017 logrotate*</span><br><span class="line">-rwxr-xr-x   1 root root  1065 Apr  7  2018 man-db*</span><br><span class="line">-rwxr-xr-x   1 root root   538 Mar  2  2018 mlocate*</span><br><span class="line">lrwxrwxrwx   1 root root    42 Jun 20 10:47 motd-commandlinefu-update.sh -&gt; &#x2F;root&#x2F;scripts&#x2F;motd-commandlinefu-update.sh*</span><br><span class="line">-rwxr-xr-x   1 root root   249 Jan 26  2018 passwd*</span><br><span class="line">-rw-r--r--   1 root root   102 Nov 16  2017 .placeholder</span><br><span class="line">-rwxr-xr-x   1 root root   246 Mar 22  2018 ubuntu-advantage-tools*</span><br></pre></td></tr></table></figure>
+<hr>
+<h2 id="Working-in-the-shell-efficiently"><a href="#Working-in-the-shell-efficiently" class="headerlink" title="Working in the shell efficiently"></a>Working in the shell efficiently</h2><p>man bash /Commands for Moving</p>
+<h3 id="Command-Editing-Shortcuts"><a href="#Command-Editing-Shortcuts" class="headerlink" title="Command Editing Shortcuts"></a>Command Editing Shortcuts</h3><ul>
+<li><p><code>Ctrl + a</code> – go to the start of the command line</p>
+</li>
+<li><p><code>Ctrl + e</code> – go to the end of the command line</p>
+</li>
+<li><p><code>Ctrl + k</code> – delete from cursor to the end of the command line</p>
+</li>
+<li><p><code>Ctrl + u</code> – delete from cursor to the start of the command line</p>
+</li>
+<li><p><code>Ctrl + w</code> – delete from cursor to start of word (i.e. delete backwards one word)</p>
+</li>
+<li><p><code>Ctrl + y</code> – paste word or text that was cut using one of the deletion shortcuts (such as the one above) after the cursor</p>
+</li>
+<li><p><code>Ctrl + xx</code> – move between start of command line and current cursor position (and back again)</p>
+</li>
+<li><p><code>Alt + b</code> – move backward one word (or go to start of word the cursor is currently on)</p>
+</li>
+<li><p><code>Alt + f</code> – move forward one word (or go to end of word the cursor is currently on)</p>
+</li>
+<li><p><code>Alt + d</code> – delete to end of word starting at cursor (whole word if cursor is at the beginning of word)</p>
+</li>
+<li><p><code>Alt + c</code> – capitalize to end of word starting at cursor (whole word if cursor is at the beginning of word)</p>
+</li>
+<li><p><code>Alt + u</code> – make uppercase from cursor to end of word</p>
+</li>
+<li><p><code>Alt + l</code> – make lowercase from cursor to end of word</p>
+</li>
+<li><p><code>Alt + t</code> – swap current word with previous</p>
+</li>
+<li><p><code>Alt + .</code> – print previous command’s argument</p>
+</li>
+<li><p><code>Ctrl + f</code> – move forward one character</p>
+</li>
+<li><p><code>Ctrl + b</code> – move backward one character</p>
+</li>
+<li><p><code>Ctrl + d</code> – delete character under the cursor</p>
+</li>
+<li><p><code>Ctrl + h</code> – delete character before the cursor</p>
+</li>
+<li><p><code>Ctrl + t</code> – swap character under cursor with the previous one</p>
+<h3 id="Command-Recall-Shortcuts"><a href="#Command-Recall-Shortcuts" class="headerlink" title="Command Recall Shortcuts"></a>Command Recall Shortcuts</h3></li>
+<li><p><code>Ctrl + r</code> – search the history backwards</p>
+</li>
+<li><p><code>Ctrl + g</code> – escape from history searching mode</p>
+</li>
+<li><p><code>Ctrl + p</code> – previous command in history (i.e. walk back through the command history)</p>
+</li>
+<li><p><code>Ctrl + n</code> – next command in history (i.e. walk forward through the command history)</p>
+</li>
+<li><p><code>Alt + .</code> – use the last word of the previous command</p>
+<h3 id="Command-Control-Shortcuts"><a href="#Command-Control-Shortcuts" class="headerlink" title="Command Control Shortcuts"></a>Command Control Shortcuts</h3></li>
+<li><p><code>Ctrl + l</code> – clear the screen</p>
+</li>
+<li><p><code>Ctrl + s</code> – stops the output to the screen (for long running verbose command)</p>
+</li>
+<li><p><code>Ctrl + q</code> – allow output to the screen (if previously stopped using command above)</p>
+</li>
+<li><p><code>Ctrl + c</code> – terminate the command</p>
+</li>
+<li><p><code>Ctrl + z</code> – suspend/stop the command</p>
+<h3 id="for-debuging-purpose"><a href="#for-debuging-purpose" class="headerlink" title="for debuging purpose"></a>for debuging purpose</h3></li>
+<li><p><code>Ctrl + Alt + e</code> - $SHELL /bin/bash</p>
+<h3 id="Bash-Bang-Commands"><a href="#Bash-Bang-Commands" class="headerlink" title="Bash Bang (!) Commands"></a>Bash Bang (!) Commands</h3><p>Bash also has some handy features that use the ! (bang) to allow you to do some funky stuff with bash commands.</p>
+</li>
+<li><p><code>!!</code> – run last command</p>
+</li>
+<li><p><code>!blah</code> – run the most recent command that starts with ‘blah’ (e.g. !ls)</p>
+</li>
+<li><p><code>!blah:p</code> – print out the command that !blah would run (also adds it as the latest command in the command history)</p>
+</li>
+<li><p><code>!$</code> – the last word of the previous command (same as Alt + .)</p>
+</li>
+<li><p><code>!$:p</code> – print out the word that !$ would substitute</p>
+</li>
+<li><p><code>!*</code> – the previous command except for the last word (e.g. if you type ‘_find somefile.txt /’, then !* would give you ‘_find somefile.txt’)</p>
+</li>
+<li><p><code>!*:p</code> – print out what !* would substitute</p>
+</li>
+<li><p><code>tail -f log_file | egrep -v &#39;ELB|Pingdom|Health&#39;</code> – filter out stuff has certain keywords</p>
+</li>
+</ul>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Linux/">Linux</a><a href="/tags/centos/">centos</a><a href="/tags/shell-script/">shell script</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/28/mysql-backup/" title="MySQL分库分表备份脚本" itemprop="url">MySQL分库分表备份脚本</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-28T06:46:20.000Z" itemprop="datePublished"> Published 2016-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Let’s cut to the chase</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[root@aofa-staging tools]# cat mysql_backup.sh</span><br><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line">MYUSER&#x3D;root</span><br><span class="line">MYPASS&#x3D;yourpasswd</span><br><span class="line">SOCKET&#x3D;&#x2F;tmp&#x2F;mysql.sock</span><br><span class="line">MYLOGIN&#x3D;&quot;mysql -u$MYUSER -p$MYPASS -S $SOCKET&quot;</span><br><span class="line">MYDUMP&#x3D;&quot;mysqldump -u$MYUSER -p$MYPASS -S$SOCKET -B&quot;</span><br><span class="line">DATABASE&#x3D;&quot;$($MYLOGIN -e &quot;show databases;&quot;|egrep -vi &quot;Data|_schema|mysql&quot;)&quot;</span><br><span class="line"></span><br><span class="line">for dbname in $DATABASE</span><br><span class="line">  do</span><br><span class="line">   MYDIR&#x3D;&#x2F;backup&#x2F;mysql&#x2F;$dbname</span><br><span class="line">   [ ! -d $MYDIR ] &amp;&amp; mkdir -p $MYDIR</span><br><span class="line"> $MYDUMP $dbname|gzip &gt;$MYDIR&#x2F;$&#123;dbname&#125;_$(date +%F).sql.gz</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[root@aofa-staging backup]# tree mysql</span><br><span class="line">mysql</span><br><span class="line">├── allyoubank</span><br><span class="line">│   └── allyoubank_2016-08-28.sql.gz</span><br><span class="line">├── test</span><br><span class="line">│   └── test_2016-08-28.sql.gz</span><br><span class="line">└── wgzy</span><br><span class="line">    └── wgzy_2016-08-28.sql.gz</span><br><span class="line"></span><br><span class="line">3 directories, 3 files</span><br></pre></td></tr></table></figure>
+<hr>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">[root@aofa-staging tools]# cat mysql_table.sh</span><br><span class="line">#!&#x2F;bin&#x2F;sh</span><br><span class="line">USER&#x3D;root</span><br><span class="line">PASSWD&#x3D;xyz</span><br><span class="line">SOCKET&#x3D;&#x2F;tmp&#x2F;mysql.sock</span><br><span class="line">MYLOGIN&#x3D;&quot;mysql -u$USER -p$PASSWD -S$SOCKET&quot;</span><br><span class="line">MYDUMP&#x3D;&quot;mysqldump -u$USER -p$PASSWD -S$SOCKET&quot;</span><br><span class="line">DATEBASE&#x3D;&quot;$($MYLOGIN -e &quot;show databases;&quot;|egrep -vi &quot;Data|_schema|mysql&quot;)&quot;</span><br><span class="line"></span><br><span class="line">for dbname in $DATEBASE</span><br><span class="line">do</span><br><span class="line"> TABLE&#x3D;&quot;$($MYLOGIN -e &quot;use $dbname;show tables;&quot;|sed &#39;1d&#39;)&quot;</span><br><span class="line">  for tname in $TABLE</span><br><span class="line">   do</span><br><span class="line">MYDIR&#x3D;&#x2F;backup&#x2F;mysql02&#x2F;$dbname&#x2F;$&#123;dbname&#125;_$(date +%F)</span><br><span class="line">     [ ! -d $MYDIR ] &amp;&amp; mkdir -p $MYDIR</span><br><span class="line"> $MYDUMP $dbname $tname |gzip &gt;$MYDIR&#x2F;$&#123;dbname&#125;_$&#123;tname&#125;_$(date +%F).sql.gz</span><br><span class="line">    done</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>Output:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">[root@aofa-staging mysql02]# tree</span><br><span class="line">.</span><br><span class="line">├── allyoubank</span><br><span class="line">│   └── allyoubank_2016-08-28</span><br><span class="line">│       ├── allyoubank_account_2016-08-28.sql.gz</span><br><span class="line">│       └── allyoubank_w_sign_in_2016-08-28.sql.gz</span><br><span class="line">└── wgzy</span><br><span class="line">    └── wgzy_2016-08-28</span><br><span class="line">        ├── wgzy_account_2016-08-28.sql.gz</span><br><span class="line">        └── wgzy_w_sign_in_2016-08-28.sql.gz</span><br><span class="line">4 directories, 172 files</span><br></pre></td></tr></table></figure>
+
+<h1 id="my-cnf-file"><a href="#my-cnf-file" class="headerlink" title="my.cnf file"></a>my.cnf file</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"># cat &#x2F;root&#x2F;.my.cnf</span><br><span class="line">[client]</span><br><span class="line">host&#x3D;hostname</span><br><span class="line">user&#x3D;foo</span><br><span class="line">password&#x3D;xxxxxxxxx</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">[client_replica]</span><br><span class="line">host&#x3D;hostname-replica</span><br><span class="line">user&#x3D;bar</span><br><span class="line">password&#x3D;xxxxxxxxxx</span><br><span class="line"></span><br><span class="line">mysql -e &#39;show master status\G&#39;;</span><br><span class="line">mysql --defaults-group-suffix&#x3D;_replica -e &#39;show slave status\G&#39;</span><br></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/mysql/">mysql</a><a href="/tags/backup/">backup</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/28/backup-script/" title="backup script" itemprop="url">backup script</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-28T06:13:25.000Z" itemprop="datePublished"> Published 2016-08-28</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="weekly-backup-script"><a href="#weekly-backup-script" class="headerlink" title="weekly backup script"></a>weekly backup script</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"># vim &#x2F;etc&#x2F;backup&#x2F;backupwk.sh</span><br><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"># &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line"># user input backup location</span><br><span class="line"># basedir&#x3D;backup dir</span><br><span class="line">basedir&#x3D;&#x2F;backup&#x2F;weekly</span><br><span class="line"></span><br><span class="line"># &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">#</span><br><span class="line">PATH&#x3D;&#x2F;bin:&#x2F;usr&#x2F;bin:&#x2F;sbin:&#x2F;usr&#x2F;sbin; export PATH</span><br><span class="line">export LANG&#x3D;C</span><br><span class="line"></span><br><span class="line"># backup folders</span><br><span class="line">#named&#x3D;$basedir&#x2F;named</span><br><span class="line">#postfixd&#x3D;$basedir&#x2F;postfix</span><br><span class="line">#vsftpd&#x3D;$basedir&#x2F;vsftp</span><br><span class="line">sshd&#x3D;$basedir&#x2F;ssh</span><br><span class="line">#sambad&#x3D;$basedir&#x2F;samba</span><br><span class="line">wwwd&#x3D;$basedir&#x2F;wwwd</span><br><span class="line">#others&#x3D;$basedir&#x2F;others</span><br><span class="line">userinfod&#x3D;$basedir&#x2F;userinfo</span><br><span class="line"># check if the file exists, if didn&#39;t create a dir</span><br><span class="line">for dirs in $sshd $wwwd $userinfod</span><br><span class="line">do</span><br><span class="line">        [ ! -d &quot;$dirs&quot; ] &amp;&amp; mkdir -p $dirs</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line"># 1. service config file</span><br><span class="line">#cp -a &#x2F;var&#x2F;named&#x2F;chroot&#x2F;&#123;etc,var&#125;      $named</span><br><span class="line">#cp -a &#x2F;etc&#x2F;postfix &#x2F;etc&#x2F;dovecot.conf   $postfixd</span><br><span class="line">#cp -a &#x2F;etc&#x2F;vsftpd&#x2F;*                    $vsftpd</span><br><span class="line">cp -a &#x2F;etc&#x2F;ssh&#x2F;*                        $sshd</span><br><span class="line">#cp -a &#x2F;etc&#x2F;samba&#x2F;*                     $sambad</span><br><span class="line">cp -a &#x2F;etc&#x2F;my.cnf       $wwwd</span><br><span class="line">cp -a &#x2F;application&#x2F;nginx&#x2F;conf&#x2F;nginx.conf        $wwwd</span><br><span class="line"></span><br><span class="line">cd &#x2F;application</span><br><span class="line">  tar -jpc -f $wwwd&#x2F;tomcat.tar.bz2     tomcat</span><br><span class="line">  tar -jpc -f $wwwd&#x2F;nginx.tar.bz2     nginx</span><br><span class="line"></span><br><span class="line"># 2. about user par</span><br><span class="line">cp -a &#x2F;etc&#x2F;&#123;passwd,shadow,group&#125;        $userinfod</span><br><span class="line">cd &#x2F;var&#x2F;spool</span><br><span class="line">  tar -jpc -f $userinfod&#x2F;mail.tar.bz2   mail</span><br><span class="line">cd &#x2F;var&#x2F;spool</span><br><span class="line">  tar -jpc -f $userinfod&#x2F;cron.tar.bz2   cron at</span><br></pre></td></tr></table></figure>
+
+<p>Every Sun 3.30 run weekly backup script:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># vim &#x2F;etc&#x2F;crontab</span><br><span class="line">30 3 * * 0 root &#x2F;backup&#x2F;backupwk.sh</span><br></pre></td></tr></table></figure>
+
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/mysql/">mysql</a><a href="/tags/backup/">backup</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/24/docker-tomcat7/" title="docker tomcat7" itemprop="url">docker tomcat7</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-24T01:15:59.000Z" itemprop="datePublished"> Published 2016-08-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="docker-container-with-centos-6-and-tomcat-7"><a href="#docker-container-with-centos-6-and-tomcat-7" class="headerlink" title="docker container with centos 6 and tomcat 7"></a>docker container with centos 6 and tomcat 7</h1><pre><code># docker search centos
+# docker pull centos
+</code></pre>
+<p>Download the Oracle JDK</p>
+<pre><code>wget --no-cookies --no-check-certificate --header &quot;Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie&quot; &quot;http://download.oracle.com/otn-pub/java/jdk/7u72-b14/jdk-7u72-linux-x64.tar.gz&quot;
+</code></pre>
+<p>Create a working folder and place both Tomcat tarball and Oracle JDK files in the same folder.</p>
+<pre><code>[root@docker centos6]# ls
+apache-tomcat-7.0.70.tar.gz  Dockerfile  jdk-7u72-linux-x64.tar.gz
+
+[root@docker centos6]# cat Dockerfile
+FROM centos:latest
+MAINTAINER lreeder
+
+#Helpful utils, but only sudo is required
+#RUN yum -y install tar
+#RUN yum -y install vim
+#RUN yum -y install nc
+RUN yum -y install sudo
+
+######## JDK7
+
+#Note that ADD uncompresses this tarball automatically
+ADD jdk-7u72-linux-x64.tar.gz /opt
+WORKDIR /opt/jdk1.7.0_72
+RUN alternatives --install /usr/bin/java java /opt/jdk1.7.0_72/bin/java 1
+RUN alternatives --install /usr/bin/jar jar /opt/jdk1.7.0_72/bin/jar 1
+RUN alternatives --install /usr/bin/javac javac /opt/jdk1.7.0_72/bin/javac 1
+RUN echo &quot;JAVA_HOME=/opt/jdk1.7.0_72&quot; &gt;&gt; /etc/environment
+
+######## TOMCAT
+
+#Note that ADD uncompresses this tarball automatically
+ADD apache-tomcat-7.0.70.tar.gz /usr/share
+WORKDIR /usr/share/
+RUN mv  apache-tomcat-7.0.70 tomcat7
+RUN echo &quot;JAVA_HOME=/opt/jdk1.7.0_72/&quot; &gt;&gt; /etc/default/tomcat7
+RUN groupadd tomcat
+RUN useradd -s /bin/bash -g tomcat tomcat
+RUN chown -Rf tomcat.tomcat /usr/share/tomcat7
+EXPOSE 8080
+</code></pre>
+<p>Build image</p>
+<pre><code># docker build --rm=true -t centos6/tomcat7 .
+</code></pre>
+<p>Setup port forwarding and start tomcat</p>
+<pre><code>[root@docker centos6]# docker run -p 80:8080 --rm=true -t -i --name tomcat7 centos6/tomcat7 /usr/bin/sudo -u tomcat /usr/share/tomcat7/bin/catalina.sh run
+</code></pre>
+<p>Find out the IP address for the running container:</p>
+<pre><code>[root@docker centos6]# docker inspect --format &#39;&#123;&#123; .NetworkSettings.IPAddress &#125;&#125;&#39; tomcat7
+172.17.0.22
+</code></pre>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/docker/">docker</a><a href="/tags/tomcat/">tomcat</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/19/zabbix-client/" title="Install Zabbix Agent" itemprop="url">Install Zabbix Agent</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-19T05:41:50.000Z" itemprop="datePublished"> Published 2016-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>is required to install on all remote systems needs to be monitor through Zabbix server. The Zabbix Agent collects resource utilization data and applications data on client system and provide such information to Zabbix server on their requests.</p>
+<p>There are two types of checks between Zabbix Server and Client.</p>
+<ul>
+<li>Passive Check : Zabbix Agent sent data to server on their request.</li>
+<li>Active Check : Zabbix Agent sends data periodically to Server.</li>
+</ul>
+<p>After installing zabbix server on your server, Now we are moving to install agent on remote system’s. This article will help you to install zabbix agent on CentOS/RHEL 7/6/5 systems. After completing this step go to next article add Host in Zabbix Server.</p>
+<h2 id="Installing-Zabbix-Agent"><a href="#Installing-Zabbix-Agent" class="headerlink" title="Installing Zabbix Agent"></a>Installing Zabbix Agent</h2><p>Follow the below instructions to install Zabbix Agent on CentOS, RHEL 7/6/5 systems.</p>
+<h3 id="Step-1-–-Add-Required-Repository"><a href="#Step-1-–-Add-Required-Repository" class="headerlink" title="Step 1 – Add Required Repository"></a>Step 1 – Add Required Repository</h3><p>Before installing Zabbix Agent first configure zabbix yum repository using following commands as per your required version and operating system.</p>
+<pre><code># rpm -ivh http://repo.zabbix.com/zabbix/2.4/rhel/6/x86_64/zabbix-release-2.4-1.el6.noarch.rpm
+</code></pre>
+<h3 id="Step-2-–-Install-Zabbix-Agent"><a href="#Step-2-–-Install-Zabbix-Agent" class="headerlink" title="Step 2 – Install Zabbix Agent"></a>Step 2 – Install Zabbix Agent</h3><p>After installing yum repository packages in our system. Now use following command to install Zabbix agent on your Linux system.</p>
+<pre><code># yum install zabbix zabbix-agent
+</code></pre>
+<h3 id="Step-3-–-Edit-Zabbix-Agent-Configuration"><a href="#Step-3-–-Edit-Zabbix-Agent-Configuration" class="headerlink" title="Step 3 – Edit Zabbix Agent Configuration"></a>Step 3 – Edit Zabbix Agent Configuration</h3><p>As zabbix agent has been successfully installed on our remote system. Now we just need to configure zabbix agent by adding zabbix server ip in its configuration file</p>
+<pre><code>vim /etc/zabbix/zabbix_agentd.conf
+
+Server=[IP of Zabbix Server]
+ServerActive=[IP of Zabbix Server]
+Hostname=[use the FQDN of the node where the agent runs]
+</code></pre>
+<h3 id="Step-4-–-Restarting-Zabbix-Agent"><a href="#Step-4-–-Restarting-Zabbix-Agent" class="headerlink" title="Step 4 – Restarting Zabbix Agent"></a>Step 4 – Restarting Zabbix Agent</h3><p>After adding zabbix server ip in configuration file, now restart agent service using below command.</p>
+<pre><code># /etc/init.d/zabbix-agent start
+# netstat -tulpn|grep zabbix
+</code></pre>
+<h3 id="Step-5-–-Test"><a href="#Step-5-–-Test" class="headerlink" title="Step 5 – Test"></a>Step 5 – Test</h3><p>Finally, in order to test if you can reach Zabbix Agent from Zabbix Server, use Telnet command from Zabbix server machine to the IP addresses of the machines that run the agents:</p>
+<pre><code># telnet zabbix_agent_IP 10050
+</code></pre>
+<h3 id="Step-6-–-Add-Zabbix-Agent-Monitored-Host-to-Zabbix-Server"><a href="#Step-6-–-Add-Zabbix-Agent-Monitored-Host-to-Zabbix-Server" class="headerlink" title="Step 6 – Add Zabbix Agent Monitored Host to Zabbix Server"></a>Step 6 – Add Zabbix Agent Monitored Host to Zabbix Server</h3><p> <a target="_blank" rel="noopener" href="http://www.tecmint.com/install-and-configure-zabbix-agents-on-centos-redhat-and-debian/" title="Step 3: Add Zabbix Agent Monitored Host to Zabbix Server">read</a> </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/zabbix/">zabbix</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <a class="extend prev" rel="prev" href="/page/5/">&lt;span&gt;&lt;&#x2F;span&gt;Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/7/">Next&lt;span&gt;&lt;&#x2F;span&gt;</a>
+  </nav>
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/puppet/" title="puppet">puppet<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="John Doe">John Doe</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+ </html>

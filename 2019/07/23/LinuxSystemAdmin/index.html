@@ -1,0 +1,961 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Linux System Admin | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="John Doe">
+    
+
+    
+    <meta name="description" content="TCP&#x2F;IP networkingTroubleshoot networkingTools for troubleshooting the network  ping - ICMP echo requests traceroute and tracepath - Trace the path taken to a given host netcat - Arbitrary TCP and UDP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux System Admin">
+<meta property="og:url" content="http://example.com/2019/07/23/LinuxSystemAdmin/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="TCP&#x2F;IP networkingTroubleshoot networkingTools for troubleshooting the network  ping - ICMP echo requests traceroute and tracepath - Trace the path taken to a given host netcat - Arbitrary TCP and UDP">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/RcrCjea.jpg">
+<meta property="og:image" content="https://i.imgur.com/60o3bav.png">
+<meta property="og:image" content="https://i.imgur.com/D7Vewu7.jpg">
+<meta property="og:image" content="https://i.imgur.com/4WIQHtZ.png">
+<meta property="article:published_time" content="2019-07-22T23:00:22.000Z">
+<meta property="article:modified_time" content="2021-04-02T05:58:25.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="SRE">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/RcrCjea.jpg">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:example.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/07/23/LinuxSystemAdmin/" title="Linux System Admin" itemprop="url">Linux System Admin</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2019-07-22T23:00:22.000Z" itemprop="datePublished"> Published 2019-07-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP-IP-networking"><span class="toc-number">1.</span> <span class="toc-text">TCP&#x2F;IP networking</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Troubleshoot-networking"><span class="toc-number">1.1.</span> <span class="toc-text">Troubleshoot networking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backup-and-streaming"><span class="toc-number">1.2.</span> <span class="toc-text">Backup and streaming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Performance-Analysis"><span class="toc-number">1.3.</span> <span class="toc-text">Performance Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#change-default-text-editor"><span class="toc-number">1.3.1.</span> <span class="toc-text">change default text editor</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-troubleshooting"><span class="toc-number">2.</span> <span class="toc-text">Linux troubleshooting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#System-access-troubleshooting"><span class="toc-number">2.1.</span> <span class="toc-text">System access troubleshooting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resolving-configuration-issues"><span class="toc-number">2.2.</span> <span class="toc-text">Resolving configuration issues</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applying-changes-to-config-files"><span class="toc-number">2.3.</span> <span class="toc-text">Applying changes to config files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Testing-Connectivity"><span class="toc-number">2.4.</span> <span class="toc-text">Testing Connectivity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sections-in-PAM"><span class="toc-number">2.5.</span> <span class="toc-text">Sections in PAM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PAM-troubleshooting"><span class="toc-number">2.6.</span> <span class="toc-text">PAM troubleshooting</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ssh-tunnel"><span class="toc-number">3.</span> <span class="toc-text">ssh tunnel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mount-a-new-disk"><span class="toc-number">3.0.1.</span> <span class="toc-text">mount a new disk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pass-the-output-of-one-command-as-the-command-line-argument-to-another"><span class="toc-number">3.0.2.</span> <span class="toc-text">pass the output of one command as the command-line argument to another</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-journalctl-on-systemd-systems"><span class="toc-number">3.0.3.</span> <span class="toc-text">Using journalctl on systemd systems</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exclude-a-specific-directory-in-ncdu-command"><span class="toc-number">3.1.</span> <span class="toc-text">Exclude a specific directory in ncdu command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#repeat-currently-typed-in-parameter-on-bash-console"><span class="toc-number">3.2.</span> <span class="toc-text">repeat currently typed in parameter on bash console</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lost-password"><span class="toc-number">3.3.</span> <span class="toc-text">Lost password</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Print-line-only-if-the-first-field-start-with-string-and-copy-it-to-clipboard"><span class="toc-number">3.4.</span> <span class="toc-text">Print line only if the first field start with string, and copy it to clipboard</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#System-access-troubleshooting-1"><span class="toc-number">4.</span> <span class="toc-text">System access troubleshooting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Server-is-not-reachable"><span class="toc-number">4.1.</span> <span class="toc-text">Server is not reachable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cannot-connect-to-a-Website-or-an-application"><span class="toc-number">4.2.</span> <span class="toc-text">Cannot connect to a Website or an application</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#tlenet-192-168-1-5-80-http"><span class="toc-number">5.</span> <span class="toc-text">tlenet 192.168.1.5 80 (http)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#some-important-signals"><span class="toc-number">5.1.</span> <span class="toc-text">some important signals</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="TCP-IP-networking"><a href="#TCP-IP-networking" class="headerlink" title="TCP/IP networking"></a>TCP/IP networking</h1><h2 id="Troubleshoot-networking"><a href="#Troubleshoot-networking" class="headerlink" title="Troubleshoot networking"></a>Troubleshoot networking</h2><p><strong>Tools for troubleshooting the network</strong></p>
+<ul>
+<li><em>ping</em> - ICMP echo requests<br><img src="https://i.imgur.com/RcrCjea.jpg" alt="ping -I eth1 192.168.10.12"></li>
+<li><em>traceroute</em> and <em>tracepath</em> - Trace the path taken to a given host</li>
+<li><em>netcat</em> - Arbitrary TCP and UDP network communication<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">stan@stan-virtual-machine:~$ ifconfig</span><br><span class="line">eth0      Link encap:Ethernet  HWaddr 00:0c:29:a2:c2:5d  </span><br><span class="line">          inet addr:192.168.199.107  Bcast:192.168.199.255  Mask:255.255.255.0</span><br><span class="line">          inet6 addr: fe80::20c:29ff:fea2:c25d&#x2F;64 Scope:Link</span><br><span class="line">          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1</span><br><span class="line">          RX packets:109798 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:34545 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:1000 </span><br><span class="line">          RX bytes:53893408 (53.8 MB)  TX bytes:15357635 (15.3 MB)</span><br><span class="line"></span><br><span class="line">lo        Link encap:Local Loopback  </span><br><span class="line">          inet addr:127.0.0.1  Mask:255.0.0.0</span><br><span class="line">          inet6 addr: ::1&#x2F;128 Scope:Host</span><br><span class="line">          UP LOOPBACK RUNNING  MTU:65536  Metric:1</span><br><span class="line">          RX packets:5917 errors:0 dropped:0 overruns:0 frame:0</span><br><span class="line">          TX packets:5917 errors:0 dropped:0 overruns:0 carrier:0</span><br><span class="line">          collisions:0 txqueuelen:0 </span><br><span class="line">          RX bytes:1699426 (1.6 MB)  TX bytes:1699426 (1.6 MB)</span><br><span class="line"></span><br><span class="line">stan@stan-virtual-machine:~$ nc -l 8000</span><br><span class="line">nc -v -z 192.168.199.107 8000</span><br><span class="line">Connection to 192.168.199.107 8000 port [tcp&#x2F;*] succeeded!</span><br></pre></td></tr></table></figure>
+<img src="https://i.imgur.com/60o3bav.png" alt="nc"></li>
+<li><em>tcpdump</em> and <em>wireshark</em> - Packet captures for network analysis<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"> nc -l 8000 &amp;</span><br><span class="line">[1] 20393</span><br><span class="line">➜  ~ sudo tcpdump -i enp2s0 port 8000</span><br><span class="line">tcpdump: verbose output suppressed, use -v or -vv for full protocol decode</span><br><span class="line">listening on enp2s0, link-type EN10MB (Ethernet), capture size 262144 bytes</span><br><span class="line">Hi</span><br><span class="line">[1]  + 20393 done       nc -l 8000</span><br><span class="line">09:52:41.674092 IP stan-virtual-machine.lan.57089 &gt; stan-OptiPlex-380.lan.8000: Flags [S], seq 3581133462, win 29200, options [mss 1460,sackOK,TS val 12349350 ecr 0,nop,wscale 7], length 0</span><br><span class="line">09:52:41.674180 IP stan-OptiPlex-380.lan.8000 &gt; stan-virtual-machine.lan.57089: Flags [S.], seq 2419171515, ack 3581133463, win 28960, options [mss 1460,sackOK,TS val 2113949133 ecr 12349350,nop,wscale 7], length 0</span><br><span class="line">09:52:41.674412 IP stan-virtual-machine.lan.57089 &gt; stan-OptiPlex-380.lan.8000: Flags [.], ack 1, win 229, options [nop,nop,TS val 12349351 ecr 2113949133], length 0</span><br><span class="line">09:52:41.674518 IP stan-virtual-machine.lan.57089 &gt; stan-OptiPlex-380.lan.8000: Flags [P.], seq 1:4, ack 1, win 229, options [nop,nop,TS val 12349351 ecr 2113949133], length 3</span><br><span class="line">09:52:41.674541 IP stan-OptiPlex-380.lan.8000 &gt; stan-virtual-machine.lan.57089: Flags [.], ack 4, win 227, options [nop,nop,TS val 2113949133 ecr 12349351], length 0</span><br><span class="line">09:52:41.674582 IP stan-virtual-machine.lan.57089 &gt; stan-OptiPlex-380.lan.8000: Flags [F.], seq 4, ack 1, win 229, options [nop,nop,TS val 12349351 ecr 2113949133], length 0</span><br><span class="line">09:52:41.674718 IP stan-OptiPlex-380.lan.8000 &gt; stan-virtual-machine.lan.57089: Flags [F.], seq 1, ack 5, win 227, options [nop,nop,TS val 2113949133 ecr 12349351], length 0</span><br><span class="line">^C</span><br><span class="line">7 packets captured</span><br><span class="line">8 packets received by filter</span><br><span class="line">1 packet dropped by kernel</span><br><span class="line"></span><br><span class="line"># saving captures to a file</span><br><span class="line">➜  ~ sudo tcpdump -i enp2s0 port 8000 -w webserver.pcap</span><br><span class="line"></span><br><span class="line"># read a file in binary format</span><br><span class="line">tcpdump -nn -r webserver.pcap</span><br><span class="line"></span><br><span class="line">stan@stan-virtual-machine:~$ echo Hi| nc 192.168.199.178 8000</span><br><span class="line">tcpdump -i eth1 port 8000 and not port 22 and not icmp</span><br><span class="line">tcpdump -i eth1 not udp 53</span><br><span class="line">tcpdump -nX -i eth1 port 8000</span><br></pre></td></tr></table></figure>
+<img src="https://i.imgur.com/D7Vewu7.jpg" alt="tcpdump"><br><img src="https://i.imgur.com/4WIQHtZ.png" alt="tcp three-way handshake"></li>
+</ul>
+<h2 id="Backup-and-streaming"><a href="#Backup-and-streaming" class="headerlink" title="Backup and streaming"></a>Backup and streaming</h2><p><strong>What to expect from a backup tool?</strong></p>
+<ul>
+<li>Any backup solution should -roughly- provide the following:</li>
+<li>Full and incrementail backups</li>
+<li>File permissions and ownership preservation</li>
+<li>The ability to be automated</li>
+</ul>
+<p><strong>Introducing rsync</strong></p>
+<ul>
+<li>Rsync is native Linux tool that can be deployed from the official repositories</li>
+<li>It supports incremental and full backups- It transfers files over SSH</li>
+<li>It can be automated via cron jobs to run in unattended mode.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">type rsync</span><br><span class="line">rsync -zvr simple-php-website&#x2F; ~&#x2F;backup&#x2F;</span><br><span class="line">sudo rsync -azv simple-php-website&#x2F; ~&#x2F;backup&#x2F; # backup with file created time stampe and ownership</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>using rsync over the network</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rsync -azv simple-php-website&#x2F; pi@rpi-01:~&#x2F;backup&#x2F;</span><br><span class="line">rsync -azv  pi@rpi-01:~&#x2F;backup&#x2F; simple-php-website</span><br></pre></td></tr></table></figure>
+<p><strong>advanced ssh options with rsync</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen</span><br><span class="line">ssh-copy-id pi@rpi-01 </span><br><span class="line">rsync -avz -e &quot;ssh -p 2222&quot; simple-php-website&#x2F; pi@rpi-01:~&#x2F;backup&#x2F; # specify the ssh port</span><br><span class="line">rsync -azv --existing simple-php-website&#x2F; pi@rpi-01:~&#x2F;backup&#x2F; ## only sync the file existing in destnation</span><br><span class="line">rsync -avzi simple-php-website&#x2F; pi@rpi-01:~&#x2F;backup&#x2F; # i show what has been changed in source and destnation</span><br><span class="line">dd if&#x3D;&#x2F;dev&#x2F;zero of&#x3D;data.bin bs&#x3D;102400 count&#x3D;10240</span><br><span class="line">rsync -azv --progress simple-php-website&#x2F; pi@rpi-01:~&#x2F;backup&#x2F; #show the transfers info</span><br><span class="line">rsync -azv --include &#39;*.php&#39; --exclude &#39;*.jpg&#39; simple-php-website&#x2F; pi@rpi-01:~&#x2F;backup&#x2F;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Performance-Analysis"><a href="#Performance-Analysis" class="headerlink" title="Performance Analysis"></a>Performance Analysis</h2><p><strong>How to improve performance?</strong></p>
+<ul>
+<li>The following are general guidelines for achieving a higher performance level on a typical Linux box:<ul>
+<li>Make sure that you have enough memory to serve the running applications</li>
+<li>Use softwre or hardware load balancing systems. They not only provide faster responses from network applications, but they also provide redundancy should one of the servers go down undexpectedly.</li>
+<li>Review the application specific documentation and configuration files. Some settings may dramatically boost application performance like turning on caching in webservers or unning multiple instances of a network application.</li>
+<li>Avoid storage I/O bottlnecks by installing faster disks like SSD’s, which do not depend on mechanically moving parts to offer much higher read/write speed than their old counterparts.</li>
+<li>Use technologies like RAID to distribute I/O evenly on disks (like striping). However, not all applications/databases benefit from striping and RAID and sometimes this my lead to negative results. Application and database vendor and/or documentation should be consulted before moving to RAID.</li>
+<li>Keep an eye on the network bandwidth and errors to ensure that the bandwidth is not saturated and that the error rate is at the minimum</li>
+</ul>
+</li>
+</ul>
+<p><strong>Possible causes of bottlenecks</strong></p>
+<ul>
+<li>Hardware-wise, performance is affected mainly by one or more of the following system components: CPU, memory, and disk and network I/O.</li>
+<li>Processes running on the system must access the above components. They compete to have, for example a CPU cycle or an I/O from the disk to read to write data. If the component is busy, the process will have to wait for its trun to be served. This wait time means that the sytem will run slower and implies that are have a performance issue.</li>
+</ul>
+<p><strong>Check your resources</strong></p>
+<ul>
+<li><p>Before addressing a performance degradation problem, you must first check your assets to have an estimate of the upper bound for system’s general performance level</p>
+</li>
+<li><p>The following files provide hardware information:</p>
+<ul>
+<li>/proc/cpuinfo: take note of the vendor ID, cpu family, model and model name. Each processor core will have a stanza of its own. Useful information can be extracted from the CPU flags like ht which means that the CPU is using the hyper threading technology.</li>
+<li>/proc/meminfo: details on total, used, and free memeory</li>
+<li>/proc/diskstats: disk devices statistics</li>
+</ul>
+</li>
+<li><p>Another useful command for this purpose if dmidecode. This will print a lot of hardware information about the machine like the mothermoard type, BIOS version, installed memory amont many other information.</p>
+</li>
+</ul>
+<p><strong>Using vmstat to measure CPU utilization</strong></p>
+<ul>
+<li>When meansuring CPU performance, you may want to determine the overall CPU utilization to know whether or not the overall clock speed is the problem, load averages may also aid you in this. In addition, you may want to check perprocess CPU consumption to know which process really hogging the CPU</li>
+<li>Running vmstat gives you the information you need. It takes the number of seconds and the number of reports as the first and second arguments to determine the number of seconds for which the tool will calculate the averages. The first line of output represents the averages since the systems boot time. The subsequent line present the average per n seconds.</li>
+<li>The right most column is for CPU readings. Us, sy,id, and wa represent the user, system, idle time, and wait time for CPU.</li>
+<li>A high us means that the system is busy doing computational tasks, while a high <strong>sy</strong> time means the system is making a lot of system calls and/or making a lot of I/O requests. A system-typically-should be using no more than 50% in user time, no more than 50% in system time, and have a non-zero idle time.</li>
+<li>The <strong>cs</strong> is short for context switches per interval. That is how many times the kernel switched the running process per interval. The <strong>in</strong> is short for interrupts, it shows the number of interrupts per interval. A high <strong>cs</strong> or <strong>in</strong> rate may be an indication to a malunctioning hardware device.</li>
+</ul>
+<p><strong>CPU load average and per-process</strong></p>
+<ul>
+<li>Using the <strong>uptime</strong> command, it essentially provides the total time spent since the system was booted, but it also offers a CPU load average for the same period.</li>
+<li>The load average consists of three vlues that represent 5,10, and 15 minutes averages.</li>
+<li>A load average that stays the same on a “good performance” and on a “performance degraded” one is an indication that you have to look elsewhere,perhaps at the network bandwidth, disk I/O, or the intalled memroy.</li>
+<li>Other commands that offer real time view of the CPU per-process load is <strong>ps -aux</strong> and <strong>top</strong>. You may find a single process using more than 50% of the available CPU time. Using <strong>nice</strong> to decrease the execution prioroty of this process may help boost performance.</li>
+</ul>
+<p><strong>Memeory management</strong></p>
+<ul>
+<li>When an application requests memeory to operate, the kernel offers this memeory in the form of “pages”. In linux, a page size is 4KiB.</li>
+<li>The kernel serves those pages from physical storage hardware (either RAM or SWAP space on the disk).</li>
+<li>The kernel shuffles pages between the SWAP space together with RAM. Memroy that is not accessed for a specific period of time is moved into SWAP space (paged) to free more space for rather more frequently accessed memory.</li>
+<li>As more and more processes demand memroy, the kernel tries to fulfil the reqeusts by paging in and out memory pages from and to the SWAP space. And because the disk is the slowest coponent of the system, as the paging rate increates, performance is degraded as processes will have to wait longer before they can have their requested memory and things start to get slower.</li>
+<li>Fainlly, if the system runs out of both physical memory and SWAP space, the kernel resorts to more drastic measures: it kills the least important process with an out-of-memory killer function, a situation that should be avoided at all costs by anticipating the need to install more memroy early enough.</li>
+</ul>
+<p><strong>Using vmstat to measure memory utilization</strong></p>
+<ul>
+<li><strong>vmstat</strong> is used the same way it was used to measure CPU utilization.</li>
+<li>The swap in (si) and swap out (so) columns in the SWAP area of the output are of the most importance here. Pages that are read from disk into memory are “swapped in” while those which are ejected by the kernel into the disk are “swapped out”. A high rate of si and so may be an indication that the system is using SWAP sapce extensively and that it might need more physical memeory to be installed.</li>
+<li>Such a decision should not be reached by the <strong>si</strong> and <strong>so</strong> rates alone as the system normally does page in and page out operations. Only if is accompanied by slow system response and user complaints.<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iostat -dx 5 5</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>A slow system quick diagnosis and remedy</strong></p>
+<ul>
+<li><p>If you find that the system is suddenly running slower than before and users start complaining, you can examine the resources discussed in this section for bottlenecks.</p>
+</li>
+<li><p>For example, running <strong>ps -auxww</strong> will show you the CPU utilization per process. If you find that a single process is using more than 50% of the CPU ofr a long time, this might be an indication of fault in the process itself. Also check the load average with uptime to determine whether or not the CPU is contended.</p>
+</li>
+<li><p>Check the paging activity with vmstat. If there are a lot of page-outs this means the physical memeory is overloaded. Additionalyy, if there is a lot of disk activity without paging this means the a process is extensively using the disk for read and write requests. If this is not the normal behavior (e.g. a database), the process activity should be further examined.</p>
+</li>
+<li><p>It is difficult to know exactly which process is using the disk I/O the most, but using kill -STOP to temporarily suspend the susceptiable process can narrow down the possibilities.</p>
+</li>
+<li><p>If a process is identified as resource intensive, a number of actions can be taken: if it is CPU intensive you can use the renice command to descrease its priority. You can also ask the user to run it later. I the process is hogging the disk and/or then network, renice will not solve the problem, but you can tune the process itself to optimize its behavior (for example web servers).</p>
+</li>
+</ul>
+<p>Using screen, you can start a session that’s tied to a single operation. Then you can connect or disconnect whenever you want, and come back to the session to check on its progress.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">screen</span><br><span class="line">screen -r</span><br><span class="line">screen -ls</span><br><span class="line">screen -r num</span><br><span class="line">cat &lt;&lt; EOF &gt; foobar</span><br><span class="line">abc foobar</span><br><span class="line">a</span><br><span class="line">b</span><br><span class="line">c</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+<h3 id="change-default-text-editor"><a href="#change-default-text-editor" class="headerlink" title="change default text editor"></a>change default text editor</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo update-alternatives --config editor</span><br></pre></td></tr></table></figure>
+
+<h1 id="Linux-troubleshooting"><a href="#Linux-troubleshooting" class="headerlink" title="Linux troubleshooting"></a>Linux troubleshooting</h1><h2 id="System-access-troubleshooting"><a href="#System-access-troubleshooting" class="headerlink" title="System access troubleshooting"></a>System access troubleshooting</h2><p><strong>Server is not reachable</strong></p>
+<ul>
+<li>Ping the destination server name<ul>
+<li>if server name is not pingable</li>
+</ul>
+</li>
+<li>Ping the destination server by IP<ul>
+<li>if IP is pingable = Name resolution issue<ul>
+<li>Check /etc/hosts file</li>
+<li>Check /etc/resolv.conf</li>
+<li>Check /etc/nsswitch.conf</li>
+</ul>
+</li>
+<li>If IP is NOT pingable<ul>
+<li>Ping another server by name and then by IP</li>
+<li>Checking if your server has an IP address</li>
+<li>Ping your gateway (netstat -rnv)/modem IP</li>
+<li>Check physical cable connection<h2 id="Resolving-configuration-issues"><a href="#Resolving-configuration-issues" class="headerlink" title="Resolving configuration issues"></a>Resolving configuration issues</h2></li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Start in runtime<ul>
+<li>ip addr show</li>
+<li>ip route show</li>
+<li>cat /etc/resolv.conf</li>
+<li>Consider running dhclient</li>
+</ul>
+</li>
+<li>Analyze persistent<ul>
+<li>/etc/sysconfig/network-scripts/ifcfg*</li>
+<li>nmcli conn show for more detailed information<h2 id="Applying-changes-to-config-files"><a href="#Applying-changes-to-config-files" class="headerlink" title="Applying changes to config files"></a>Applying changes to config files</h2></li>
+</ul>
+</li>
+<li>If you directly modify the config files in network-scipts, use nmcli conn reload to make them effective</li>
+<li>If the network card is already active, use nmcli conn down th0; nmcli con up eth0 to make changes effective</li>
+</ul>
+<h2 id="Testing-Connectivity"><a href="#Testing-Connectivity" class="headerlink" title="Testing Connectivity"></a>Testing Connectivity</h2><ul>
+<li>Ping a name to test DNS</li>
+<li>Ping the DNS server by IP address to test IP setup adn routing</li>
+<li>Ping the local router if you have routing issues</li>
+<li>Ping another node on the same network to test direct connectivity issues<br>ping -b 192.168.199.0</li>
+</ul>
+<p>ping -f 192.168.199.188</p>
+<h2 id="Sections-in-PAM"><a href="#Sections-in-PAM" class="headerlink" title="Sections in PAM"></a>Sections in PAM</h2><ul>
+<li>Where to apply<ul>
+<li>account: user related settings</li>
+<li>auth: authentication related settings</li>
+<li>password: updating passwords</li>
+<li>session: access to different items during a session</li>
+</ul>
+</li>
+<li>What to do<ul>
+<li>required</li>
+<li>requisite</li>
+<li>sufficient</li>
+<li>optional</li>
+<li>include</li>
+<li>substack</li>
+<li>[vaule1=action value2=action]<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ldd $(which login)</span><br><span class="line">cd &#x2F;etc&#x2F;padm.d&#x2F;</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="PAM-troubleshooting"><a href="#PAM-troubleshooting" class="headerlink" title="PAM troubleshooting"></a>PAM troubleshooting</h2><ul>
+<li>if no appropriate PAM module is found, the other module is used and blocks everything</li>
+<li>Watch /var/log/secure for additional info</li>
+<li>PAM is normally written by the authconfig utilities</li>
+<li>There mark all their changes in /etc/sysconfig/authconfig</li>
+<li>If you manually mess up PAM configuration, restore original configuration using authconfig –updateall,<br>it will re-apply all settings in /etc/sysconfig/authconfig</li>
+</ul>
+<p><strong>Cannot connect to a website or an application</strong><br>Troubleshoting Steps: ping server by hostname and IP<br>if NOT pinable= go back to <strong>Server is not reachable</strong></p>
+<p>if pingable = Connect to service </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet 192.168.1.5 80 (http)</span><br></pre></td></tr></table></figure>
+<p>Verify the installation:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -q haproxy</span><br></pre></td></tr></table></figure>
+<p>Show the log file which is last written to:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;var&#x2F;log</span><br><span class="line">ls -lrt</span><br></pre></td></tr></table></figure>
+<h1 id="ssh-tunnel"><a href="#ssh-tunnel" class="headerlink" title="ssh tunnel"></a>ssh tunnel</h1><p>Stan@Company     <a href="mailto:&#114;&#x6f;&#111;&#x74;&#64;&#x74;&#111;&#97;&#100;&#46;&#99;&#x77;&#122;&#x68;&#x6f;&#x75;&#x2e;&#119;&#x69;&#110;">&#114;&#x6f;&#111;&#x74;&#64;&#x74;&#111;&#97;&#100;&#46;&#99;&#x77;&#122;&#x68;&#x6f;&#x75;&#x2e;&#119;&#x69;&#110;</a> ||  root@Kali</p>
+<ol>
+<li><p>From Kalia connect to Toad</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@Kalia:~# ssh -R 2222:localhost:22 root@toad.cwzhou.win</span><br><span class="line"></span><br><span class="line">root@Toad:~# while [1]; do date; sleep 300; done</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+<li><p>Stan in Company machine:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@stan:~# ssh root@toad.cwzhou.win</span><br><span class="line">root@toad:~# ssh -p 2222 root@localhost</span><br></pre></td></tr></table></figure>
+<h3 id="mount-a-new-disk"><a href="#mount-a-new-disk" class="headerlink" title="mount a new disk"></a>mount a new disk</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># mount &#x2F;dev&#x2F;xvdc1 &#x2F;data</span><br><span class="line">vim &#x2F;etc&#x2F;fstab</span><br><span class="line">&#x2F;dev&#x2F;xvdc1	&#x2F;data	ext4	defaults     0   0</span><br></pre></td></tr></table></figure>
+<h3 id="pass-the-output-of-one-command-as-the-command-line-argument-to-another"><a href="#pass-the-output-of-one-command-as-the-command-line-argument-to-another" class="headerlink" title="pass the output of one command as the command-line argument to another"></a>pass the output of one command as the command-line argument to another</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">find &#x2F; -name pg_hba.conf|xargs cat</span><br></pre></td></tr></table></figure>
+<h3 id="Using-journalctl-on-systemd-systems"><a href="#Using-journalctl-on-systemd-systems" class="headerlink" title="Using journalctl on systemd systems"></a>Using journalctl on systemd systems</h3></li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">## man system.jounal-fields</span><br><span class="line">## after err level messages</span><br><span class="line">#journalctl -p err</span><br><span class="line"># configured in &#x2F;etc&#x2F;systemd&#x2F;journald.conf</span><br><span class="line">$ logger -p cron.err &quot;I&#39;M ANOTHER PARADOXICAL LOG MESSAGE.&quot;</span><br><span class="line"></span><br><span class="line">$ sudo journalctl -p err _TRANSPORT&#x3D;syslog --since 18:00-- Logs begin at Tue 2018-10-09 18:43:07 UTC, end at Wed 2018-10-10 18:11:15 UTC. --Oct 10 18:08:18 centos1 vagrant[1736]: I&#39;M ANOTHER PARADOXICAL LOG MESSAGE.</span><br><span class="line"></span><br><span class="line">The options SystemMaxUse and RuntimeMaxUse govern the maximum disk space the journal can use</span><br><span class="line"></span><br><span class="line">The SystemKeepFree and RuntimeKeepFree options govern how much disk space journald leaves free for other uses</span><br><span class="line"># journalctl --vacuum-size&#x3D;2G</span><br></pre></td></tr></table></figure>
+<h2 id="Exclude-a-specific-directory-in-ncdu-command"><a href="#Exclude-a-specific-directory-in-ncdu-command" class="headerlink" title="Exclude a specific directory in ncdu command"></a>Exclude a specific directory in ncdu command</h2><p>ncdu -x / –exclude /mnt</p>
+<h2 id="repeat-currently-typed-in-parameter-on-bash-console"><a href="#repeat-currently-typed-in-parameter-on-bash-console" class="headerlink" title="repeat currently typed in parameter on bash console"></a>repeat currently typed in parameter on bash console</h2><p>cp /etc/systemd/{journald,journald-bk}.conf</p>
+<h2 id="Lost-password"><a href="#Lost-password" class="headerlink" title="Lost password"></a>Lost password</h2><p>Boot the Ubuntu Live CD.<br>Press Ctrl-Alt-F1</p>
+<p>sudo mount /dev/sda1 /mnt</p>
+<p>If you created a custom partition layout when installing Ubuntu you have to find your root partition using the fdisk utility. See the section Finding your root partition.</p>
+<p>sudo chroot /mnt</p>
+<h2 id="Print-line-only-if-the-first-field-start-with-string-and-copy-it-to-clipboard"><a href="#Print-line-only-if-the-first-field-start-with-string-and-copy-it-to-clipboard" class="headerlink" title="Print line only if the first field start with string, and copy it to clipboard"></a>Print line only if the first field start with string, and copy it to clipboard</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">awk &#39;$1~&#x2F;Value&#x2F;&#39; sau2-db-06.txt |cut -d &quot;:&quot; -f 2|xsel -b</span><br><span class="line">## Print the line start with string</span><br><span class="line">awk &#39;&#x2F;^Variable_name&#x2F;&#39; eqx1-db-02.txt |cut -d &quot;:&quot; -f 2|xsel -b</span><br></pre></td></tr></table></figure>
+<h1 id="System-access-troubleshooting-1"><a href="#System-access-troubleshooting-1" class="headerlink" title="System access troubleshooting"></a>System access troubleshooting</h1><h2 id="Server-is-not-reachable"><a href="#Server-is-not-reachable" class="headerlink" title="Server is not reachable"></a>Server is not reachable</h2><ul>
+<li>Ping the destination server name<ul>
+<li>if server name is not pingable</li>
+</ul>
+</li>
+<li>Ping the destination server by IP<ul>
+<li>if IP is pingable = Name resolution issue<ul>
+<li>Check /etc/hosts file</li>
+<li>Check /etc/resolv.conf</li>
+<li>Check /etc/nsswitch.conf</li>
+</ul>
+</li>
+<li>if IP is NOT pingable<ul>
+<li>Ping another server by name and then by IP</li>
+<li>Checking if your server has an IP address</li>
+<li>Ping your gateway/modem ip (check gateway by netstat -rnv)</li>
+<li>Check physical cable connection<h2 id="Cannot-connect-to-a-Website-or-an-application"><a href="#Cannot-connect-to-a-Website-or-an-application" class="headerlink" title="Cannot connect to a Website or an application"></a>Cannot connect to a Website or an application</h2>service down or server down?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Ping server by hostname and IP<ul>
+<li>If not pingable = go back to “server not reachable” lecture</li>
+<li>If pingable = connect to service<h1 id="tlenet-192-168-1-5-80-http"><a href="#tlenet-192-168-1-5-80-http" class="headerlink" title="tlenet 192.168.1.5 80 (http)"></a>tlenet 192.168.1.5 80 (http)</h1><ul>
+<li>if connected = service is running<br>Must be sth wrong with the client machine</li>
+<li>if Not connected = service (http) not running<br>Login to the server and start the service (http)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="some-important-signals"><a href="#some-important-signals" class="headerlink" title="some important signals"></a>some important signals</h2><p>| Signal   | SigNr | Default Meaning                |<br>| SIGALARM |    14 | Exit setting an allarm clock   |<br>| SIGCHLD  |    18 | Ignore child status changed    |<br>| SIGFPF   |     8 | Exit,core Arithmetic exception |<br>| SIGHUP   |     1 | Exit Hangup                    |<br>| SIGINT   |     2 | Exit Interrupt                 |<br>| SIGKILL  |     9 | Exit Killed                    |<br>| SIGQUIT  |     3 | Exit,core Quit                 |<br>| SIGSTOP  |    23 | Stop Stopped (signal)          |<br>| SIGTERM  |    15 | Exit Terminated                |<br>| SIGUSR1  |    16 | Exit User signal 1             |<br>| SIGUSR2  |    17 | Exit User signal 2             |<br>|          |       |                                |</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/devops/">devops</a><a href="/tags/SRE/">SRE</a><a href="/tags/Linux/">Linux</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://example.com/2019/07/23/LinuxSystemAdmin/" data-title="Linux System Admin | Hexo" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/07/29/jenkins-blue-ocean/" title="Jenkins Pipeline">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Jenkins Pipeline</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/07/19/programming4sysadmins/"  title="programming4sysadmins">
+ <strong>下一篇：</strong><br/> 
+ <span>programming4sysadmins
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#TCP-IP-networking"><span class="toc-number">1.</span> <span class="toc-text">TCP&#x2F;IP networking</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Troubleshoot-networking"><span class="toc-number">1.1.</span> <span class="toc-text">Troubleshoot networking</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backup-and-streaming"><span class="toc-number">1.2.</span> <span class="toc-text">Backup and streaming</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Performance-Analysis"><span class="toc-number">1.3.</span> <span class="toc-text">Performance Analysis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#change-default-text-editor"><span class="toc-number">1.3.1.</span> <span class="toc-text">change default text editor</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux-troubleshooting"><span class="toc-number">2.</span> <span class="toc-text">Linux troubleshooting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#System-access-troubleshooting"><span class="toc-number">2.1.</span> <span class="toc-text">System access troubleshooting</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Resolving-configuration-issues"><span class="toc-number">2.2.</span> <span class="toc-text">Resolving configuration issues</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Applying-changes-to-config-files"><span class="toc-number">2.3.</span> <span class="toc-text">Applying changes to config files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Testing-Connectivity"><span class="toc-number">2.4.</span> <span class="toc-text">Testing Connectivity</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Sections-in-PAM"><span class="toc-number">2.5.</span> <span class="toc-text">Sections in PAM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PAM-troubleshooting"><span class="toc-number">2.6.</span> <span class="toc-text">PAM troubleshooting</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ssh-tunnel"><span class="toc-number">3.</span> <span class="toc-text">ssh tunnel</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#mount-a-new-disk"><span class="toc-number">3.0.1.</span> <span class="toc-text">mount a new disk</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#pass-the-output-of-one-command-as-the-command-line-argument-to-another"><span class="toc-number">3.0.2.</span> <span class="toc-text">pass the output of one command as the command-line argument to another</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-journalctl-on-systemd-systems"><span class="toc-number">3.0.3.</span> <span class="toc-text">Using journalctl on systemd systems</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Exclude-a-specific-directory-in-ncdu-command"><span class="toc-number">3.1.</span> <span class="toc-text">Exclude a specific directory in ncdu command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#repeat-currently-typed-in-parameter-on-bash-console"><span class="toc-number">3.2.</span> <span class="toc-text">repeat currently typed in parameter on bash console</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Lost-password"><span class="toc-number">3.3.</span> <span class="toc-text">Lost password</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Print-line-only-if-the-first-field-start-with-string-and-copy-it-to-clipboard"><span class="toc-number">3.4.</span> <span class="toc-text">Print line only if the first field start with string, and copy it to clipboard</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#System-access-troubleshooting-1"><span class="toc-number">4.</span> <span class="toc-text">System access troubleshooting</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Server-is-not-reachable"><span class="toc-number">4.1.</span> <span class="toc-text">Server is not reachable</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Cannot-connect-to-a-Website-or-an-application"><span class="toc-number">4.2.</span> <span class="toc-text">Cannot connect to a Website or an application</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#tlenet-192-168-1-5-80-http"><span class="toc-number">5.</span> <span class="toc-text">tlenet 192.168.1.5 80 (http)</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#some-important-signals"><span class="toc-number">5.1.</span> <span class="toc-text">some important signals</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/puppet/" title="puppet">puppet<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="John Doe">John Doe</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

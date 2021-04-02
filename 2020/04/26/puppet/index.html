@@ -1,0 +1,757 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>puppet | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="John Doe">
+    
+
+    
+    <meta name="description" content="Puppet Code Directory Layoutenvironments&#x2F;production&#x2F;:manifests&#x2F;:Puppet manifestsmodules&#x2F;: Puppet modulesdata&#x2F;: Hiera datahiera.yaml: Hiera configuration add cert autosigncat &#x2F;etc&#x2F;puppetlabs&#x2F;puppet&#x2F;aut">
+<meta property="og:type" content="article">
+<meta property="og:title" content="puppet">
+<meta property="og:url" content="http://example.com/2020/04/26/puppet/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Puppet Code Directory Layoutenvironments&#x2F;production&#x2F;:manifests&#x2F;:Puppet manifestsmodules&#x2F;: Puppet modulesdata&#x2F;: Hiera datahiera.yaml: Hiera configuration add cert autosigncat &#x2F;etc&#x2F;puppetlabs&#x2F;puppet&#x2F;aut">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-04-26T12:41:23.000Z">
+<meta property="article:modified_time" content="2021-04-02T05:58:25.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="puppet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:example.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/04/26/puppet/" title="puppet" itemprop="url">puppet</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2020-04-26T12:41:23.000Z" itemprop="datePublished"> Published 2020-04-26</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Puppet-Code-Directory-Layout"><span class="toc-number">1.</span> <span class="toc-text">Puppet Code Directory Layout</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#add-cert-autosign"><span class="toc-number">2.</span> <span class="toc-text">add cert autosign</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Puppet-5-essentials"><span class="toc-number">3.</span> <span class="toc-text">Puppet 5 essentials</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#resources-parameters-and-properties"><span class="toc-number">3.1.</span> <span class="toc-text">resources, parameters, and properties</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dry-testing-your-manifest"><span class="toc-number">3.2.</span> <span class="toc-text">Dry testing your manifest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-variables"><span class="toc-number">3.3.</span> <span class="toc-text">Using variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variable-types"><span class="toc-number">3.4.</span> <span class="toc-text">Variable types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-types"><span class="toc-number">3.5.</span> <span class="toc-text">Data types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adding-control-structures-in-manifests"><span class="toc-number">3.6.</span> <span class="toc-text">Adding control structures in manifests</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#How-to-add-a-new-module-in-puppet"><span class="toc-number">4.</span> <span class="toc-text">How to add a new module in puppet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-modified-Puppetfile"><span class="toc-number">4.1.</span> <span class="toc-text">1. modified Puppetfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ssh-to-puppet-master"><span class="toc-number">4.2.</span> <span class="toc-text">2. ssh to puppet master</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-modified-data-common-yaml-and-base-pp"><span class="toc-number">4.3.</span> <span class="toc-text">3. modified data&#x2F;common.yaml and base.pp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-new-file-data-node-overrides-hostname-yaml"><span class="toc-number">4.4.</span> <span class="toc-text">4. new file data&#x2F;node-overrides&#x2F;hostname.yaml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-file-line"><span class="toc-number">4.5.</span> <span class="toc-text">5. file_line</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Puppet-Code-Directory-Layout"><a href="#Puppet-Code-Directory-Layout" class="headerlink" title="Puppet Code Directory Layout"></a>Puppet Code Directory Layout</h1><p>environments/production/:<br>manifests/:Puppet manifests<br>modules/: Puppet modules<br>data/: Hiera data<br>hiera.yaml: Hiera configuration</p>
+<h1 id="add-cert-autosign"><a href="#add-cert-autosign" class="headerlink" title="add cert autosign"></a>add cert autosign</h1><p>cat /etc/puppetlabs/puppet/autosign.conf<br>add the hostname or *.foobar</p>
+<p>add a line in /etc/puppetlabs/puppet/puppet.conf<br>autosign = true</p>
+<h1 id="Puppet-5-essentials"><a href="#Puppet-5-essentials" class="headerlink" title="Puppet 5 essentials"></a>Puppet 5 essentials</h1><h2 id="resources-parameters-and-properties"><a href="#resources-parameters-and-properties" class="headerlink" title="resources, parameters, and properties"></a>resources, parameters, and properties</h2><p>Resources are the elementray builing blocks of manifests.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># cat puppet_service.pp</span><br><span class="line">service &#123; &#39;puppet&#39;:</span><br><span class="line">  ensure &#x3D;&gt; &#39;stopped&#39;,</span><br><span class="line">  enable &#x3D;&gt; false,</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+<p>Each has a type (service) and a name or title (puppet). Each resource is unique to a manifest, and can be referenced by the combination of its<br>type and name, such as Server[“puppet”].<br>A resource comprises a list of zero or more attributes.<br>An attribute is a key-value pair, such as <code>enable =&gt; fales</code>.</p>
+<p>Puppet differentiates between two different attributes: parameters and properties.<br>Parameters describe the way that Puppet should deal with a resource type.<br>Properties describe a specific setting of a resource.<br>Certain parameters are available for all resource types (metaparameters), and some names are just very common, such as ensure. The service type supports the ensure property, which represents the status of the managed process. Its enabled property, on the other hand, relates to the system boot configuration (with respect to the service in question).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cat puppet_service_provider.pp </span><br><span class="line">service &#123; &#39;puppet&#39;:</span><br><span class="line">  ensure   &#x3D;&gt; &#39;stopped&#39;,</span><br><span class="line">  enable   &#x3D;&gt; false,</span><br><span class="line">  provider &#x3D;&gt; &#39;upstart&#39;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The provider parameter tells Puppet that it need to interact with the upstart subsystem to control its background service.</p>
+<p>The difference between parameters and properties is that the parameter merely indicates how Puppet should manage the resource, not what a desired state is.<br>Puppet will only take action on property values. In this example, these are ensure =&gt; ‘stopped’ and enable =&gt; false. For each such property, Puppet will perform the following tasks:</p>
+<ul>
+<li>Test whether the resources is already in sync with the target state</li>
+<li>If the resource is not in sync, it will trigger a sync action</li>
+</ul>
+<p>Properties can be out of sync, whereas parameters cannot.</p>
+<h2 id="Dry-testing-your-manifest"><a href="#Dry-testing-your-manifest" class="headerlink" title="Dry testing your manifest"></a>Dry testing your manifest</h2><p><code>puppet apply puppet_service.pp --noop</code></p>
+<h2 id="Using-variables"><a href="#Using-variables" class="headerlink" title="Using variables"></a>Using variables</h2><p>Any variable name is always prefixed with the $ sign:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$download_server &#x3D; &#39;img2.example.net&#39;</span><br><span class="line">$url &#x3D; &quot;https:&#x2F;&#x2F;$&#123;download_server&#125;&#x2F;pkg&#x2F;example_source.tar.gz&quot; </span><br></pre></td></tr></table></figure>
+<h2 id="Variable-types"><a href="#Variable-types" class="headerlink" title="Variable types"></a>Variable types</h2><p>Four variable types: strings, arrays, hashed, and Booleans</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$a_bool &#x3D; true</span><br><span class="line">$a_string &#x3D; &#39;This is a string value&#39;</span><br><span class="line">$an_array &#x3D; [ &#39;This&#39;, &#39;forms&#39;, &#39;an&#39;, &#39;array&#39; ]</span><br><span class="line">$a_hash &#x3D; &#123;   </span><br><span class="line">   &#39;subject&#39;   &#x3D;&gt; &#39;Hashes&#39;,  </span><br><span class="line">   &#39;predicate&#39; &#x3D;&gt; &#39;are written&#39;,  </span><br><span class="line">   &#39;object&#39;    &#x3D;&gt; &#39;like this&#39;,  </span><br><span class="line">   &#39;note&#39;      &#x3D;&gt; &#39;not actual grammar!&#39;,  </span><br><span class="line">   &#39;also note&#39; &#x3D;&gt; [ &#39;nesting is&#39;,</span><br><span class="line">   &#123; &#39;allowed&#39;   &#x3D;&gt; &#39; of course&#39; &#125; ], </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Data-types"><a href="#Data-types" class="headerlink" title="Data types"></a>Data types</h2><p>Puppet has core data types and abstract data types. The core data types are the most commonly used types of data, such as string or integer, whereas abstract data types allow for more sophisticated type validation, such as optional or variant.</p>
+<h2 id="Adding-control-structures-in-manifests"><a href="#Adding-control-structures-in-manifests" class="headerlink" title="Adding control structures in manifests"></a>Adding control structures in manifests</h2><p>if/else block:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if &#39;mail_lda&#39; in $needed_services &#123;  </span><br><span class="line">   service &#123; &#39;dovecot&#39;: enable &#x3D;&gt; true &#125;</span><br><span class="line">&#125; else &#123;  </span><br><span class="line">   service &#123; &#39;dovecot&#39;: enable &#x3D;&gt; false &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>case statement:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+<h1 id="How-to-add-a-new-module-in-puppet"><a href="#How-to-add-a-new-module-in-puppet" class="headerlink" title="How to add a new module in puppet"></a>How to add a new module in puppet</h1><h2 id="1-modified-Puppetfile"><a href="#1-modified-Puppetfile" class="headerlink" title="1. modified Puppetfile"></a>1. modified Puppetfile</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mod &#39;puppetlabs-lvm&#39;,  &#39;1.4.0&#39;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-ssh-to-puppet-master"><a href="#2-ssh-to-puppet-master" class="headerlink" title="2. ssh to puppet master"></a>2. ssh to puppet master</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;etc&#x2F;puppetlabs&#x2F;code&#x2F;environments&#x2F;production&#x2F;</span><br><span class="line">librarian-puppeet install --verbose</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-modified-data-common-yaml-and-base-pp"><a href="#3-modified-data-common-yaml-and-base-pp" class="headerlink" title="3. modified data/common.yaml and base.pp"></a>3. modified data/common.yaml and base.pp</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">profile::base::enable_lvm: false</span><br><span class="line">vim base.pp</span><br><span class="line">if $enable_lvm &#123;</span><br><span class="line">   include lvm</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="4-new-file-data-node-overrides-hostname-yaml"><a href="#4-new-file-data-node-overrides-hostname-yaml" class="headerlink" title="4. new file data/node-overrides/hostname.yaml"></a>4. new file data/node-overrides/hostname.yaml</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">profile::base::enable_lvm: true</span><br><span class="line">lvm::volume_groups:</span><br><span class="line">  mysql_vg:</span><br><span class="line">    createonly: true</span><br><span class="line">    physical_volumes:</span><br><span class="line">      &#x2F;dev&#x2F;sdb:</span><br><span class="line">    logical_volumes:</span><br><span class="line">      ipscape_db:</span><br><span class="line">        size: undef </span><br><span class="line">        mountpath: &#x2F;dev&#x2F;mysql_vg&#x2F;ipscape_db</span><br><span class="line">        mountpath_require: true</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="5-file-line"><a href="#5-file-line" class="headerlink" title="5. file_line"></a>5. file_line</h2><p><a target="_blank" rel="noopener" href="https://forge.puppet.com/modules/puppetlabs/stdlib/4.9.1/readme">file_line types</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">file_line &#123; &#39;asterisk_setting&#39;:</span><br><span class="line">  path &#x3D;&gt; &#39;&#x2F;etc&#x2F;ipscape-api&#x2F;server.settings&#39;,</span><br><span class="line">  line &#x3D;&gt; &#39;asterisk_pool_max_idle &#x3D; 0&#39;,</span><br><span class="line">  ensure &#x3D;&gt; present</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/devops/">devops</a><a href="/tags/puppet/">puppet</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://example.com/2020/04/26/puppet/" data-title="puppet | Hexo" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/06/14/azure/" title="azure">
+  <strong>上一篇：</strong><br/>
+  <span>
+  azure</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/02/26/monitoring/"  title="monitoring">
+ <strong>下一篇：</strong><br/> 
+ <span>monitoring
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Puppet-Code-Directory-Layout"><span class="toc-number">1.</span> <span class="toc-text">Puppet Code Directory Layout</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#add-cert-autosign"><span class="toc-number">2.</span> <span class="toc-text">add cert autosign</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Puppet-5-essentials"><span class="toc-number">3.</span> <span class="toc-text">Puppet 5 essentials</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#resources-parameters-and-properties"><span class="toc-number">3.1.</span> <span class="toc-text">resources, parameters, and properties</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Dry-testing-your-manifest"><span class="toc-number">3.2.</span> <span class="toc-text">Dry testing your manifest</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-variables"><span class="toc-number">3.3.</span> <span class="toc-text">Using variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Variable-types"><span class="toc-number">3.4.</span> <span class="toc-text">Variable types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Data-types"><span class="toc-number">3.5.</span> <span class="toc-text">Data types</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adding-control-structures-in-manifests"><span class="toc-number">3.6.</span> <span class="toc-text">Adding control structures in manifests</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#How-to-add-a-new-module-in-puppet"><span class="toc-number">4.</span> <span class="toc-text">How to add a new module in puppet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-modified-Puppetfile"><span class="toc-number">4.1.</span> <span class="toc-text">1. modified Puppetfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ssh-to-puppet-master"><span class="toc-number">4.2.</span> <span class="toc-text">2. ssh to puppet master</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-modified-data-common-yaml-and-base-pp"><span class="toc-number">4.3.</span> <span class="toc-text">3. modified data&#x2F;common.yaml and base.pp</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-new-file-data-node-overrides-hostname-yaml"><span class="toc-number">4.4.</span> <span class="toc-text">4. new file data&#x2F;node-overrides&#x2F;hostname.yaml</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-file-line"><span class="toc-number">4.5.</span> <span class="toc-text">5. file_line</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/puppet/" title="puppet">puppet<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="John Doe">John Doe</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

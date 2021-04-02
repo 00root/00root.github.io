@@ -1,0 +1,872 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>tools | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="John Doe">
+    
+
+    
+    <meta name="description" content="Table of Contents  - Multiplexers byobu mosh ss mtr iftop iperf Troubleshooting layer 1 problems HTTP core protocol Request Response   cURL netcat Basic client&#x2F;server        Multiplexersmosh12mosh jd">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tools">
+<meta property="og:url" content="http://example.com/2020/08/09/tools/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Table of Contents  - Multiplexers byobu mosh ss mtr iftop iperf Troubleshooting layer 1 problems HTTP core protocol Request Response   cURL netcat Basic client&#x2F;server        Multiplexersmosh12mosh jd">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-09T04:15:15.000Z">
+<meta property="article:modified_time" content="2021-04-02T05:58:25.000Z">
+<meta property="article:author" content="John Doe">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="Linux">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Hexo" title="Hexo"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:example.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2020/08/09/tools/" title="tools" itemprop="url">tools</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		
+  <p class="article-time">
+    <time datetime="2020-08-09T04:15:15.000Z" itemprop="datePublished"> Published 2020-08-09</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Multiplexers"><span class="toc-number">1.</span> <span class="toc-text">Multiplexers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#mosh"><span class="toc-number">1.1.</span> <span class="toc-text">mosh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ss"><span class="toc-number">1.2.</span> <span class="toc-text">ss</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mtr"><span class="toc-number">1.3.</span> <span class="toc-text">mtr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iftop"><span class="toc-number">1.4.</span> <span class="toc-text">iftop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iperf"><span class="toc-number">1.5.</span> <span class="toc-text">iperf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Troubleshooting-layer-1-problems"><span class="toc-number">1.6.</span> <span class="toc-text">Troubleshooting layer 1 problems</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-core-protocol"><span class="toc-number">1.7.</span> <span class="toc-text">HTTP core protocol</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Request"><span class="toc-number">1.7.1.</span> <span class="toc-text">Request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Response"><span class="toc-number">1.7.2.</span> <span class="toc-text">Response</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cURL"><span class="toc-number">1.8.</span> <span class="toc-text">cURL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netcat"><span class="toc-number">1.9.</span> <span class="toc-text">netcat</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-client-server"><span class="toc-number">1.9.1.</span> <span class="toc-text">Basic client&#x2F;server</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+<p><strong>Table of Contents</strong></p>
+<ul>
+<li><a href="#-">-</a></li>
+<li><a href="#multiplexers">Multiplexers</a><ul>
+<li><a href="#byobu">byobu</a></li>
+<li><a href="#mosh">mosh</a></li>
+<li><a href="#ss">ss</a></li>
+<li><a href="#mtr">mtr</a></li>
+<li><a href="#iftop">iftop</a></li>
+<li><a href="#iperf">iperf</a></li>
+<li><a href="#troubleshooting-layer-1-problems">Troubleshooting layer 1 problems</a></li>
+<li><a href="#http-core-protocol">HTTP core protocol</a><ul>
+<li><a href="#request">Request</a></li>
+<li><a href="#response">Response</a></li>
+</ul>
+</li>
+<li><a href="#curl">cURL</a></li>
+<li><a href="#netcat">netcat</a><ul>
+<li><a href="#basic-clientserver">Basic client/server</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- markdown-toc end -->
+
+<h1 id="Multiplexers"><a href="#Multiplexers" class="headerlink" title="Multiplexers"></a>Multiplexers</h1><h2 id="mosh"><a href="#mosh" class="headerlink" title="mosh"></a>mosh</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mosh jdoe@10.10.10.101</span><br><span class="line">mosh username@remoteserver.org --ssh&#x3D;&quot;ssh -i ~&#x2F;.ssh&#x2F;identity_file -p 1234&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id="ss"><a href="#ss" class="headerlink" title="ss"></a>ss</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">user@opsschool ~$ ss -tuln</span><br><span class="line">Netid  State      Recv-Q Send-Q         Local Address:Port         Peer Address:Port</span><br><span class="line">tcp    LISTEN     0      128                        *:80                      *:*</span><br><span class="line">tcp    LISTEN     0      50                         *:4242                    *:*</span><br><span class="line">tcp    LISTEN     0      50                        :::4242                   :::*</span><br><span class="line">tcp    LISTEN     0      50                         *:2003                    *:*</span><br><span class="line">tcp    LISTEN     0      50                         *:2004                    *:*</span><br><span class="line">tcp    LISTEN     0      128                       :::22                     :::*</span><br><span class="line">tcp    LISTEN     0      128                        *:22                      *:*</span><br><span class="line">tcp    LISTEN     0      100                        *:3000                    *:*</span><br><span class="line">tcp    LISTEN     0      100                      ::1:25                     :::*</span><br><span class="line">tcp    LISTEN     0      100                127.0.0.1:25                      *:*</span><br><span class="line">tcp    LISTEN     0      50                         *:7002                    *:*</span><br></pre></td></tr></table></figure>
+<ul>
+<li>means the deamon is listening on all IP addresses the server might have.</li>
+</ul>
+<p>127.0.0.1 means the daemon is listening only to the loopback interface</p>
+<p>::: is the same thing as *, but for IPv6</p>
+<p>::1 is the same as 127.0.0.1, but for IPv6</p>
+<h2 id="mtr"><a href="#mtr" class="headerlink" title="mtr"></a>mtr</h2><p>is a program that combines the functionality of ping and traceroute into one utility</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"> mtr -r uow.edu.au</span><br><span class="line">Start: 2020-08-09T15:14:55+1000</span><br><span class="line">HOST: stan-OptiPlex-380           Loss%   Snt   Last   Avg  Best  Wrst StDev</span><br><span class="line">  1.|-- router.lan                 0.0%    10    0.4   0.4   0.3   0.4   0.0</span><br><span class="line">  2.|-- 58.162.27.77               0.0%    10    8.6  12.7   8.0  17.5   3.4</span><br><span class="line">  3.|-- 10.2.2.150                 0.0%    10    8.6  13.7   8.3  29.7   6.6</span><br><span class="line">  4.|-- 10.2.1.149                 0.0%    10   15.2  13.6  10.2  16.1   2.0</span><br><span class="line">  5.|-- Bundle-Ether77.chw-edge90  0.0%    10   12.2  14.0  10.1  23.7   3.9</span><br><span class="line">  6.|-- bundle-ether2.ken-edge903  0.0%    10   12.1  13.3   9.2  26.3   4.8</span><br><span class="line">  7.|-- aar3533567.lnk.telstra.ne  0.0%    10   14.3  14.1  10.4  31.7   6.5</span><br><span class="line">  8.|-- xe-0-2-1.pe1.rsby.nsw.aar  0.0%    10   12.7  12.0   8.9  14.8   2.2</span><br><span class="line">  9.|-- 138.44.5.111               0.0%    10   10.2  14.5  10.2  17.5   2.5</span><br><span class="line"> 10.|-- 203.10.91.20               0.0%    10   11.8  16.6   9.9  27.2   6.1</span><br><span class="line"> 11.|-- www.uow.edu.au             0.0%    10   11.8  13.7  11.8  16.4   1.5</span><br></pre></td></tr></table></figure>
+<h2 id="iftop"><a href="#iftop" class="headerlink" title="iftop"></a>iftop</h2><p>Displays bandwith usage on a specific interface, broken down by remote host</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iftop -i eth0</span><br></pre></td></tr></table></figure>
+<h2 id="iperf"><a href="#iperf" class="headerlink" title="iperf"></a>iperf</h2><p>a bandwidth testing utility. It consists of a daemon and client, running on separate machines.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo iperf3 -c remote-host</span><br></pre></td></tr></table></figure>
+<h2 id="Troubleshooting-layer-1-problems"><a href="#Troubleshooting-layer-1-problems" class="headerlink" title="Troubleshooting layer 1 problems"></a>Troubleshooting layer 1 problems</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ip -s link show eth0</span><br><span class="line">sudo ethtool eth0</span><br><span class="line">## -S, which shows all the same metrics as the ip command, plus many, many more</span><br><span class="line">sudo ethtool -S eth0</span><br></pre></td></tr></table></figure>
+<h2 id="HTTP-core-protocol"><a href="#HTTP-core-protocol" class="headerlink" title="HTTP core protocol"></a>HTTP core protocol</h2><h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><table>
+<thead>
+<tr>
+<th>Method</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GET</td>
+<td align="center">Tranfers a current representation of the target resource.</td>
+</tr>
+<tr>
+<td>HEAD</td>
+<td align="center">Same as GET, but only transfer the status line and header section.</td>
+</tr>
+<tr>
+<td>POST</td>
+<td align="center">Perform resource-specific processing on the request payload.</td>
+</tr>
+<tr>
+<td>PUT</td>
+<td align="center">Replace all current representations of the target resource with the requested payload.</td>
+</tr>
+<tr>
+<td>DELETE</td>
+<td align="center">Remove all current representations of the target resource.</td>
+</tr>
+<tr>
+<td>CONNECT</td>
+<td align="center">Establish a tunnel to the server identified by the target resource.</td>
+</tr>
+<tr>
+<td>OPTIONS</td>
+<td align="center">Describe the communication options for the target resource.</td>
+</tr>
+<tr>
+<td>TRACE</td>
+<td align="center">Perform a message loop-back test along the path to the target resource.</td>
+</tr>
+</tbody></table>
+<h3 id="Response"><a href="#Response" class="headerlink" title="Response"></a>Response</h3><table>
+<thead>
+<tr>
+<th>Code</th>
+<th align="center">Reason</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td align="center">OK</td>
+<td>The request has succeeded.</td>
+</tr>
+<tr>
+<td>301</td>
+<td align="center">Moved Permenantly</td>
+<td>The target has moved to a new location and future references should use a new location. The server should mention the new location in the Location header in the response.</td>
+</tr>
+<tr>
+<td>302</td>
+<td align="center">Found</td>
+<td>The target resources been temporarily moved. As the move is temporarily, future references should still use the same location.</td>
+</tr>
+<tr>
+<td>400</td>
+<td align="center">Bad Request</td>
+<td>The server cannot process the request as it is perceived as invalid.</td>
+</tr>
+<tr>
+<td>401</td>
+<td align="center">Unauthorized</td>
+<td>The request to the target resource is not allowed due to missing or incorrect authentication credentials.</td>
+</tr>
+<tr>
+<td>403</td>
+<td align="center">Forbidden</td>
+<td>The request to the target resource is not allowed for reasons unrelated to authentication.</td>
+</tr>
+<tr>
+<td>404</td>
+<td align="center">Not Found</td>
+<td>The target resource was not found.</td>
+</tr>
+<tr>
+<td>500</td>
+<td align="center">Internal Server Error</td>
+<td>The server encountered an unexpected error.</td>
+</tr>
+<tr>
+<td>502</td>
+<td align="center">Bad Gateway</td>
+<td>The server is acting as a gateway/proxy and received an invalid response from a server it contacted to fulfill the request.</td>
+</tr>
+<tr>
+<td>503</td>
+<td align="center">Service Unavailable</td>
+<td>The server is currently unable to fulfill the request.</td>
+</tr>
+</tbody></table>
+<h2 id="cURL"><a href="#cURL" class="headerlink" title="cURL"></a>cURL</h2><p>is a tool and library for transferring data with URL syntax, capable of handling various protocols.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">curl http:&#x2F;&#x2F;foobar&#x2F;index.html</span><br><span class="line">With the --request or -X parameter, the method can be specified. To include the the headers in the output.</span><br><span class="line">curl -I --request GET  http:&#x2F;&#x2F;www.opsschool.org&#x2F;en&#x2F;latest&#x2F;http_101.html</span><br><span class="line">The -O switch makes cURL write output to a local file named like the remote file.</span><br><span class="line">$ curl -O http:&#x2F;&#x2F;localhost&#x2F;bigfile</span><br></pre></td></tr></table></figure>
+<p>By default cURL does not follow HTTP redirects, and instead a 3xx redirection message is given.<br>The -L switch makes cURL automatically follow redirects and issue another request to the given localtion till it finds the targeted resource.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -IL foobar.org</span><br></pre></td></tr></table></figure>
+<h2 id="netcat"><a href="#netcat" class="headerlink" title="netcat"></a>netcat</h2><p>a networking tool capable of reading and writing data across a network connection.</p>
+<h3 id="Basic-client-server"><a href="#Basic-client-server" class="headerlink" title="Basic client/server"></a>Basic client/server</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ nc -l 192.168.0.1 1234 &gt; output.log</span><br><span class="line">### then in another terminal, pipe some data to netcat that is connected to the destination ip and port</span><br><span class="line">$ echo &quot;I&#39;m connected as client&quot;| nc 192.168.0.1 1234</span><br><span class="line">## Then again in the first (server) terminal, the data is displayed:</span><br><span class="line">$ cat output.log</span><br><span class="line">I&#39;m connected as client</span><br></pre></td></tr></table></figure>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/devops/">devops</a><a href="/tags/Linux/">Linux</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://example.com/2020/08/09/tools/" data-title="tools | Hexo" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2020/11/11/influxdb/" title="influxdb">
+  <strong>上一篇：</strong><br/>
+  <span>
+  influxdb</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2020/06/28/puppet6/"  title="puppet6">
+ <strong>下一篇：</strong><br/> 
+ <span>puppet6
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Multiplexers"><span class="toc-number">1.</span> <span class="toc-text">Multiplexers</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#mosh"><span class="toc-number">1.1.</span> <span class="toc-text">mosh</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ss"><span class="toc-number">1.2.</span> <span class="toc-text">ss</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mtr"><span class="toc-number">1.3.</span> <span class="toc-text">mtr</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iftop"><span class="toc-number">1.4.</span> <span class="toc-text">iftop</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#iperf"><span class="toc-number">1.5.</span> <span class="toc-text">iperf</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Troubleshooting-layer-1-problems"><span class="toc-number">1.6.</span> <span class="toc-text">Troubleshooting layer 1 problems</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#HTTP-core-protocol"><span class="toc-number">1.7.</span> <span class="toc-text">HTTP core protocol</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Request"><span class="toc-number">1.7.1.</span> <span class="toc-text">Request</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Response"><span class="toc-number">1.7.2.</span> <span class="toc-text">Response</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cURL"><span class="toc-number">1.8.</span> <span class="toc-text">cURL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#netcat"><span class="toc-number">1.9.</span> <span class="toc-text">netcat</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Basic-client-server"><span class="toc-number">1.9.1.</span> <span class="toc-text">Basic client&#x2F;server</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/nginx/" title="nginx">nginx<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/puppet/" title="puppet">puppet<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="John Doe">John Doe</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
