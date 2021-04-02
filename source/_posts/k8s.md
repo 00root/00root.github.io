@@ -1,7 +1,9 @@
 ---
 title: k8s
 date: 2019-06-04 11:37:00
-tags: kubernetes
+tags: 
+  - kubernetes
+  - K8s
 ---
 # K8S
 

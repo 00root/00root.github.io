@@ -5,6 +5,7 @@ tags:
   - k8s
   - GKE
   - devops
+  - kubernetes
 ---
 # Kubernetes on the GKE
 **use cloud shell**
