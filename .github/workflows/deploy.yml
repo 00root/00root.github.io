@@ -8,44 +8,15 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14.16]
-
     steps:
-    - name: Checkout
-      uses: actions/checkout@v1
-      with:
-        ref: src
-
-    - name: Setup Node.js environment ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Set git environment
-      env: 
-        # 1. Add this private key and title as DEPLOY_KEY in this repo -> settings/secrets
-        # 2. Add corresponding public key and named as any text to the github page repo -> settings/deploy keys
-        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
-        USERNAME: stanosaka
-        EMAIL: stan.osaka@gmail.com 
-      run: |
-        mkdir -p ~/.ssh/
-        echo "$DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan github.com >> ~/.ssh/known_hosts
-        git config --global user.name "$USERNAME"
-        git config --global user.email "$EMAIL"
-        git branch -a
-    - name: Setup Hexo environment
-      run: |
-        npm install -g hexo
-        npm install
-        node --version
-        npm --version
-    - name: Deploy Hexo
-      run: |
-        hexo g
-        cat public/about/index.html
-        hexo d
+      - uses: actions/checkout@v1
+      - name: Cache node modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}
+      - uses: yrpang/github-actions-hexo@v1.3
+        with:
+          deploykey: ${{secrets.DEPLOY_KEY}}
+          username: stanosaka
+          email: stan.osaka@gmail.com
