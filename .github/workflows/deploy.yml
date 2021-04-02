@@ -8,16 +8,20 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [10.x]
+
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v1
       with:
         ref: src
 
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v2
+    - name: Setup Node.js environment ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
       with:
-        node-version: '14'
+        node-version: ${{ matrix.node-version }}
 
     - name: Set git environment
       env: 
@@ -28,7 +32,7 @@ jobs:
         EMAIL: stan.osaka@gmail.com 
       run: |
         mkdir -p ~/.ssh/
-        echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+        echo "$DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan github.com >> ~/.ssh/known_hosts
         git config --global user.name "$USERNAME"
