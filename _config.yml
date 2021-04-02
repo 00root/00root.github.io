@@ -3,17 +3,20 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle: ''
-description: ''
+title: Stan Zhou's Hexo Technical Blog
+subtitle: Innovation Evangelist
+description: a Site Reliability Engineer working and living in Sydney.
 keywords:
-author: John Doe
+  - SRE
+  - Devops
+  - Cloud Native
+author: Stan Zhou
 language: en
-timezone: ''
+timezone: Australia/Sydney
 
 # URL
 ## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: http://example.com
+url: http://cwzhou.win
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
@@ -102,4 +105,7 @@ theme: jacman
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
-  type: ''
+  type: git
+  repo: git@github.com:00root/00root.github.io.git
+  branch: master
+  message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
