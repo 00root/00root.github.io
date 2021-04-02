@@ -1,0 +1,25 @@
+name: Hexo Deploy
+
+on:
+  push:
+    branches:
+      - src
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - run: mkdir -p ~/.ssh/
+      - run: echo "${{secrets.DEPLOY_KEY}}" > ~/.ssh/id_rsa
+      - run: chmod 600 ~/.ssh/id_rsa
+      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - run: git config --global user.name '{USERNAME}'
+      - run: git config --global user.email '{EMAIL}'
+      - run: npm ci
+      - run: npm i -g hexo-cli
+      - run: hexo deploy -g
