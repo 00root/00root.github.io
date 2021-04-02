@@ -39,7 +39,7 @@ jobs:
 
     - name: Build and Deploy
 
-      uses: y4code/hexo-deploy-action@master
+      uses: stanosaka/hexo-deploy-action@master
       env:
         PERSONAL_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         PUBLISH_REPOSITORY: 00root/00root.github.io # The repository the action should deploy to.
