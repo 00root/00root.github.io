@@ -6,20 +6,36 @@ on:
       - src
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 12
-          registry-url: https://registry.npmjs.org/
-      - run: mkdir -p ~/.ssh/
-      - run: echo "${{secrets.DEPLOY_KEY}}" > ~/.ssh/id_rsa
-      - run: chmod 600 ~/.ssh/id_rsa
-      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
-      - run: git config --global user.name '{USERNAME}'
-      - run: git config --global user.email '{EMAIL}'
-      - run: npm ci
-      - run: npm i -g hexo-cli
-      - run: hexo deploy -g
+    - name: Checkout
+      uses: actions/checkout@v1
+
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v2-beta
+      with:
+        node-version: '12'
+
+    - name: Set git environment
+      env: 
+        # 1. Add this private key and title as DEPLOY_KEY in this repo -> settings/secrets
+        # 2. Add corresponding public key and named as any text to the github page repo -> settings/deploy keys
+        DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        USERNAME: stanosaka
+        EMAIL: stan.osaka@gmail.com 
+      run: |
+        mkdir -p ~/.ssh/
+        echo "$DEPLOY_KEY" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        git config --global user.name "$USERNAME"
+        git config --global user.email "$EMAIL"
+    - name: Setup Hexo environment
+      run: |
+        npm install -g hexo-cli
+        npm install
+    - name: Deploy Hexo
+      run: |
+        hexo g
+        hexo d
