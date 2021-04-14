@@ -434,3 +434,74 @@ https://docs.docker.com/engine/reference/commandline/login/#credentials-store
 
 Login Succeeded
 ```
+## Container Security
+### Containers inside VMs
+- To get the benefits of containers and VMs, you can run all your containers inside a VM.
+- This gives you the hypervisor layers you need to separate mission-critical pieces of your app.
+- Docker, VMware, and other companies build super-fast hypervisor layers for containers.
+
+Some security best practices:
+- only run verified images so that so attacker can inject their image into your system
+- have an image registry for your company which let you build, share, track, and run your image.
+Image registries like Docker Hub and Docker Trusted Registry implement a tool called Docker Content Trust which lets you sign your images and define exactly what images are allowed to be run on your system. 
+In addition, there are security scanning tools like Atomic Scan and Docker Security Scanning which you can run on your images once they've been built.
+
+These can be automated and implemented as a part of your continuous integration or testing processes.
+
+When creating your images, it's important that they follow the principle of least privilege.
+The container should have the least amount of privileges it needs to do its job.
+For many containers, this means implementing read-only file systems. Even if an attacker gets full access to that container, they won't be able to write anything to the underlying system.
+
+Limit resources for each containers so they can't be hijacked for other purposes.
+
+Don't run your processes in the container as a root user.
+
+Use runtime threat detection systems like Aqua Security and Red Hat OpenShfit.
+
+If it seems unusual activity or traffic, you can set up rules so they alert you, shut the system down, or take other steps.
+
+**Other Security Measures**
+- Security scanning happends during the build stage, make sure that containers are secure
+  - Tools include Atomic Scan and Docker Secuiry Scanning.
+- Create container images following **the rule of least privilege**
+- Runtime threat detection uses machine learning to monitor your app during normal running. then detect "abnormal" traffic or activity.
+  - Tools include Aqua Security and Red Hat OpenShift.
+  
+## Container Logging and Monitoring 
+Monitoring the Health of Your System
+- Lots of orchestration software has monitoring build in.
+- Kubernetes Heaspster aggregates all K8s data to one spot.
+- cAdvisor, InfluxDB, and other tools can be used to display data, build graphs, and even build monitoring dashboards from this data.
+- Third-party cloud services can also plug in and track data from orchestration using APIs.
+- Offers same alerting, graphing, and dashboard tools as on-prem solutions.
+- Datadog and Sysdig
+
+## Docker + EC2 Variations
+- Docker out of the box + Vanilla EC2 instances
+  - Existing docker tools
+    - docker-machine, docker swarm, docker-compose, and docker
+  - Infrastructure as a service (IaaS)
+- Amazon Elastic Beanstalk + Docker container format
+  - Beanstalk application delivery
+     - Java with Glashfish, Python with uWSGI
+  - Platform as a service (PaaS)
+- Docker Datacenter (DDC) for AWS
+  - Containers as a service (CaaS)
+- Docker for AWS
+## ECS managed policies
+- AmazonEC2ContainerServiceFullAccess
+  - Added to the ECS Administrator Role
+- AmazonEC2ContainerServiceforEC2Role
+  - Added to the ECS Container Instance Role
+- AmazonEC2ContainerServiceRole
+  - Added to the ECS Container Scheduler Role
+    - Applied to ELB load balancers
+    - Register and deregister container instances with load balancers
+- AmazonEC2ContainerServiceAutoscaleRole
+  - Added to ECS Auto Scaling Role
+     - Used by Application Auto Scale Service
+     - Scale service's desired count in response to CloudWatch alarms
+- AmazonEC2ContainerServiceTaskRole
+  - Added to ECS Task Role
+    - Used by AWS APIs
+    - Access AWS Resources

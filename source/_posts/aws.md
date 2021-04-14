@@ -104,4 +104,19 @@ Users
 - Login to management console
 - Can have long-term access keys
 
-
+# Elastic Load Balancer (ELB)
+## Spread traffic algorithmically
+  - Evenly
+  - Unbalanced on purpose
+## Types
+1. Application Load Balancers
+  - Application Layer
+    - HTTP/HTTP traffic
+  - Two appealing features
+    1. Dynamic host port mapping
+      - Docker containers listening on the same port
+      - Set hostPort to 0
+        - Host picks ports in ephemeral port range
+    2. Path-based routing
+   ![image](https://i.imgur.com/SBOmrEf.png "path-based routing") 
+2. Classic Load Balancers
