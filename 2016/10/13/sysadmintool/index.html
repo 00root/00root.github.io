@@ -1,0 +1,745 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>system admin tools | Stan Zhou&#39;s Hexo Technical Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Stan Zhou">
+    
+
+    
+    <meta name="description" content="system admin tooliostat介绍全能系统监控工具dstat most use:  1[root@toad pxe]# dstat -cmsdnl -D sda3 -N lo,eth0 100 5 网络监控工具本地服务器的网卡吞吐量： 1iptraf -d eth0   123456789101112131415161718192021222324252627# bothwget">
+<meta property="og:type" content="article">
+<meta property="og:title" content="system admin tools">
+<meta property="og:url" content="http://cwzhou.win/2016/10/13/sysadmintool/index.html">
+<meta property="og:site_name" content="Stan Zhou&#39;s Hexo Technical Blog">
+<meta property="og:description" content="system admin tooliostat介绍全能系统监控工具dstat most use:  1[root@toad pxe]# dstat -cmsdnl -D sda3 -N lo,eth0 100 5 网络监控工具本地服务器的网卡吞吐量： 1iptraf -d eth0   123456789101112131415161718192021222324252627# bothwget">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-10-13T05:23:04.000Z">
+<meta property="article:modified_time" content="2021-04-02T05:58:25.000Z">
+<meta property="article:author" content="Stan Zhou">
+<meta property="article:tag" content="centos">
+<meta property="article:tag" content="system admin">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Stan Zhou&#39;s Hexo Technical Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Stan Zhou&#39;s Hexo Technical Blog" title="Stan Zhou&#39;s Hexo Technical Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Stan Zhou&#39;s Hexo Technical Blog">Stan Zhou&#39;s Hexo Technical Blog</a></h1>
+				<h2 class="blog-motto">Innovation Evangelist</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:cwzhou.win">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/10/13/sysadmintool/" title="system admin tools" itemprop="url">system admin tools</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2016-10-13T05:23:04.000Z" itemprop="datePublished"> Published 2016-10-13</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#system-admin-tool"><span class="toc-number">1.</span> <span class="toc-text">system admin tool</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#useful-commands"><span class="toc-number"></span> <span class="toc-text">useful commands</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Create-a-configuration-file-and-add-your-license-key"><span class="toc-number"></span> <span class="toc-text">Create a configuration file and add your license key \</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Create-the-agent%E2%80%99s-yum-repository"><span class="toc-number"></span> <span class="toc-text">Create the agent’s yum repository \</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Update-your-yum-cache"><span class="toc-number"></span> <span class="toc-text">Update your yum cache \</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Run-the-installation-script"><span class="toc-number"></span> <span class="toc-text">Run the installation script \</span></a>
+		
+		</div>
+		
+		<h2 id="system-admin-tool"><a href="#system-admin-tool" class="headerlink" title="system admin tool"></a>system admin tool</h2><p><a target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-10915175-id-3246219.html%22iostat%E4%BB%8B%E7%BB%8D%22">iostat介绍</a><br><a target="_blank" rel="noopener" href="http://blog.chinaunix.net/uid-10915175-id-4543091.html">全能系统监控工具dstat </a><br>most use: </p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@toad pxe]<span class="comment"># dstat -cmsdnl -D sda3 -N lo,eth0 100 5</span></span><br></pre></td></tr></table></figure>
+<p>网络监控工具<br>本地服务器的网卡吞吐量：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptraf -d eth0</span><br></pre></td></tr></table></figure>
+
+<hr>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># both</span></span><br><span class="line">wget ftp://ftp.netperf.org/netperf/netperf-2.7.0.tar.gz</span><br><span class="line">tar xf netperf-2.7.0.tar.gz</span><br><span class="line">./configure</span><br><span class="line">make</span><br><span class="line">make install</span><br><span class="line"></span><br><span class="line"><span class="comment">#服务端：</span></span><br><span class="line">[root@toad netperf-2.7.0]<span class="comment"># netserver</span></span><br><span class="line">Starting netserver with host <span class="string">&#x27;IN(6)ADDR_ANY&#x27;</span> port <span class="string">&#x27;12865&#x27;</span> and family AF_UNSPEC</span><br><span class="line">[root@toad netperf-2.7.0]<span class="comment"># lsof -i :12865</span></span><br><span class="line">COMMAND     PID USER   FD   TYPE  DEVICE SIZE/OFF NODE NAME</span><br><span class="line">netserver 18230 root    3u  IPv6 2815424      0t0  TCP *:12865 (LISTEN)</span><br><span class="line">[root@toad netperf-2.7.0]<span class="comment"># ethtool eth0 |grep -i speed</span></span><br><span class="line">        Speed: 1000Mb/s</span><br><span class="line"></span><br><span class="line"><span class="comment">#客户端</span></span><br><span class="line">root@kali:~/Downloads/netperf-2.7.0<span class="comment">#  netperf -H 192.168.199.231 -l 60</span></span><br><span class="line">MIGRATED TCP STREAM TEST from 0.0.0.0 () port 0 AF_INET to 192.168.199.231 () port 0 AF_INET</span><br><span class="line">Recv   Send    Send</span><br><span class="line">Socket Socket  Message  Elapsed</span><br><span class="line">Size   Size    Size     Time     Throughput</span><br><span class="line">bytes  bytes   bytes    secs.    10^6bits/sec</span><br><span class="line"></span><br><span class="line">87380  16384  16384    60.02      94.13</span><br><span class="line">root@kali:~/Downloads/netperf-2.7.0<span class="comment"># ethtool eth0 |grep -i speed</span></span><br><span class="line">        Speed: 100Mb/s</span><br></pre></td></tr></table></figure>
+<p>Netperf缺省情况下进行TCP批量传输，即-t TCP_STREAM。测试过程中，netperf向netserver发送批量的TCP数据分组，以确定数据传输过程中的吞吐量：<br> 从netperf的结果输出中，我们可以知道以下的一些信息：<br>1）    远端系统（即server）使用大小为87380字节的socket接收缓冲<br>2）    本地系统（即client）使用大小为16384字节的socket发送缓冲<br>3）    向远端系统发送的测试分组大小为16384字节<br>4）    测试经历的时间为60秒<br>5）    吞吐量的测试结果为94.13Mbits/秒</p>
+<blockquote>
+<p>Reference <a target="_blank" rel="noopener" href="https://www.ibm.com/developerworks/cn/linux/l-netperf/">netperf 与网络性能测量</a></p>
+</blockquote>
+<h1 id="useful-commands"><a href="#useful-commands" class="headerlink" title="useful commands"></a>useful commands</h1><h1 id="Create-a-configuration-file-and-add-your-license-key"><a href="#Create-a-configuration-file-and-add-your-license-key" class="headerlink" title="Create a configuration file and add your license key \"></a>Create a configuration file and add your license key \</h1><p>echo “license_key: a61ac49b8930c041d9d940b8227f5d716819NRAL” | sudo tee -a /etc/newrelic-infra.yml &amp;&amp; \</p>
+<p>\</p>
+<h1 id="Create-the-agent’s-yum-repository"><a href="#Create-the-agent’s-yum-repository" class="headerlink" title="Create the agent’s yum repository \"></a>Create the agent’s yum repository \</h1><p>sudo curl -o /etc/yum.repos.d/newrelic-infra.repo <a target="_blank" rel="noopener" href="https://download.newrelic.com/infrastructure_agent/linux/yum/el/7/x86_64/newrelic-infra.repo">https://download.newrelic.com/infrastructure_agent/linux/yum/el/7/x86_64/newrelic-infra.repo</a> &amp;&amp; \</p>
+<p>\</p>
+<h1 id="Update-your-yum-cache"><a href="#Update-your-yum-cache" class="headerlink" title="Update your yum cache \"></a>Update your yum cache \</h1><p>sudo yum -q makecache -y –disablerepo=’*’ –enablerepo=’newrelic-infra’ &amp;&amp; \</p>
+<p>\</p>
+<h1 id="Run-the-installation-script"><a href="#Run-the-installation-script" class="headerlink" title="Run the installation script \"></a>Run the installation script \</h1><p>sudo yum install newrelic-infra -y</p>
+<blockquote>
+<p>Written with <a target="_blank" rel="noopener" href="https://stackedit.io/">StackEdit</a>.</p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/centos/">centos</a><a href="/tags/system-admin/">system admin</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://cwzhou.win/2016/10/13/sysadmintool/" data-title="system admin tools | Stan Zhou&#39;s Hexo Technical Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2016/10/17/nginx/" title="optimize nginx performance">
+  <strong>上一篇：</strong><br/>
+  <span>
+  optimize nginx performance</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2016/10/12/zabbix/"  title="zabbix">
+ <strong>下一篇：</strong><br/> 
+ <span>zabbix
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#system-admin-tool"><span class="toc-number">1.</span> <span class="toc-text">system admin tool</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#useful-commands"><span class="toc-number"></span> <span class="toc-text">useful commands</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Create-a-configuration-file-and-add-your-license-key"><span class="toc-number"></span> <span class="toc-text">Create a configuration file and add your license key \</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Create-the-agent%E2%80%99s-yum-repository"><span class="toc-number"></span> <span class="toc-text">Create the agent’s yum repository \</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Update-your-yum-cache"><span class="toc-number"></span> <span class="toc-text">Update your yum cache \</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Run-the-installation-script"><span class="toc-number"></span> <span class="toc-text">Run the installation script \</span></a>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/K8s/" title="K8s">K8s<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="Stan Zhou">Stan Zhou</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

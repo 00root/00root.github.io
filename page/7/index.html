@@ -1,0 +1,924 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Stan Zhou&#39;s Hexo Technical Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Stan Zhou">
+    
+
+    
+    <meta name="description" content="a Site Reliability Engineer working and living in Sydney.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Stan Zhou&#39;s Hexo Technical Blog">
+<meta property="og:url" content="http://cwzhou.win/page/7/index.html">
+<meta property="og:site_name" content="Stan Zhou&#39;s Hexo Technical Blog">
+<meta property="og:description" content="a Site Reliability Engineer working and living in Sydney.">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Stan Zhou">
+<meta property="article:tag" content="SRE">
+<meta property="article:tag" content="Devops">
+<meta property="article:tag" content="Cloud Native">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Stan Zhou&#39;s Hexo Technical Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Stan Zhou&#39;s Hexo Technical Blog" title="Stan Zhou&#39;s Hexo Technical Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Stan Zhou&#39;s Hexo Technical Blog">Stan Zhou&#39;s Hexo Technical Blog</a></h1>
+				<h2 class="blog-motto">Innovation Evangelist</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:cwzhou.win">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/19/zabbix-server/" title="Install zabbix server on aws ec2" itemprop="url">Install zabbix server on aws ec2</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-19T03:46:10.000Z" itemprop="datePublished"> Published 2016-08-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-First-install-Mysql"><a href="#1-First-install-Mysql" class="headerlink" title="1. First install Mysql:"></a>1. First install Mysql:</h2><pre><code>vim install_mysql
+</code></pre>
+<h3 id="Insert-the-following-lines"><a href="#Insert-the-following-lines" class="headerlink" title="Insert the following lines:"></a>Insert the following lines:</h3><pre><code>groupadd mysql
+useradd -s /sbin/nologin -g mysql -M mysql
+tail -1 /etc/passwd
+id mysql
+wget ftp://mysql.inspire.net.nz/mysql/Downloads/MySQL-5.5/mysql-5.5.53-linux2.6-x86_64.tar.gz    
+tar xf mysql-5.5.53-linux2.6-x86_64.tar.gz
+mkdir -p /application/
+mv mysql-5.5.53-linux2.6-x86_64 /application/mysql-5.5.53
+ln -s /application/mysql-5.5.53/ /application/mysql
+ls -l /application/
+cd /application/mysql/
+ls -l support-files/*.cnf
+/bin/cp support-files/my-medium.cnf /etc/my.cnf
+mkdir -p /application/mysql/data
+chown -R mysql.mysql /application/mysql/
+/application/mysql/scripts/mysql_install_db --basedir=/application/mysql --datadir=/application/mysql/data/ --user=mysql
+/bin/cp support-files/mysql.server /etc/init.d/mysqld
+chmod +x /etc/init.d/mysqld
+
+
+sed -i &#39;s#/usr/local/mysql#/application/mysql#g&#39; /application/mysql/bin/mysqld_safe /etc/init.d/mysqld
+
+/etc/init.d/mysqld start
+netstat -lntup|grep mysql
+
+
+chkconfig --add mysqld
+chkconfig mysqld on
+chkconfig --list mysqld
+
+echo &#39;export PATH=/application/mysql/bin:$PATH&#39; &gt;&gt; /etc/profile
+tail -1 /etc/profile
+source /etc/profile
+echo $PATH
+</code></pre>
+<h3 id="Running-command"><a href="#Running-command" class="headerlink" title="Running command:"></a>Running command:</h3><pre><code>source install_mysql
+/application/mysql/bin/mysql_secure_installation
+</code></pre>
+<h2 id="2-Installing-repository-configuration-package"><a href="#2-Installing-repository-configuration-package" class="headerlink" title="2. Installing repository configuration package"></a>2. Installing repository configuration package</h2><p>Zabbix 2.4 for RHEL6, Oracle Linux 6, CentOS 6:<br>    #  rpm -ivh <a target="_blank" rel="noopener" href="http://mirrors.aliyun.com/epel/6/x86_64/epel-release-6-8.noarch.rpm">http://mirrors.aliyun.com/epel/6/x86_64/epel-release-6-8.noarch.rpm</a></p>
+<h2 id="rpm-ivh-http-repo-zabbix-com-zabbix-2-4-rhel-6-x86-64-zabbix-release-2-4-1-el6-noarch-rpm"><a href="#rpm-ivh-http-repo-zabbix-com-zabbix-2-4-rhel-6-x86-64-zabbix-release-2-4-1-el6-noarch-rpm" class="headerlink" title="rpm -ivh http://repo.zabbix.com/zabbix/2.4/rhel/6/x86_64/zabbix-release-2.4-1.el6.noarch.rpm"></a>rpm -ivh <a target="_blank" rel="noopener" href="http://repo.zabbix.com/zabbix/2.4/rhel/6/x86_64/zabbix-release-2.4-1.el6.noarch.rpm">http://repo.zabbix.com/zabbix/2.4/rhel/6/x86_64/zabbix-release-2.4-1.el6.noarch.rpm</a></h2><p>Installing Zabbix packages</p>
+<pre><code># yum install zabbix-server-mysql zabbix-web-mysql
+</code></pre>
+<p>Creating initial database</p>
+<pre><code>shell&gt; mysql -uroot -p
+mysql&gt; create database zabbix character set utf8 collate utf8_bin;
+mysql&gt; grant all privileges on zabbix.* to zabbix@localhost identified by &#39;zabbix&#39;;
+mysql&gt; quit;
+</code></pre>
+<p>Import initial schema and data.</p>
+<pre><code># cd /usr/share/doc/zabbix-server-mysql-2.4.8/create
+# mysql -uroot -p zabbix &lt; schema.sql
+# mysql -uroot -p zabbix &lt; images.sql
+# mysql -uroot -p zabbix &lt; data.sql
+</code></pre>
+<p>Starting Zabbix server process</p>
+<p>Edit database configuration in zabbix_server.conf</p>
+<pre><code># vim /etc/zabbix/zabbix_server.conf
+DBHost=localhost
+DBName=zabbix
+DBUser=zabbix
+DBPassword=zabbix
+DBSocket=/tmp/mysql.sock
+</code></pre>
+<p>Start Zabbix server process.</p>
+<h1 id="service-zabbix-server-start"><a href="#service-zabbix-server-start" class="headerlink" title="service zabbix-server start"></a>service zabbix-server start</h1><p>Editing PHP configuration for Zabbix frontend</p>
+<p>Apache configuration file for Zabbix frontend is located in /etc/httpd/conf.d/zabbix.conf. Some PHP settings are already configured.</p>
+<pre><code># vim /etc/httpd/conf.d/zabbix.conf
+php_value max_execution_time 300
+php_value memory_limit 128M
+php_value post_max_size 16M
+php_value upload_max_filesize 2M
+php_value max_input_time 300
+php_value date.timezone Asia/Shanghai
+</code></pre>
+<p>It’s necessary to uncomment the “date.timezone” setting and set the right timezone for you. After changing the configuration file restart the apache web server.</p>
+<pre><code># service httpd restart
+</code></pre>
+<p>Zabbix frontend is available at <a target="_blank" rel="noopener" href="http://zabbix-frontend-hostname/zabbix">http://zabbix-frontend-hostname/zabbix</a> in the browser. Default username/password is Admin/zabbix.</p>
+<h2 id="3-Troubleshooting"><a href="#3-Troubleshooting" class="headerlink" title="3. Troubleshooting"></a>3. Troubleshooting</h2><p><img src="http://obsavus1p.bkt.clouddn.com/error02.PNG"></p>
+<p><code>mkdir -p /var/lib/mysql; ln -s /tmp/mysql.sock /var/lib/mysql/mysql.sock</code></p>
+<hr>
+<p><img src="http://obsavus1p.bkt.clouddn.com/error03.PNG"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/sysconfig/clock</span><br><span class="line"></span><br><span class="line">ZONE=&quot;Aisa/Shanghai&quot;</span><br><span class="line"></span><br><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">echo &#x27;#time sync by stan zhou at `date`&#x27;&gt;&gt; /var/spool/cron/root</span><br><span class="line">echo &#x27;*/5 * * * * /usr/sbin/ntpdate 3.cn.pool.ntp.org &gt; /dev/null 2&gt;&amp;1&#x27; &gt;&gt; /var/spool/cron/root</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+
+<h2 id="read-more-Changing-the-Time-Zone"><a href="#read-more-Changing-the-Time-Zone" class="headerlink" title="read more Changing the Time Zone"></a>read more <a target="_blank" rel="noopener" href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/set-time.html">Changing the Time Zone</a></h2><p>checking for mysql_config… /usr/bin/mysql_config<br>checking for main in -lmysqlclient… no<br>configure: error: Not found mysqlclient library</p>
+<p>#yum -y install mysql-devel</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/ec2/">ec2</a><a href="/tags/zabbix/">zabbix</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/17/aws/" title="aws ec2 init setup" itemprop="url">aws ec2 init setup</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-17T04:07:13.000Z" itemprop="datePublished"> Published 2016-08-17</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="ASW-ec2-init-setup"><a href="#ASW-ec2-init-setup" class="headerlink" title="ASW ec2 init setup"></a>ASW ec2 init setup</h4><p>Managing User Accounts on Your Linux Instance</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user@ip-172-31-17-193 ~]$ sudo -i</span><br><span class="line">[root@ip-172-31-17-193 ~]# adduser stan</span><br><span class="line">[root@koopa ~]# passwd stan</span><br><span class="line">[root@ip-172-31-17-193 ~]# su - stan</span><br><span class="line">[stan@ip-172-31-17-193 ~]$ mkdir .ssh</span><br><span class="line">[stan@ip-172-31-17-193 ~]$ chmod 700 .ssh</span><br><span class="line">[stan@ip-172-31-17-193 ~]$ vim .ssh&#x2F;authorized_keys</span><br><span class="line">[stan@ip-172-31-17-193 ~]$ chmod 600 .ssh&#x2F;authorized_keys</span><br><span class="line">[root@ip-172-31-17-193 ~]# groupadd auegg</span><br><span class="line">[root@ip-172-31-17-193 ~]# usermod -a -G auegg stan</span><br><span class="line">[root@ip-172-31-17-193 ~]# visudo</span><br><span class="line">#add the following line</span><br><span class="line"></span><br><span class="line">%auegg ALL&#x3D;(ALL) ALL</span><br><span class="line">[root@ip-172-31-17-193 ~]# service sshd restart</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="ssh-to-aws-without-key-pairs"><a href="#ssh-to-aws-without-key-pairs" class="headerlink" title="ssh to aws without key pairs"></a>ssh to aws without key pairs</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;etc&#x2F;ssh&#x2F;sshd_config</span><br><span class="line">PasswordAuthentication yes</span><br><span class="line">Reload ssh daemon</span><br><span class="line">service sshd reload</span><br></pre></td></tr></table></figure>
+
+<h4 id="set-root-login"><a href="#set-root-login" class="headerlink" title="set root login"></a>set root login</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vi &#x2F;root&#x2F;.ssh&#x2F;authorized_keys</span><br><span class="line">Delete the lines at the begining of the file until you get to the words ssh-rsa</span><br><span class="line">vim &#x2F;etc&#x2F;ssh&#x2F;sshd_config</span><br><span class="line">PermitRootLogin yes</span><br></pre></td></tr></table></figure>
+
+<h1 id="the-5-pillars-of-aws-weel-architected-framework"><a href="#the-5-pillars-of-aws-weel-architected-framework" class="headerlink" title="the 5 pillars of aws weel-architected framework"></a>the 5 pillars of aws weel-architected framework</h1><ol>
+<li>Operationa Excellence<br>Design Principles:</li>
+</ol>
+<ul>
+<li>Perform operations as code</li>
+<li>Annotate documentation</li>
+<li>Make frequent, small, reversible changes</li>
+<li>Refine operations procedures frequently</li>
+<li>Anticipate failure</li>
+<li>Learn from all operation failures<br>Best practices:<br>Operations teams need to understand their business and customer needs so they can support business outcomes.<br>Ops creates and uses procedures to repond to operational events, and validates their effectiveness to support<br>business needs. Ops also collects metrics that are used to measure the achievement of desired business outcomes.</li>
+</ul>
+<ol start="2">
+<li>Security<br>Design Principles:</li>
+</ol>
+<ul>
+<li>Implement a strong identity foundation</li>
+<li>Enable traceability</li>
+<li>Apply security at all layers</li>
+<li>Automate security best practices</li>
+<li>Protect data in transfit and at rest</li>
+<li>Prepare for security events</li>
+</ul>
+<p>The <a target="_blank" rel="noopener" href="https://aws.amazon.com/compliance/shared-responsibility-model/">AWS Shared Responsibility Model</a> enables organizations to achieve<br>security and compliance goals.</p>
+<ol start="3">
+<li>Reliability<br>Design Principles:</li>
+</ol>
+<ul>
+<li>Test recovery procedures</li>
+<li>Automatically recover from failure</li>
+<li>Gtop guessing capacity</li>
+<li>Manage change in automation</li>
+</ul>
+<ol start="4">
+<li>Performance efficiency<br>Design principles:</li>
+</ol>
+<ul>
+<li>Democratize advanced technologies</li>
+<li>Go global in minutes</li>
+<li>Use serverless architectures</li>
+<li>Experiment more often</li>
+<li>Mechanical sympathy</li>
+</ul>
+<ol start="5">
+<li>Cost optimization</li>
+</ol>
+<ul>
+<li>Adopt a consumption model</li>
+<li>Measure overall efficiency</li>
+<li>Stop spending monty on data center operations</li>
+<li>Analyze and attribute expenditure</li>
+<li>Use managed services to reduce cost of ownership</li>
+</ul>
+<h1 id="Identity-and-access-management"><a href="#Identity-and-access-management" class="headerlink" title="Identity and access management"></a>Identity and access management</h1><p><strong>IAM overview</strong><br>AWS API<br>Access ID + secret key</p>
+<p>CLI, SDKs and Management console call API.</p>
+<p>Users</p>
+<ul>
+<li>Are created and exist within IAM service</li>
+<li>Login to management console</li>
+<li>Can have long-term access keys</li>
+</ul>
+<h1 id="Elastic-Load-Balancer-ELB"><a href="#Elastic-Load-Balancer-ELB" class="headerlink" title="Elastic Load Balancer (ELB)"></a>Elastic Load Balancer (ELB)</h1><h2 id="Spread-traffic-algorithmically"><a href="#Spread-traffic-algorithmically" class="headerlink" title="Spread traffic algorithmically"></a>Spread traffic algorithmically</h2><ul>
+<li>Evenly</li>
+<li>Unbalanced on purpose<h2 id="Types"><a href="#Types" class="headerlink" title="Types"></a>Types</h2></li>
+</ul>
+<ol>
+<li>Application Load Balancers</li>
+</ol>
+<ul>
+<li>Application Layer<ul>
+<li>HTTP/HTTP traffic</li>
+</ul>
+</li>
+<li>Two appealing features<ol>
+<li>Dynamic host port mapping</li>
+</ol>
+<ul>
+<li>Docker containers listening on the same port</li>
+<li>Set hostPort to 0<ul>
+<li>Host picks ports in ephemeral port range</li>
+</ul>
+</li>
+</ul>
+<ol start="2">
+<li>Path-based routing<br><img src="https://i.imgur.com/SBOmrEf.png" alt="image" title="path-based routing"> </li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>Classic Load Balancers</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/aws/">aws</a><a href="/tags/ec2/">ec2</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/08/12/tomcat/" title="tomcat troubleshooting" itemprop="url">tomcat troubleshooting</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2016-08-12T05:19:32.000Z" itemprop="datePublished"> Published 2016-08-12</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="Issue-1"><a href="#Issue-1" class="headerlink" title="Issue 1:"></a>Issue 1:</h3><p>   <img src="http://obsavus1p.bkt.clouddn.com/outmemoryissue.PNG"></p>
+<h3 id="Solve"><a href="#Solve" class="headerlink" title="Solve:"></a>Solve:</h3><p>vim /tomcat home dir/bin/catalina.sh<br>add the following line:</p>
+<p>   <code> JAVA_OPTS=&quot;-Djava.awt.headless=true -Dfile.encoding=UTF-8 -server -Xms1024m -Xmx1024m -XX:NewSize=512m -XX:MaxNewSize=512m -XX:PermSize=512m -XX:MaxPermSize=512m&quot;</code></p>
+<hr>
+<h3 id="Issue-2"><a href="#Issue-2" class="headerlink" title="Issue 2:"></a>Issue 2:</h3><pre><code>`SEVERE: The web application [/name] appears to have started a thread named [Prototyper] but has failed to stop it. This is very likely to create a memory leak.`
+</code></pre>
+<h3 id="Solve-1"><a href="#Solve-1" class="headerlink" title="Solve:"></a>Solve:</h3><p>tomcat did not shutdown properly</p>
+<p><code>vim /tomcat home dir/bin/catalina.sh</code><br>add the following line after PRGDIR=<code>dirname &quot;$PRG&quot;</code>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if [ -z &quot;$CATALINA_PID&quot; ]; then</span><br><span class="line">      CATALINA_PID&#x3D;$PRGDIR&#x2F;CATALINA_PID</span><br><span class="line">      cat $CATALINA_PID</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+<p>==============================bin/shutdown.sh<br><code>exec &quot;$PRGDIR&quot;/&quot;$EXECUTABLE&quot; stop  -force &quot;$@&quot;  #add -force </code></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/tomcat/">tomcat</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <a class="extend prev" rel="prev" href="/page/6/">&lt;span&gt;&lt;&#x2F;span&gt;Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+  </nav>
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/K8s/" title="K8s">K8s<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="Stan Zhou">Stan Zhou</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+ </html>

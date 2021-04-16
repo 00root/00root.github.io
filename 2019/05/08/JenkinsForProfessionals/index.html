@@ -1,0 +1,940 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Jenkins For Professionals | Stan Zhou&#39;s Hexo Technical Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Stan Zhou">
+    
+
+    
+    <meta name="description" content="Jenkins for ProfessionalsJenkins’s architectureGithub repository –&gt; Master -&gt; slave                             -&gt; slave Why distributed architecture for Jenkins?  Sometime, several different">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins For Professionals">
+<meta property="og:url" content="http://cwzhou.win/2019/05/08/JenkinsForProfessionals/index.html">
+<meta property="og:site_name" content="Stan Zhou&#39;s Hexo Technical Blog">
+<meta property="og:description" content="Jenkins for ProfessionalsJenkins’s architectureGithub repository –&gt; Master -&gt; slave                             -&gt; slave Why distributed architecture for Jenkins?  Sometime, several different">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/MSJOKSL.png">
+<meta property="og:image" content="https://i.imgur.com/ml63iH6.png">
+<meta property="og:image" content="https://i.imgur.com/0yAeBkU.png">
+<meta property="og:image" content="https://i.imgur.com/C9aaE74.png">
+<meta property="og:image" content="https://i.imgur.com/tRfhyNR.png">
+<meta property="og:image" content="https://i.imgur.com/EsJCtWv.png">
+<meta property="article:published_time" content="2019-05-08T11:26:40.000Z">
+<meta property="article:modified_time" content="2021-04-02T05:58:25.000Z">
+<meta property="article:author" content="Stan Zhou">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="Jenkins">
+<meta property="article:tag" content="CICD">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/MSJOKSL.png">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Stan Zhou&#39;s Hexo Technical Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Stan Zhou&#39;s Hexo Technical Blog" title="Stan Zhou&#39;s Hexo Technical Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Stan Zhou&#39;s Hexo Technical Blog">Stan Zhou&#39;s Hexo Technical Blog</a></h1>
+				<h2 class="blog-motto">Innovation Evangelist</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:cwzhou.win">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/08/JenkinsForProfessionals/" title="Jenkins For Professionals" itemprop="url">Jenkins For Professionals</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2019-05-08T11:26:40.000Z" itemprop="datePublished"> Published 2019-05-08</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Jenkins-for-Professionals"><span class="toc-number">1.</span> <span class="toc-text">Jenkins for Professionals</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins%E2%80%99s-architecture"><span class="toc-number">1.1.</span> <span class="toc-text">Jenkins’s architecture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins-Freestyle-job"><span class="toc-number">1.2.</span> <span class="toc-text">Jenkins Freestyle job</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scheduling-a-Jenkins-job"><span class="toc-number">1.3.</span> <span class="toc-text">Scheduling a Jenkins job</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Triggering-builds-remotely"><span class="toc-number">1.4.</span> <span class="toc-text">Triggering builds remotely</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parameterizing-build"><span class="toc-number">1.5.</span> <span class="toc-text">Parameterizing build</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-a-user"><span class="toc-number">1.6.</span> <span class="toc-text">Creating a user</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Plugins"><span class="toc-number">1.7.</span> <span class="toc-text">Installing Plugins</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementing-Role-based-access"><span class="toc-number">1.8.</span> <span class="toc-text">Implementing Role based access</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Assign-Roles"><span class="toc-number">1.8.1.</span> <span class="toc-text">Assign Roles</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins-in-Docker"><span class="toc-number">1.9.</span> <span class="toc-text">Jenkins in Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Running-jenkins-in-docker"><span class="toc-number">1.9.1.</span> <span class="toc-text">Running jenkins in docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Persisting-Jenkins-data-in-a-Volume"><span class="toc-number">1.9.2.</span> <span class="toc-text">Persisting Jenkins data in a Volume</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Running-multiple-Jenkins-instances-in-Docker"><span class="toc-number">1.9.3.</span> <span class="toc-text">Running multiple Jenkins instances in Docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins-Plugins"><span class="toc-number">1.10.</span> <span class="toc-text">Jenkins Plugins</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-build-monitor-view"><span class="toc-number">1.10.1.</span> <span class="toc-text">Create build monitor view</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-catlight"><span class="toc-number">1.10.2.</span> <span class="toc-text">Using catlight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-Jenkins-CLI"><span class="toc-number">1.10.3.</span> <span class="toc-text">Using Jenkins CLI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jenkins-Multibranch-Pipeline"><span class="toc-number">1.10.4.</span> <span class="toc-text">Jenkins Multibranch Pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Integrating-Jenkins-with-Slack"><span class="toc-number">1.10.5.</span> <span class="toc-text">Integrating Jenkins with Slack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jenkins-Metrics-and-Trends"><span class="toc-number">1.10.6.</span> <span class="toc-text">Jenkins Metrics and Trends</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction-to-Jenkins-Pipeline"><span class="toc-number">1.11.</span> <span class="toc-text">Introduction to Jenkins Pipeline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pipeline-concepts"><span class="toc-number">1.12.</span> <span class="toc-text">Pipeline concepts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-a-simple-Pipeline"><span class="toc-number">1.13.</span> <span class="toc-text">Creating a simple Pipeline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Building-a-project-with-jenkins-pipeline"><span class="toc-number">1.14.</span> <span class="toc-text">Building a project with jenkins pipeline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Building-a-Pipeline-with-Jenkinsfile"><span class="toc-number">1.15.</span> <span class="toc-text">Building a Pipeline with Jenkinsfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-environment-variables"><span class="toc-number">1.16.</span> <span class="toc-text">Using environment variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-environment-variables"><span class="toc-number">1.17.</span> <span class="toc-text">Setting environment variables</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Jenkins-Blue-Ocean"><span class="toc-number">2.</span> <span class="toc-text">Jenkins Blue Ocean</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-started-with-blue-ocean"><span class="toc-number">2.1.</span> <span class="toc-text">Getting started with blue ocean</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Jenkins-for-Professionals"><a href="#Jenkins-for-Professionals" class="headerlink" title="Jenkins for Professionals"></a>Jenkins for Professionals</h1><h2 id="Jenkins’s-architecture"><a href="#Jenkins’s-architecture" class="headerlink" title="Jenkins’s architecture"></a>Jenkins’s architecture</h2><p>Github repository –&gt; Master -&gt; slave<br>                             -&gt; slave</p>
+<p>Why distributed architecture for Jenkins?</p>
+<ul>
+<li>Sometime, several different environments needed</li>
+<li>If a larger project gets build, a single server cannot handle entire load<br>Jenkins Master:</li>
+<li>Scheduling jobs</li>
+<li>Communicating with the slaves</li>
+<li>Monitor the slaves</li>
+<li>Present the results</li>
+<li>Master can also execute build jobs</li>
+</ul>
+<p>Jenkins Slave:</p>
+<ul>
+<li>Communicates with Jenkins Master</li>
+<li>Can run in different OS</li>
+<li>Execute jobs</li>
+<li>Flexibility</li>
+</ul>
+<h2 id="Jenkins-Freestyle-job"><a href="#Jenkins-Freestyle-job" class="headerlink" title="Jenkins Freestyle job"></a>Jenkins Freestyle job</h2><ul>
+<li>Central feature of Jenkins</li>
+<li>Using jenkins UI to create a CI Pipeline</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/ravikiran-srini/springExample">https://github.com/ravikiran-srini/springExample</a></p>
+<h2 id="Scheduling-a-Jenkins-job"><a href="#Scheduling-a-Jenkins-job" class="headerlink" title="Scheduling a Jenkins job"></a>Scheduling a Jenkins job</h2><ul>
+<li>Scheduling is one of the options of a Build Trigger</li>
+<li>Use CRON expressions to schedule a job<ul>
+<li>Each line consists of 5 fields sparated by TAB or whitespace</li>
+<li>MINUTE HOUR DOM MONTH DOW<br>0 refers to Sunday</li>
+</ul>
+</li>
+<li>To specify multiple values, use the following:<ul>
+<li><ul>
+<li>for all valid values</li>
+</ul>
+</li>
+<li>0-9 specify a range of values</li>
+<li>2,3,4,5 to enumerate multiple values</li>
+</ul>
+</li>
+<li>Use Hash system for automatic balancing<ul>
+<li>Use H H * * * instead of 0 0 * * *</li>
+</ul>
+</li>
+<li>Use aliases like @yearly, @monthly, @weekly<ul>
+<li>@hourly is the same as H * * * *</li>
+</ul>
+</li>
+</ul>
+<p>Under Source Code Management of Project,<br>in Build Triggers, tick Build periodically, put five starts.</p>
+<h2 id="Triggering-builds-remotely"><a href="#Triggering-builds-remotely" class="headerlink" title="Triggering builds remotely"></a>Triggering builds remotely</h2><p>Build Triggers-&gt; tick ‘Tigger build remotely’, put Authenication Token value.</p>
+<h2 id="Parameterizing-build"><a href="#Parameterizing-build" class="headerlink" title="Parameterizing build"></a>Parameterizing build</h2><ul>
+<li>Allow you to prompt users for one or more inputs</li>
+<li>Each parameter has a name and a value</li>
+<li>Can be accessed using $paramater or %parameter%</li>
+<li>‘Build Now’ will be replaced by “Build with Parameters”</li>
+</ul>
+<p>Types of Parameters</p>
+<ul>
+<li>Boolean Parameter</li>
+<li>Choice Parameter</li>
+<li>Credentials Parameter</li>
+<li>File Parameter</li>
+<li>List Subversion tags</li>
+<li>Password Parameter</li>
+<li>Run Parameter</li>
+<li>String Parameter</li>
+</ul>
+<h2 id="Creating-a-user"><a href="#Creating-a-user" class="headerlink" title="Creating a user"></a>Creating a user</h2><h2 id="Installing-Plugins"><a href="#Installing-Plugins" class="headerlink" title="Installing Plugins"></a>Installing Plugins</h2><p>Plugin name: Role-based Authorization Strategy</p>
+<h2 id="Implementing-Role-based-access"><a href="#Implementing-Role-based-access" class="headerlink" title="Implementing Role based access"></a>Implementing Role based access</h2><p>Enabling role based access<br>Manage Jenkins-&gt; Configure Global Security, tick ‘Enable security’<br>Authorization select ‘Role-Based Strategy’</p>
+<p>Under Manage Jenkins you will have a new ‘Manage and Assign Roles’-&gt; Manage roles</p>
+<p>In ‘Global roles’ add role ‘team’ with overall read permission.<br>In “Project roles” add role ‘dev’ with ‘Pattern’ ‘Dev.*’, and tick all the boxes.<br>Same for ‘test’ and ‘ops’.<br><img src="https://i.imgur.com/MSJOKSL.png" alt="ManageRoles"></p>
+<h3 id="Assign-Roles"><a href="#Assign-Roles" class="headerlink" title="Assign Roles"></a>Assign Roles</h3><p>Click “Assign Roles”, in ‘Global roles’ add ‘dev’, ‘test’ and ‘ops’ into group ‘team’.<br>Under ‘Item roles’ add user ‘dev’,’test’ and ‘ops’ and assign to its own role.<br><img src="https://i.imgur.com/ml63iH6.png" alt="AssignRoles"></p>
+<hr>
+<h2 id="Jenkins-in-Docker"><a href="#Jenkins-in-Docker" class="headerlink" title="Jenkins in Docker"></a>Jenkins in Docker</h2><h3 id="Running-jenkins-in-docker"><a href="#Running-jenkins-in-docker" class="headerlink" title="Running jenkins in docker"></a>Running jenkins in docker</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull jenkins</span><br><span class="line">docker run -p 8080:8080 -p 50000:50000 jenkins</span><br></pre></td></tr></table></figure>
+<h3 id="Persisting-Jenkins-data-in-a-Volume"><a href="#Persisting-Jenkins-data-in-a-Volume" class="headerlink" title="Persisting Jenkins data in a Volume"></a>Persisting Jenkins data in a Volume</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker volume create volume1</span><br><span class="line">docker volume volume ls</span><br><span class="line">docker run -p 8080:8080 -p 50000:50000 -v  volume1:&#x2F;var&#x2F;jenkins_home jenkins #v means bond a volume</span><br></pre></td></tr></table></figure>
+<p><code>docker stop $(docker ps -aq) #stop all the containers</code><br><code>docker rm $(docker ps -aq) #remove the container</code></p>
+<h3 id="Running-multiple-Jenkins-instances-in-Docker"><a href="#Running-multiple-Jenkins-instances-in-Docker" class="headerlink" title="Running multiple Jenkins instances in Docker"></a>Running multiple Jenkins instances in Docker</h3><p><img src="https://i.imgur.com/0yAeBkU.png" alt="demo"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8080:8080 -p 50000:50000 -v  volume1:&#x2F;var&#x2F;jenkins_home jenkins</span><br><span class="line">docker run -p 8081:8080 -p 50001:50000 -v  volume1:&#x2F;var&#x2F;jenkins_home jenkins</span><br></pre></td></tr></table></figure>
+<h2 id="Jenkins-Plugins"><a href="#Jenkins-Plugins" class="headerlink" title="Jenkins Plugins"></a>Jenkins Plugins</h2><h3 id="Create-build-monitor-view"><a href="#Create-build-monitor-view" class="headerlink" title="Create build monitor view"></a>Create build monitor view</h3><p>Install pugin: build monitor view</p>
+<h3 id="Using-catlight"><a href="#Using-catlight" class="headerlink" title="Using catlight"></a>Using <a target="_blank" rel="noopener" href="https://catlight.io/">catlight</a></h3><p><strong>Catlight</strong></p>
+<ul>
+<li>A notification app for developers</li>
+<li>Available for wind, mac &amp; Linux os</li>
+<li>Monitor Busg, tasks, builds</li>
+<li>See status in the tray and get notified</li>
+<li>This is a jenkins plugin</li>
+</ul>
+<h3 id="Using-Jenkins-CLI"><a href="#Using-Jenkins-CLI" class="headerlink" title="Using Jenkins CLI"></a>Using Jenkins CLI</h3><ul>
+<li>Jenkins has a built-in CLI<br>Manage Jenkins-&gt; Jenkins CLI-&gt; Download jenkins-cli.jar</li>
+</ul>
+<p><code>java -jar jenkins-cli.jar -s http://localhost:8080/ build pipeline -f --username stanadmin --password mario54321</code></p>
+<p>Change ‘Configure Global Security’ -&gt; ‘Authorization’-&gt; Logged-in users can do anything-Allow anonymous read access</p>
+<p><code>java -jar jenkins-cli.jar -s http://localhost:8080/ build Parameterized-build -f -p environment=&#39;dev&#39;</code></p>
+<h3 id="Jenkins-Multibranch-Pipeline"><a href="#Jenkins-Multibranch-Pipeline" class="headerlink" title="Jenkins Multibranch Pipeline"></a>Jenkins Multibranch Pipeline</h3><ul>
+<li>Implement different Jenkinsfile for different branches<br>New iteam-&gt; Select Multibranch Pipline-&gt; Scan multibranch pipleline Now<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">git remote add proj1 https:&#x2F;&#x2F;github.com&#x2F;szhouchoice&#x2F;springExample.git</span><br><span class="line">git branch</span><br><span class="line">git branch -a</span><br><span class="line">git branch feature2</span><br><span class="line">git checkout feature2 # Switched to branch &#39;feature2&#39;</span><br><span class="line">git push origin feature2</span><br></pre></td></tr></table></figure>
+<h3 id="Integrating-Jenkins-with-Slack"><a href="#Integrating-Jenkins-with-Slack" class="headerlink" title="Integrating Jenkins with Slack"></a>Integrating Jenkins with Slack</h3>Install: Jenkins-&gt;Plugin Manager-&gt; Slack Notification<h3 id="Jenkins-Metrics-and-Trends"><a href="#Jenkins-Metrics-and-Trends" class="headerlink" title="Jenkins Metrics and Trends"></a>Jenkins Metrics and Trends</h3></li>
+</ul>
+<p><strong>Build History Metrics Plugin</strong></p>
+<ul>
+<li>Mean Time To Failure (MTTF)</li>
+<li>Mean Time To Recovery (MTTR)</li>
+<li>Standard Deviation<br>Install: Plugin Manager-&gt;Build history metrics<br><img src="https://i.imgur.com/C9aaE74.png" alt="Build History Metrics"></li>
+</ul>
+<p><strong>Global Build Stats</strong><br>Install: Plugin Manager-&gt;global-build-stats<br>Manage Jenkins-&gt;Global Build Stats-&gt;Initalize stats-&gt;Create new chart-&gt;<br>Title: foobar<br>600*400<br>Hourly<br>24 hours<br><img src="https://i.imgur.com/tRfhyNR.png" alt="Global Build Stats"></p>
+<h2 id="Introduction-to-Jenkins-Pipeline"><a href="#Introduction-to-Jenkins-Pipeline" class="headerlink" title="Introduction to Jenkins Pipeline"></a>Introduction to Jenkins Pipeline</h2><ul>
+<li>A suite of plugins that support continuous delivery pipelines</li>
+<li>They provide tools for modeling delivery pipelines as</li>
+<li>Definition is written into a text file called ‘Jenkinsfile’</li>
+</ul>
+<p>Benefits of pipelines</p>
+<ul>
+<li>Automatically creates a Pipeline build process</li>
+<li>Code review of the Pipeline</li>
+<li>Audit trail of the Pipeline </li>
+<li>Single source of truth</li>
+</ul>
+<p>Declarative vs Scripted Pipeline </p>
+<ul>
+<li>Jenkinsfile can be written using:<ul>
+<li>Declarative</li>
+<li>Scripted</li>
+</ul>
+</li>
+<li>Declarative is a more recent feature<ul>
+<li>provides rich syntactical feature</li>
+<li>designed to make reading &amp; writing Pipelines easier</li>
+</ul>
+</li>
+</ul>
+<p>Why pipeline?</p>
+<ul>
+<li>Pipelines add a powerful set of automation tolls onto Jenkins</li>
+<li>Features of Pipeline are:<ul>
+<li>Pipelines are implemented in code </li>
+<li>Pipelines support complex real-world CD requirements</li>
+<li>Pipelines can survive both planned and unplanned restarts</li>
+<li>Pipeline plugin supports custom extensions</li>
+<li>Pipelines can stop and wait</li>
+</ul>
+</li>
+</ul>
+<h2 id="Pipeline-concepts"><a href="#Pipeline-concepts" class="headerlink" title="Pipeline concepts"></a>Pipeline concepts</h2><ul>
+<li>Pipeline</li>
+<li>Node</li>
+<li>Stage: build, test, deploy</li>
+<li>Step</li>
+</ul>
+<p>Declarative Pipeline syntax</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">pipeline&#123;</span><br><span class="line">  agent any</span><br><span class="line">  stages&#123;</span><br><span class="line">    stage(&#39;Build&#39;)&#123;</span><br><span class="line">	steps &#123;</span><br><span class="line">	   &#x2F;&#x2F;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(&#39;Test&#39;)&#123;</span><br><span class="line">	steps &#123;</span><br><span class="line">	   &#x2F;&#x2F;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(&#39;Deploy&#39;)&#123;</span><br><span class="line">	steps &#123;</span><br><span class="line">	   &#x2F;&#x2F;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Declarative Pipeline syntax</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">node &#123;</span><br><span class="line">  stage(&#39;Build&#39;)&#123;</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">  &#125;</span><br><span class="line">  stage(&#39;Test&#39;)&#123;</span><br><span class="line">    &#x2F;&#x2F;</span><br><span class="line">  &#125;</span><br><span class="line">  stage(&#39;Deploy&#39;)&#123;</span><br><span class="line">   &#x2F;&#x2F;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Creating-a-simple-Pipeline"><a href="#Creating-a-simple-Pipeline" class="headerlink" title="Creating a simple Pipeline"></a>Creating a simple Pipeline</h2><ul>
+<li>Pipeline can be created in any of the following ways:<ul>
+<li>Blue Ocean</li>
+<li>Through Classic UI</li>
+<li>In SCM(Source Code Managment)</li>
+</ul>
+</li>
+</ul>
+<h2 id="Building-a-project-with-jenkins-pipeline"><a href="#Building-a-project-with-jenkins-pipeline" class="headerlink" title="Building a project with jenkins pipeline"></a>Building a project with jenkins pipeline</h2><p>pipeline script:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">pipeline&#123;</span><br><span class="line">  agent any</span><br><span class="line">  stages&#123;</span><br><span class="line">    stage(&#39;Build&#39;)&#123;</span><br><span class="line">        steps &#123;</span><br><span class="line">           bat &quot;rm -rf springExample&quot;</span><br><span class="line">           bat &quot;git clone https:&#x2F;&#x2F;github.com&#x2F;ravikiran-srini&#x2F;springExample.git&quot;</span><br><span class="line">           bat &quot;mvn clean -f springExample&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(&#39;Test&#39;)&#123;</span><br><span class="line">        steps &#123;</span><br><span class="line">           bat &quot;mvn test -f springExample&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(&#39;Deploy&#39;)&#123;</span><br><span class="line">        steps &#123;</span><br><span class="line">           bat &quot;mvn package -f springExample&quot;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Building-a-Pipeline-with-Jenkinsfile"><a href="#Building-a-Pipeline-with-Jenkinsfile" class="headerlink" title="Building a Pipeline with Jenkinsfile"></a>Building a Pipeline with Jenkinsfile</h2><p>Jenkinsfile</p>
+<ul>
+<li>Complex Pipelines are difficult to write and maintain</li>
+<li>You can write Jenkinsfile in an IDE and commit to source control</li>
+</ul>
+<ol>
+<li>In <a target="_blank" rel="noopener" href="https://github.com/szhouchoice/springExample">https://github.com/szhouchoice/springExample</a> add a Jenksinsfile<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">  agent any</span><br><span class="line">  stages &#123;</span><br><span class="line">    stage(&#39;Build&#39;) &#123;</span><br><span class="line">      steps &#123;</span><br><span class="line">        sh &#39;mvn clean&#39;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(&#39;Test&#39;) &#123;</span><br><span class="line">      steps &#123;</span><br><span class="line">        sh &#39;mvn test&#39;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    stage(&#39;Deploy&#39;) &#123;</span><br><span class="line">      steps &#123;</span><br><span class="line">        sh &#39;mvn package&#39;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li>Pipeline<br><img src="https://i.imgur.com/EsJCtWv.png" alt="Pipeline script from SCM"></li>
+</ol>
+<h2 id="Using-environment-variables"><a href="#Using-environment-variables" class="headerlink" title="Using environment variables"></a>Using environment variables</h2><p><strong>Environment variables</strong></p>
+<ul>
+<li>Jenkins exposes environment variables through the variable ‘env’</li>
+<li>Entire list of environment variables is accessible from <a href="localhost:8080/pipeline-syntax/globals#env">env variables</a></li>
+</ul>
+<p>example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(&#39;stage1&#39;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo &quot;Build ID: $&#123;env.BUILD_ID&#125;, Jenkins URL: $&#123;env.JENKINS_URL&#125;&quot;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Console Ouput:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Started by user Stan Zhou</span><br><span class="line">Running in Durability level: MAX_SURVIVABILITY</span><br><span class="line">[Pipeline] Start of Pipeline</span><br><span class="line">[Pipeline] node</span><br><span class="line">Running on Jenkins in &#x2F;Users&#x2F;szhou&#x2F;.jenkins&#x2F;workspace&#x2F;stanpipeline</span><br><span class="line">[Pipeline] &#123;</span><br><span class="line">[Pipeline] stage</span><br><span class="line">[Pipeline] &#123; (stage1)</span><br><span class="line">[Pipeline] echo</span><br><span class="line">Build ID: 1, Jenkins URL: http:&#x2F;&#x2F;localhost:8080&#x2F;</span><br><span class="line">[Pipeline] &#125;</span><br><span class="line">[Pipeline] &#x2F;&#x2F; stage</span><br><span class="line">[Pipeline] &#125;</span><br><span class="line">[Pipeline] &#x2F;&#x2F; node</span><br><span class="line">[Pipeline] End of Pipeline</span><br><span class="line">Finished: SUCCESS</span><br></pre></td></tr></table></figure>
+<h2 id="Setting-environment-variables"><a href="#Setting-environment-variables" class="headerlink" title="Setting environment variables"></a>Setting environment variables</h2><ul>
+<li>Declarative Pipeline<ul>
+<li>use ‘environment’ directive</li>
+</ul>
+</li>
+<li>Scripted Pipeline<ul>
+<li>use ‘withEnv’ step</li>
+</ul>
+</li>
+<li>environment directive in top-level pipeline block will apply to all steps</li>
+<li>environment directive within a stage will only apply with the stage</li>
+</ul>
+<p>example:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">    agent any</span><br><span class="line">    environment &#123;</span><br><span class="line">        mainenv &#x3D; &#39;test&#39;</span><br><span class="line">    &#125;</span><br><span class="line">    stages &#123;</span><br><span class="line">        stage(&#39;stage1&#39;) &#123;</span><br><span class="line">            environment &#123;</span><br><span class="line">                subenv &#x3D; &#39;test1&#39;</span><br><span class="line">            &#125;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo mainenv</span><br><span class="line">                echo subenv</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        stage(&#39;stage2&#39;) &#123;</span><br><span class="line">            steps &#123;</span><br><span class="line">                echo mainenv</span><br><span class="line">                echo subenv  # will pro error</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="Jenkins-Blue-Ocean"><a href="#Jenkins-Blue-Ocean" class="headerlink" title="Jenkins Blue Ocean"></a>Jenkins Blue Ocean</h1><h2 id="Getting-started-with-blue-ocean"><a href="#Getting-started-with-blue-ocean" class="headerlink" title="Getting started with blue ocean"></a>Getting started with blue ocean</h2><p>What is blue ocean?</p>
+<ul>
+<li>Blue Ocean refefines the user experience of Jenkins</li>
+<li>Features of Blue Ocean are:<ul>
+<li>Visualization</li>
+<li>Pipeline editor</li>
+<li>Personalization</li>
+<li>Precision</li>
+<li>Native integration for branch</li>
+</ul>
+</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/devops/">devops</a><a href="/tags/Jenkins/">Jenkins</a><a href="/tags/CICD/">CICD</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://cwzhou.win/2019/05/08/JenkinsForProfessionals/" data-title="Jenkins For Professionals | Stan Zhou&#39;s Hexo Technical Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/05/08/vim/" title="vim">
+  <strong>上一篇：</strong><br/>
+  <span>
+  vim</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/05/06/git/"  title="Complete Git and Github Masterclass">
+ <strong>下一篇：</strong><br/> 
+ <span>Complete Git and Github Masterclass
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Jenkins-for-Professionals"><span class="toc-number">1.</span> <span class="toc-text">Jenkins for Professionals</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins%E2%80%99s-architecture"><span class="toc-number">1.1.</span> <span class="toc-text">Jenkins’s architecture</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins-Freestyle-job"><span class="toc-number">1.2.</span> <span class="toc-text">Jenkins Freestyle job</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Scheduling-a-Jenkins-job"><span class="toc-number">1.3.</span> <span class="toc-text">Scheduling a Jenkins job</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Triggering-builds-remotely"><span class="toc-number">1.4.</span> <span class="toc-text">Triggering builds remotely</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Parameterizing-build"><span class="toc-number">1.5.</span> <span class="toc-text">Parameterizing build</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-a-user"><span class="toc-number">1.6.</span> <span class="toc-text">Creating a user</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installing-Plugins"><span class="toc-number">1.7.</span> <span class="toc-text">Installing Plugins</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementing-Role-based-access"><span class="toc-number">1.8.</span> <span class="toc-text">Implementing Role based access</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Assign-Roles"><span class="toc-number">1.8.1.</span> <span class="toc-text">Assign Roles</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins-in-Docker"><span class="toc-number">1.9.</span> <span class="toc-text">Jenkins in Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Running-jenkins-in-docker"><span class="toc-number">1.9.1.</span> <span class="toc-text">Running jenkins in docker</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Persisting-Jenkins-data-in-a-Volume"><span class="toc-number">1.9.2.</span> <span class="toc-text">Persisting Jenkins data in a Volume</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Running-multiple-Jenkins-instances-in-Docker"><span class="toc-number">1.9.3.</span> <span class="toc-text">Running multiple Jenkins instances in Docker</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Jenkins-Plugins"><span class="toc-number">1.10.</span> <span class="toc-text">Jenkins Plugins</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-build-monitor-view"><span class="toc-number">1.10.1.</span> <span class="toc-text">Create build monitor view</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-catlight"><span class="toc-number">1.10.2.</span> <span class="toc-text">Using catlight</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Using-Jenkins-CLI"><span class="toc-number">1.10.3.</span> <span class="toc-text">Using Jenkins CLI</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jenkins-Multibranch-Pipeline"><span class="toc-number">1.10.4.</span> <span class="toc-text">Jenkins Multibranch Pipeline</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Integrating-Jenkins-with-Slack"><span class="toc-number">1.10.5.</span> <span class="toc-text">Integrating Jenkins with Slack</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jenkins-Metrics-and-Trends"><span class="toc-number">1.10.6.</span> <span class="toc-text">Jenkins Metrics and Trends</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction-to-Jenkins-Pipeline"><span class="toc-number">1.11.</span> <span class="toc-text">Introduction to Jenkins Pipeline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pipeline-concepts"><span class="toc-number">1.12.</span> <span class="toc-text">Pipeline concepts</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-a-simple-Pipeline"><span class="toc-number">1.13.</span> <span class="toc-text">Creating a simple Pipeline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Building-a-project-with-jenkins-pipeline"><span class="toc-number">1.14.</span> <span class="toc-text">Building a project with jenkins pipeline</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Building-a-Pipeline-with-Jenkinsfile"><span class="toc-number">1.15.</span> <span class="toc-text">Building a Pipeline with Jenkinsfile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-environment-variables"><span class="toc-number">1.16.</span> <span class="toc-text">Using environment variables</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-environment-variables"><span class="toc-number">1.17.</span> <span class="toc-text">Setting environment variables</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Jenkins-Blue-Ocean"><span class="toc-number">2.</span> <span class="toc-text">Jenkins Blue Ocean</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Getting-started-with-blue-ocean"><span class="toc-number">2.1.</span> <span class="toc-text">Getting started with blue ocean</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/K8s/" title="K8s">K8s<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="Stan Zhou">Stan Zhou</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

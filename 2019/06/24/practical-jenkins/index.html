@@ -1,0 +1,890 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>practical jenkins | Stan Zhou&#39;s Hexo Technical Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Stan Zhou">
+    
+
+    
+    <meta name="description" content="Practical Jenkins for Production Deployments Installation, configuration, and automation of Jenkins and its dependencies Attention to high-availability, monitoring, management, and security Utilizing">
+<meta property="og:type" content="article">
+<meta property="og:title" content="practical jenkins">
+<meta property="og:url" content="http://cwzhou.win/2019/06/24/practical-jenkins/index.html">
+<meta property="og:site_name" content="Stan Zhou&#39;s Hexo Technical Blog">
+<meta property="og:description" content="Practical Jenkins for Production Deployments Installation, configuration, and automation of Jenkins and its dependencies Attention to high-availability, monitoring, management, and security Utilizing">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/vZuSUgf.png">
+<meta property="og:image" content="https://i.imgur.com/YnYwCzR.png">
+<meta property="og:image" content="https://i.imgur.com/fvgXK7C.png">
+<meta property="og:image" content="https://i.imgur.com/88b0cnX.png">
+<meta property="og:image" content="https://i.imgur.com/jeagEZ9.png">
+<meta property="og:image" content="https://i.imgur.com/gG5igvY.png">
+<meta property="og:image" content="https://imgur.com/1gwJ4gM.png">
+<meta property="og:image" content="https://i.imgur.com/9q0FIpP.png">
+<meta property="og:image" content="https://i.imgur.com/lPoxSai.png">
+<meta property="og:image" content="https://i.imgur.com/H0bz6rU.png">
+<meta property="og:image" content="https://i.imgur.com/YkFDXf5.png">
+<meta property="og:image" content="https://i.imgur.com/JM1wDEf.png">
+<meta property="og:image" content="https://i.imgur.com/l1wUQY3.png">
+<meta property="og:image" content="https://i.imgur.com/10Cbmz6.png">
+<meta property="og:image" content="https://i.imgur.com/R8fVL74.png">
+<meta property="article:published_time" content="2019-06-24T13:57:33.000Z">
+<meta property="article:modified_time" content="2021-04-02T05:58:25.000Z">
+<meta property="article:author" content="Stan Zhou">
+<meta property="article:tag" content="Jenkins">
+<meta property="article:tag" content="Devops">
+<meta property="article:tag" content="CD&#x2F;CI">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/vZuSUgf.png">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Stan Zhou&#39;s Hexo Technical Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Stan Zhou&#39;s Hexo Technical Blog" title="Stan Zhou&#39;s Hexo Technical Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Stan Zhou&#39;s Hexo Technical Blog">Stan Zhou&#39;s Hexo Technical Blog</a></h1>
+				<h2 class="blog-motto">Innovation Evangelist</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:cwzhou.win">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/06/24/practical-jenkins/" title="practical jenkins" itemprop="url">practical jenkins</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2019-06-24T13:57:33.000Z" itemprop="datePublished"> Published 2019-06-24</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Practical-Jenkins-for-Production-Deployments"><span class="toc-number">1.</span> <span class="toc-text">Practical Jenkins for Production Deployments</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-Development-Stages"><span class="toc-number">2.</span> <span class="toc-text">The Development Stages</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-Continuous-Integration"><span class="toc-number">3.</span> <span class="toc-text">What is Continuous Integration?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-Continous-Delivery"><span class="toc-number">4.</span> <span class="toc-text">What is Continous Delivery?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-Continous-Deployment"><span class="toc-number">5.</span> <span class="toc-text">What is Continous Deployment?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Setting-up-git-code-repositories-and-dependencies-for-Jenkins"><span class="toc-number">6.</span> <span class="toc-text">Setting up git, code repositories, and dependencies for Jenkins</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Storage-for-Jenkins-Data"><span class="toc-number">6.1.</span> <span class="toc-text">Storage for Jenkins Data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installation-of-Jenkins-from-Packages-and-WAR-Files"><span class="toc-number">6.2.</span> <span class="toc-text">Installation of Jenkins from Packages and WAR Files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuring-reverse-proxy-and-setting-up-user-interface-for-jenkins"><span class="toc-number">6.3.</span> <span class="toc-text">Configuring reverse proxy and setting up user interface for jenkins</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Automating-the-Jenkins-Installation-and-Configuration-Process"><span class="toc-number">6.4.</span> <span class="toc-text">Automating the Jenkins Installation and Configuration Process</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#install-puppet"><span class="toc-number">6.5.</span> <span class="toc-text">install puppet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-build-jobs-from-user-interface-and-scripts"><span class="toc-number">6.6.</span> <span class="toc-text">Creating build jobs from user interface and scripts</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#High-availability-monitoring-and-management-of-jenkins-deployments"><span class="toc-number">7.</span> <span class="toc-text">High-availability, monitoring, and management of jenkins deployments</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-up-multiple-Jenkins-Master-with-Load-Balancer-for-high-availability"><span class="toc-number">7.1.</span> <span class="toc-text">Setting up multiple Jenkins Master with Load Balancer for high-availability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-On-aws-ec2-create-3-instances-with-Centos-7-OS-1-for-haproxy-2-for-jenkins"><span class="toc-number">7.1.1.</span> <span class="toc-text">1. On aws ec2 create 3 instances with Centos 7 OS. 1 for haproxy 2 for jenkins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Create-a-efs-on-aws-setup-up-efs-on-two-jenkins-ec2-instances-efs-security-group-need-create-a-new-one-open-nfs-port-to-everywhere"><span class="toc-number">7.1.2.</span> <span class="toc-text">2. Create a efs on aws, setup up efs on two jenkins ec2 instances. efs security group need create a new one open nfs port to everywhere</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-On-Jenkins-master-passive-node"><span class="toc-number">7.1.3.</span> <span class="toc-text">3. On Jenkins master passive node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-On-HA-Proxy-server"><span class="toc-number">7.1.4.</span> <span class="toc-text">4. On HA Proxy server</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backing-up-and-restoring-Jenkins-data"><span class="toc-number">7.2.</span> <span class="toc-text">Backing up and restoring Jenkins data</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Steps-of-backup-and-resotre"><span class="toc-number">7.2.1.</span> <span class="toc-text">Steps of backup and resotre</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Backup-and-Restore-Methods"><span class="toc-number">7.2.2.</span> <span class="toc-text">Backup and Restore Methods</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Monitoring-Jenkins-components-and-data"><span class="toc-number">7.3.</span> <span class="toc-text">Monitoring Jenkins components and data</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-plugin-monitoring-after-that-under-%E2%80%98Manage-Jenkins%E2%80%99-will-have-Monitoring-of-Jenkins-master"><span class="toc-number">7.3.1.</span> <span class="toc-text">Install plugin monitoring, after that under ‘Manage Jenkins’ will have Monitoring of Jenkins master:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install-configure-graphite-grafana"><span class="toc-number">7.3.2.</span> <span class="toc-text">install configure graphite grafana</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-monit"><span class="toc-number">7.3.3.</span> <span class="toc-text">Install monit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementing-security-and-roles-for-Jenkins"><span class="toc-number">7.4.</span> <span class="toc-text">Implementing security and roles for Jenkins</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jenkins-Security-best-practices"><span class="toc-number">7.4.1.</span> <span class="toc-text">Jenkins Security best practices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#use-LDAP-server-and-role-based-strategy"><span class="toc-number">7.4.2.</span> <span class="toc-text">use LDAP server and role-based strategy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-the-jenkinss-api-and-automating-plugin-management"><span class="toc-number">7.5.</span> <span class="toc-text">Using the jenkinss api and automating plugin management</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="Practical-Jenkins-for-Production-Deployments"><a href="#Practical-Jenkins-for-Production-Deployments" class="headerlink" title="Practical Jenkins for Production Deployments"></a>Practical Jenkins for Production Deployments</h1><ul>
+<li>Installation, configuration, and automation of Jenkins and its dependencies</li>
+<li>Attention to high-availability, monitoring, management, and security</li>
+<li>Utilizing distributed architectures and ability to work with diverse infrastructure platforms</li>
+<li>Understanding and implementing pipeline as code with special attention to multi-branch pipeline</li>
+<li>Being able to deploy code continously</li>
+<li>Integration with extenal services for optimal workflow desgin</li>
+</ul>
+<h1 id="The-Development-Stages"><a href="#The-Development-Stages" class="headerlink" title="The Development Stages"></a>The Development Stages</h1><ul>
+<li>Feature branch forked from devlop branch</li>
+<li>Code added/modified and then build/test is executed against it</li>
+<li>On success, the node is merged to the develop branch</li>
+<li>More builds/tests are executed against the develop branch including integration tests</li>
+<li>On success, the code is merged to the master branch</li>
+<li>A tag is created and (optionally) a package is prepared for deployment</li>
+<li>Next setps:<ul>
+<li>The package is deployed to target systems by Jenkins</li>
+<li>Jenkins triggers an event in another deployment tool</li>
+<li>Acceptance testing is performed on the target systems (optional)</li>
+</ul>
+</li>
+</ul>
+<h1 id="What-is-Continuous-Integration"><a href="#What-is-Continuous-Integration" class="headerlink" title="What is Continuous Integration?"></a>What is Continuous Integration?</h1><ul>
+<li>It is a development practice</li>
+<li>A new feature is added by forking an integration branch</li>
+<li>The new feature branch is tested before merging the code to the integration branch</li>
+<li>Errors and problems are detected early</li>
+<li>Testing and merging happens automatically without manual intervention</li>
+<li>New code is added, modified, and merged regularly to the integration branch</li>
+</ul>
+<h1 id="What-is-Continous-Delivery"><a href="#What-is-Continous-Delivery" class="headerlink" title="What is Continous Delivery?"></a>What is Continous Delivery?</h1><ul>
+<li>It is the practice of getting code into a deployable state</li>
+<li>This is achieved irrespective of the size of the application or number of developers making commits</li>
+<li>Includes new features, changes, bug fixes, etc</li>
+<li>Makes sure that all changes are ready to be deployed at any time</li>
+<li>Makes releases low risk and of higher quality</li>
+<li>Depends on Continous Integration</li>
+</ul>
+<h1 id="What-is-Continous-Deployment"><a href="#What-is-Continous-Deployment" class="headerlink" title="What is Continous Deployment?"></a>What is Continous Deployment?</h1><ul>
+<li>It is the process of automatic releases to production</li>
+<li>It is the next step to Continous Delivery</li>
+<li>The level of testing decides how good the release will be </li>
+<li>Release happends in small batches and continuously</li>
+<li>Gradual product improvement and increase in quality</li>
+<li>The processes of Continous Integration and Continuous Delivery need to be perfect to ensure that releases are without issues</li>
+<li>Relieves developers and administrators from the periodic taks of releasing</li>
+</ul>
+<h1 id="Setting-up-git-code-repositories-and-dependencies-for-Jenkins"><a href="#Setting-up-git-code-repositories-and-dependencies-for-Jenkins" class="headerlink" title="Setting up git, code repositories, and dependencies for Jenkins"></a>Setting up git, code repositories, and dependencies for Jenkins</h1><h2 id="Storage-for-Jenkins-Data"><a href="#Storage-for-Jenkins-Data" class="headerlink" title="Storage for Jenkins Data"></a>Storage for Jenkins Data</h2><ul>
+<li>Setting up a dedicated storage</li>
+<li>Run on physical hardware-rate configuration with multiple disks</li>
+<li>Run on virtualized cloud platform-dedicated elastic volumes</li>
+<li>Home directory - /var/lib/jenkins</li>
+</ul>
+<p>Create a new volume in aws ec2 Elastic Block Store, attach volume to ec2 jenkins master instance, run following commmands:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l</span><br><span class="line">mkfs.ext4 &#x2F;dev&#x2F;xvdf</span><br><span class="line">mkdir -p &#x2F;var&#x2F;lib&#x2F;jenkins</span><br><span class="line">vim &#x2F;etc&#x2F;fstab</span><br><span class="line">&#x2F;dev&#x2F;xvdf &#x2F;var&#x2F;lib&#x2F;jenkins ext4 defaults 0 0</span><br><span class="line">mount &#x2F;var&#x2F;lib&#x2F;jenkins</span><br><span class="line">df -h</span><br><span class="line">yum -y install java-1.8.0-openjdk</span><br></pre></td></tr></table></figure>
+<h2 id="Installation-of-Jenkins-from-Packages-and-WAR-Files"><a href="#Installation-of-Jenkins-from-Packages-and-WAR-Files" class="headerlink" title="Installation of Jenkins from Packages and WAR Files"></a>Installation of Jenkins from Packages and WAR Files</h2><ol>
+<li><p>from Packages</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum -y install java-1.8.0-openjdk</span><br><span class="line">wget -O &#x2F;etc&#x2F;yum.repos.d&#x2F;jenkins.repo https:&#x2F;&#x2F;pkg.jenkins.io&#x2F;redhat-stable&#x2F;jenkins.repo</span><br><span class="line">rpm --import https:&#x2F;&#x2F;pkg.jenkins.io&#x2F;redhat-stable&#x2F;jenkins.io.key</span><br><span class="line">yum install -y jenkins</span><br><span class="line">systemctl start jenkins</span><br></pre></td></tr></table></figure>
+<p>If want to change the jenkins’ home directory vim /etc/sysconfig/jenkins<br>JENKINS_HOME=</p>
+</li>
+<li><p>from WAR files</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">yum intall -y tomcat</span><br><span class="line">cd &#x2F;usr&#x2F;share&#x2F;tomcat.webapps&#x2F;</span><br><span class="line">wget http:&#x2F;&#x2F;mirrors.jenkins.io&#x2F;war-stable&#x2F;latest&#x2F;jenkins.war</span><br><span class="line">systemctl start tomcat</span><br><span class="line">access by ipaddress:8080&#x2F;jenkins</span><br><span class="line">systemctl stop tomcat</span><br><span class="line">mkdir -p &#x2F;opt&#x2F;jenkins_home</span><br><span class="line">chown -R tomcat:tomcat &#x2F;opt&#x2F;jenkins_home</span><br><span class="line">vim &#x2F;etc&#x2F;tomcat&#x2F;contxt.xml</span><br><span class="line"># At the end of file add a new line</span><br><span class="line">&lt;Environment name&#x3D;&quot;JENKINS_HOME&quot; vaule&#x3D;&quot;&#x2F;opt&#x2F;jenkins_home&quot; type&#x3D;&quot;java.lang.String&quot; &#x2F;&gt;</span><br><span class="line">systemctl start tomcat</span><br></pre></td></tr></table></figure></li>
+<li><p>use docker containers</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line">yum-config-manager --add-repo https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;centos&#x2F;docker-ce.repo</span><br><span class="line">yum install -y docker-ce</span><br><span class="line">systemctl start docker</span><br><span class="line">docker pull jenkins&#x2F;jenkins:lts</span><br><span class="line">docker run --name jenkins_master -d -p 8080:8080 -v jenkins_home:&#x2F;var&#x2F;jenkins_home jenkins&#x2F;jenkins:lts</span><br></pre></td></tr></table></figure>
+<h2 id="Configuring-reverse-proxy-and-setting-up-user-interface-for-jenkins"><a href="#Configuring-reverse-proxy-and-setting-up-user-interface-for-jenkins" class="headerlink" title="Configuring reverse proxy and setting up user interface for jenkins"></a>Configuring reverse proxy and setting up user interface for jenkins</h2><p>Install nginx:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">rpm -ihv https:&#x2F;&#x2F;dl.fedoraproject.org&#x2F;pub&#x2F;epel&#x2F;7&#x2F;x86_64&#x2F;Packages&#x2F;e&#x2F;epel-release-7-11.noarch.rpm</span><br><span class="line">yum install -y nginx</span><br><span class="line">vim &#x2F;etc&#x2F;nginx&#x2F;nginx.conf delete server &#123; part &#125;</span><br><span class="line">vim &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;jenkins.conf </span><br><span class="line">upstream jenkins &#123;</span><br><span class="line">    server 127.0.0.1:8080;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen      80 default;</span><br><span class="line">    server_name jenkins.course;</span><br><span class="line"></span><br><span class="line">    access_log  &#x2F;var&#x2F;log&#x2F;nginx&#x2F;jenkins.access.log;</span><br><span class="line">    error_log   &#x2F;var&#x2F;log&#x2F;nginx&#x2F;jenkins.error.log;</span><br><span class="line"></span><br><span class="line">    proxy_buffers 16 64k;</span><br><span class="line">    proxy_buffer_size 128k;</span><br><span class="line"></span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">        proxy_pass  http:&#x2F;&#x2F;jenkins;</span><br><span class="line">        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;</span><br><span class="line">        proxy_redirect off;</span><br><span class="line"></span><br><span class="line">        proxy_set_header    Host            $host;</span><br><span class="line">        proxy_set_header    X-Real-IP       $remote_addr;</span><br><span class="line">        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header    X-Forwarded-Proto $scheme;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In Jenkins configuration Git plugin put git username and email address<br><img src="https://i.imgur.com/vZuSUgf.png" alt="setupcredentials"></p>
+</li>
+</ol>
+<h2 id="Automating-the-Jenkins-Installation-and-Configuration-Process"><a href="#Automating-the-Jenkins-Installation-and-Configuration-Process" class="headerlink" title="Automating the Jenkins Installation and Configuration Process"></a>Automating the Jenkins Installation and Configuration Process</h2><ul>
+<li>Disabling the manual setup wizard</li>
+<li>Automating the setup wizard steps</li>
+<li>Creating puppet configuration to automate the installation and configuration process</li>
+<li>Automating the process by applying the puppet module<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop jenkins</span><br><span class="line">vim &#x2F;etc&#x2F;system&#x2F;jenkins</span><br><span class="line">modify JENKINS_JAVA_OPTIONS&#x3D;&quot;-Djava.awt.headless&#x3D;true -Djenkins.install.runSetupWizard&#x3D;false&quot;</span><br><span class="line">mkdir -p &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;init&#x2F;groovy.d</span><br><span class="line">vim &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;init&#x2F;groovy.d&#x2F;installPlugins.groovy</span><br><span class="line">#!groovy</span><br><span class="line"></span><br><span class="line">import jenkins.model.*</span><br><span class="line">import java.util.logging.Logger</span><br><span class="line"></span><br><span class="line">def logger &#x3D; Logger.getLogger(&quot;&quot;)</span><br><span class="line">def installed &#x3D; false</span><br><span class="line">def initialized &#x3D; false</span><br><span class="line">def pluginParameter &#x3D; &quot;ws-cleanup timestamper credentials-binding build-timeout antisamy-markup-formatter cloudbees-folder pipeline-stage-view pipeline-github-lib github-branch-source workflow-aggregator gradle ant mailer email-ext ldap pam-auth matrix-auth ssh-slaves github git&quot;</span><br><span class="line"></span><br><span class="line">def plugins &#x3D; pluginParameter.split()</span><br><span class="line">logger.info(&quot;&quot; + plugins)</span><br><span class="line">def instance &#x3D; Jenkins.getInstance()</span><br><span class="line">def pm &#x3D; instance.getPluginManager()</span><br><span class="line">def uc &#x3D; instance.getUpdateCenter()</span><br><span class="line">plugins.each &#123;</span><br><span class="line">  logger.info(&quot;Checking &quot; + it)</span><br><span class="line">  if (!pm.getPlugin(it)) &#123;</span><br><span class="line">    logger.info(&quot;Looking UpdateCenter for &quot; + it)</span><br><span class="line">    if (!initialized) &#123;</span><br><span class="line">      uc.updateAllSites()</span><br><span class="line">      initialized &#x3D; true</span><br><span class="line">    &#125;</span><br><span class="line">    def plugin &#x3D; uc.getPlugin(it)</span><br><span class="line">    if (plugin) &#123;</span><br><span class="line">      logger.info(&quot;Installing &quot; + it)</span><br><span class="line">        def installFuture &#x3D; plugin.deploy()</span><br><span class="line">      while(!installFuture.isDone()) &#123;</span><br><span class="line">        logger.info(&quot;Waiting for plugin install: &quot; + it)</span><br><span class="line">        sleep(3000)</span><br><span class="line">      &#125;</span><br><span class="line">      installed &#x3D; true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">if (installed) &#123;</span><br><span class="line">  logger.info(&quot;Plugins installed, initializing a restart!&quot;)</span><br><span class="line">  instance.save()</span><br><span class="line">  instance.restart()</span><br><span class="line">&#125;</span><br><span class="line">vim &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;init&#x2F;groovy.d&#x2F;security.groovy</span><br><span class="line">#!groovy</span><br><span class="line"></span><br><span class="line">import jenkins.model.*</span><br><span class="line">import hudson.security.*</span><br><span class="line">import jenkins.security.s2m.AdminWhitelistRule</span><br><span class="line">import hudson.security.csrf.DefaultCrumbIssuer</span><br><span class="line">import jenkins.model.Jenkins</span><br><span class="line"></span><br><span class="line">def instance &#x3D; Jenkins.getInstance()</span><br><span class="line"></span><br><span class="line">def hudsonRealm &#x3D; new HudsonPrivateSecurityRealm(false)</span><br><span class="line">hudsonRealm.createAccount(&quot;admin&quot;, &quot;admin&quot;)</span><br><span class="line">instance.setSecurityRealm(hudsonRealm)</span><br><span class="line"></span><br><span class="line">def strategy &#x3D; new FullControlOnceLoggedInAuthorizationStrategy()</span><br><span class="line">strategy.setAllowAnonymousRead(false)</span><br><span class="line">instance.setAuthorizationStrategy(strategy)</span><br><span class="line">instance.save()</span><br><span class="line"></span><br><span class="line">Jenkins.instance.getInjector().getInstance(AdminWhitelistRule.class)</span><br><span class="line"></span><br><span class="line">def j &#x3D; Jenkins.instance</span><br><span class="line">if(j.getCrumbIssuer() &#x3D;&#x3D; null) &#123;</span><br><span class="line">    j.setCrumbIssuer(new DefaultCrumbIssuer(true))</span><br><span class="line">    j.save()</span><br><span class="line">    println &#39;CSRF Protection configuration has changed.  Enabled CSRF Protection.&#39;</span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">    println &#39;Nothing changed.  CSRF Protection already configured.&#39;</span><br><span class="line">&#125;</span><br><span class="line">chown -R jenkins:jenkins &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;init&#x2F;groovy.d&#x2F;*.groovy</span><br><span class="line">systemctl start jenkins</span><br><span class="line">tail -f &#x2F;var&#x2F;log&#x2F;jenkins&#x2F;jenkins.log</span><br></pre></td></tr></table></figure>
+<h2 id="install-puppet"><a href="#install-puppet" class="headerlink" title="install puppet"></a>install puppet</h2>go to <a target="_blank" rel="noopener" href="http://yum.puppetlabs.com/">puppet</a>, copy url link <a target="_blank" rel="noopener" href="http://yum.puppetlabs.com/puppetlabs-release-pc1-el-7.noarch.rpm">puppetlabs-release-pc1-el-7.noarch.rpm</a>.<br>on the sever install the package by the command:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">rpm -ihv http:&#x2F;&#x2F;yum.puppetlabs.com&#x2F;puppetlabs-release-pc1-el-7.noarch.rpm</span><br><span class="line"></span><br><span class="line">yum -y install puppet-agent</span><br></pre></td></tr></table></figure></li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br></pre></td><td class="code"><pre><span class="line">mkdir puppet</span><br><span class="line">cd puppet</span><br><span class="line">mkdir &#123;modules, manifests&#125;</span><br><span class="line">mkdir modules&#x2F;jenkins</span><br><span class="line">mkdir modules&#x2F;jenkins&#x2F;&#123;manifests,files&#125;</span><br><span class="line">vim modules&#x2F;jenkins&#x2F;manifests.install.pp</span><br><span class="line">class jenkins::install &#123;</span><br><span class="line">    file &#123; &#39;jenkins_repo&#39;:</span><br><span class="line">        path   &#x3D;&gt; &#39;&#x2F;etc&#x2F;yum.repos.d&#x2F;jenkins.repo&#39;,</span><br><span class="line">        source &#x3D;&gt; &#39;https:&#x2F;&#x2F;pkg.jenkins.io&#x2F;redhat-stable&#x2F;jenkins.repo&#39;,</span><br><span class="line">        ensure &#x3D;&gt; present,</span><br><span class="line">        mode   &#x3D;&gt; &#39;0644&#39;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    exec &#123; &#39;jenkins_repo_key&#39;:</span><br><span class="line">        command   &#x3D;&gt; &#39;&#x2F;bin&#x2F;rpm --import https:&#x2F;&#x2F;pkg.jenkins.io&#x2F;redhat-stable&#x2F;jenkins.io.key&#39;,</span><br><span class="line">        unless    &#x3D;&gt; &#39;&#x2F;bin&#x2F;rpm -q jenkins&#39;,</span><br><span class="line">        subscribe &#x3D;&gt; File[&#39;jenkins_repo&#39;],</span><br><span class="line">        require   &#x3D;&gt; File[&#39;jenkins_repo&#39;]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    package &#123; &#39;epel-repo&#39;:</span><br><span class="line">        name   &#x3D;&gt; &#39;epel-release&#39;,</span><br><span class="line">        ensure &#x3D;&gt; present,</span><br><span class="line">        source &#x3D;&gt; &#39;https:&#x2F;&#x2F;dl.fedoraproject.org&#x2F;pub&#x2F;epel&#x2F;7&#x2F;x86_64&#x2F;Packages&#x2F;e&#x2F;epel-release-7-11.noarch.rpm&#39;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    $packages &#x3D; [ &#39;jenkins&#39;, &#39;java-1.8.0-openjdk&#39;, &#39;nginx&#39;, &#39;git&#39; ]</span><br><span class="line"></span><br><span class="line">    package &#123; $packages:</span><br><span class="line">        ensure    &#x3D;&gt; present,</span><br><span class="line">        require   &#x3D;&gt; [ File[&#39;jenkins_repo&#39;], Package[&#39;epel-repo&#39;] ]</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vim modules&#x2F;jenkins&#x2F;cofig.pp</span><br><span class="line">class jenkins::config &#123;</span><br><span class="line">    file &#123; &#39;groovy_script_directory&#39;:</span><br><span class="line">        path   &#x3D;&gt; &#39;&#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;init.groovy.d&#39;,</span><br><span class="line">        owner  &#x3D;&gt; &#39;jenkins&#39;,</span><br><span class="line">        group  &#x3D;&gt; &#39;jenkins&#39;,</span><br><span class="line">        mode   &#x3D;&gt; &#39;0755&#39;,</span><br><span class="line">        ensure &#x3D;&gt; directory</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    file &#123; &#39;security_groovy_script&#39;:</span><br><span class="line">        path    &#x3D;&gt; &#39;&#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;init.groovy.d&#x2F;security.groovy&#39;,</span><br><span class="line">        owner   &#x3D;&gt; &#39;jenkins&#39;,</span><br><span class="line">        group   &#x3D;&gt; &#39;jenkins&#39;,</span><br><span class="line">        source  &#x3D;&gt; &#39;puppet:&#x2F;&#x2F;&#x2F;modules&#x2F;jenkins&#x2F;security.groovy&#39;,</span><br><span class="line">        mode    &#x3D;&gt; &#39;0644&#39;,</span><br><span class="line">        require &#x3D;&gt; File[&#39;groovy_script_directory&#39;]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    file &#123; &#39;plugins_groovy_script&#39;:</span><br><span class="line">        path    &#x3D;&gt; &#39;&#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;init.groovy.d&#x2F;installPlugins.groovy&#39;,</span><br><span class="line">        owner   &#x3D;&gt; &#39;jenkins&#39;,</span><br><span class="line">        group   &#x3D;&gt; &#39;jenkins&#39;,</span><br><span class="line">        source  &#x3D;&gt; &#39;puppet:&#x2F;&#x2F;&#x2F;modules&#x2F;jenkins&#x2F;installPlugins.groovy&#39;,</span><br><span class="line">        mode    &#x3D;&gt; &#39;0644&#39;,</span><br><span class="line">        require &#x3D;&gt; File[&#39;groovy_script_directory&#39;]</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    file &#123; &#39;nginx_config_jenkins&#39;:</span><br><span class="line">        path   &#x3D;&gt; &#39;&#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;jenkins.conf&#39;,</span><br><span class="line">        owner  &#x3D;&gt; &#39;root&#39;,</span><br><span class="line">        group  &#x3D;&gt; &#39;root&#39;,</span><br><span class="line">        source &#x3D;&gt; &#39;puppet:&#x2F;&#x2F;&#x2F;modules&#x2F;jenkins&#x2F;jenkins.conf&#39;,</span><br><span class="line">        mode   &#x3D;&gt; &#39;0644&#39;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    file &#123; &#39;nginx_config&#39;:</span><br><span class="line">        path   &#x3D;&gt; &#39;&#x2F;etc&#x2F;nginx&#x2F;nginx.conf&#39;,</span><br><span class="line">        owner  &#x3D;&gt; &#39;root&#39;,</span><br><span class="line">        group  &#x3D;&gt; &#39;root&#39;,</span><br><span class="line">        source &#x3D;&gt; &#39;puppet:&#x2F;&#x2F;&#x2F;modules&#x2F;jenkins&#x2F;nginx.conf&#39;,</span><br><span class="line">        mode   &#x3D;&gt; &#39;0644&#39;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    file &#123; &#39;jenkins_sysconfig&#39;:</span><br><span class="line">        path   &#x3D;&gt; &#39;&#x2F;etc&#x2F;sysconfig&#x2F;jenkins&#39;,</span><br><span class="line">        owner  &#x3D;&gt; &#39;root&#39;,</span><br><span class="line">        group  &#x3D;&gt; &#39;root&#39;,</span><br><span class="line">        source &#x3D;&gt; &#39;puppet:&#x2F;&#x2F;&#x2F;modules&#x2F;jenkins&#x2F;jenkins&#39;,</span><br><span class="line">        mode   &#x3D;&gt; &#39;0644&#39;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vim modules&#x2F;jenkins&#x2F;service.pp</span><br><span class="line">class jenkins::service &#123;</span><br><span class="line">    service &#123; &#39;jenkins&#39;:</span><br><span class="line">        ensure &#x3D;&gt; running</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    service &#123; &#39;nginx&#39;:</span><br><span class="line">        ensure &#x3D;&gt; running</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vim modules&#x2F;jenkins&#x2F;init.pp</span><br><span class="line">class jenkins &#123;</span><br><span class="line">    include jenkins::install</span><br><span class="line">    include jenkins::config</span><br><span class="line">    include jenkins::service</span><br><span class="line"></span><br><span class="line">    Class[&#39;jenkins::install&#39;] -&gt; Class[&#39;jenkins::config&#39;] ~&gt; Class[&#39;jenkins::service&#39;]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vim modules&#x2F;jenkins&#x2F;files&#x2F;installPlugins.groovy</span><br><span class="line">#!groovy</span><br><span class="line"></span><br><span class="line">import jenkins.model.*</span><br><span class="line">import java.util.logging.Logger</span><br><span class="line"></span><br><span class="line">def logger &#x3D; Logger.getLogger(&quot;&quot;)</span><br><span class="line">def installed &#x3D; false</span><br><span class="line">def initialized &#x3D; false</span><br><span class="line">def pluginParameter &#x3D; &quot;ws-cleanup timestamper credentials-binding build-timeout antisamy-markup-formatter cloudbees-folder pipeline-stage-view pipeline-github-lib github-branch-source workflow-aggregator gradle ant mailer email-ext ldap pam-auth matrix-auth ssh-slaves github git&quot;</span><br><span class="line"></span><br><span class="line">def plugins &#x3D; pluginParameter.split()</span><br><span class="line">logger.info(&quot;&quot; + plugins)</span><br><span class="line">def instance &#x3D; Jenkins.getInstance()</span><br><span class="line">def pm &#x3D; instance.getPluginManager()</span><br><span class="line">def uc &#x3D; instance.getUpdateCenter()</span><br><span class="line">plugins.each &#123;</span><br><span class="line">  logger.info(&quot;Checking &quot; + it)</span><br><span class="line">  if (!pm.getPlugin(it)) &#123;</span><br><span class="line">    logger.info(&quot;Looking UpdateCenter for &quot; + it)</span><br><span class="line">    if (!initialized) &#123;</span><br><span class="line">      uc.updateAllSites()</span><br><span class="line">      initialized &#x3D; true</span><br><span class="line">    &#125;</span><br><span class="line">    def plugin &#x3D; uc.getPlugin(it)</span><br><span class="line">    if (plugin) &#123;</span><br><span class="line">      logger.info(&quot;Installing &quot; + it)</span><br><span class="line">        def installFuture &#x3D; plugin.deploy()</span><br><span class="line">      while(!installFuture.isDone()) &#123;</span><br><span class="line">        logger.info(&quot;Waiting for plugin install: &quot; + it)</span><br><span class="line">        sleep(3000)</span><br><span class="line">      &#125;</span><br><span class="line">      installed &#x3D; true</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">if (installed) &#123;</span><br><span class="line">  logger.info(&quot;Plugins installed, initializing a restart!&quot;)</span><br><span class="line">  instance.save()</span><br><span class="line">  instance.restart()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vim modules&#x2F;jenkins&#x2F;files&#x2F;jenkins.conf</span><br><span class="line">upstream jenkins &#123;</span><br><span class="line">    server 127.0.0.1:8080;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">server &#123;</span><br><span class="line">    listen      80 default;</span><br><span class="line">    server_name jenkins.course;</span><br><span class="line"></span><br><span class="line">    access_log  &#x2F;var&#x2F;log&#x2F;nginx&#x2F;jenkins.access.log;</span><br><span class="line">    error_log   &#x2F;var&#x2F;log&#x2F;nginx&#x2F;jenkins.error.log;</span><br><span class="line"></span><br><span class="line">    proxy_buffers 16 64k;</span><br><span class="line">    proxy_buffer_size 128k;</span><br><span class="line"></span><br><span class="line">    location &#x2F; &#123;</span><br><span class="line">        proxy_pass  http:&#x2F;&#x2F;jenkins;</span><br><span class="line">        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;</span><br><span class="line">        proxy_redirect off;</span><br><span class="line"></span><br><span class="line">        proxy_set_header    Host            $host;</span><br><span class="line">        proxy_set_header    X-Real-IP       $remote_addr;</span><br><span class="line">        proxy_set_header    X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_set_header    X-Forwarded-Proto $scheme;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vim modules&#x2F;jenkins&#x2F;files&#x2F;nginx.conf</span><br><span class="line"># For more information on configuration, see:</span><br><span class="line">#   * Official English Documentation: http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;docs&#x2F;</span><br><span class="line">#   * Official Russian Documentation: http:&#x2F;&#x2F;nginx.org&#x2F;ru&#x2F;docs&#x2F;</span><br><span class="line"></span><br><span class="line">user nginx;</span><br><span class="line">worker_processes auto;</span><br><span class="line">error_log &#x2F;var&#x2F;log&#x2F;nginx&#x2F;error.log;</span><br><span class="line">pid &#x2F;run&#x2F;nginx.pid;</span><br><span class="line"></span><br><span class="line"># Load dynamic modules. See &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;README.dynamic.</span><br><span class="line">include &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;modules&#x2F;*.conf;</span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections 1024;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    log_format  main  &#39;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#39;</span><br><span class="line">                      &#39;$status $body_bytes_sent &quot;$http_referer&quot; &#39;</span><br><span class="line">                      &#39;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#39;;</span><br><span class="line"></span><br><span class="line">    access_log  &#x2F;var&#x2F;log&#x2F;nginx&#x2F;access.log  main;</span><br><span class="line"></span><br><span class="line">    sendfile            on;</span><br><span class="line">    tcp_nopush          on;</span><br><span class="line">    tcp_nodelay         on;</span><br><span class="line">    keepalive_timeout   65;</span><br><span class="line">    types_hash_max_size 2048;</span><br><span class="line"></span><br><span class="line">    include             &#x2F;etc&#x2F;nginx&#x2F;mime.types;</span><br><span class="line">    default_type        application&#x2F;octet-stream;</span><br><span class="line"></span><br><span class="line">    # Load modular configuration files from the &#x2F;etc&#x2F;nginx&#x2F;conf.d directory.</span><br><span class="line">    # See http:&#x2F;&#x2F;nginx.org&#x2F;en&#x2F;docs&#x2F;ngx_core_module.html#include</span><br><span class="line">    # for more information.</span><br><span class="line">    include &#x2F;etc&#x2F;nginx&#x2F;conf.d&#x2F;*.conf;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">vim modules&#x2F;jenkins&#x2F;files&#x2F;security.groovy</span><br><span class="line">#!groovy</span><br><span class="line"></span><br><span class="line">import jenkins.model.*</span><br><span class="line">import hudson.security.*</span><br><span class="line">import jenkins.security.s2m.AdminWhitelistRule</span><br><span class="line">import hudson.security.csrf.DefaultCrumbIssuer</span><br><span class="line">import jenkins.model.Jenkins</span><br><span class="line"></span><br><span class="line">def instance &#x3D; Jenkins.getInstance()</span><br><span class="line"></span><br><span class="line">def hudsonRealm &#x3D; new HudsonPrivateSecurityRealm(false)</span><br><span class="line">hudsonRealm.createAccount(&quot;admin&quot;, &quot;admin&quot;)</span><br><span class="line">instance.setSecurityRealm(hudsonRealm)</span><br><span class="line"></span><br><span class="line">def strategy &#x3D; new FullControlOnceLoggedInAuthorizationStrategy()</span><br><span class="line">strategy.setAllowAnonymousRead(false)</span><br><span class="line">instance.setAuthorizationStrategy(strategy)</span><br><span class="line">instance.save()</span><br><span class="line"></span><br><span class="line">Jenkins.instance.getInjector().getInstance(AdminWhitelistRule.class)</span><br><span class="line"></span><br><span class="line">def j &#x3D; Jenkins.instance</span><br><span class="line">if(j.getCrumbIssuer() &#x3D;&#x3D; null) &#123;</span><br><span class="line">    j.setCrumbIssuer(new DefaultCrumbIssuer(true))</span><br><span class="line">    j.save()</span><br><span class="line">    println &#39;CSRF Protection configuration has changed.  Enabled CSRF Protection.&#39;</span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">    println &#39;Nothing changed.  CSRF Protection already configured.&#39;</span><br><span class="line">&#125;</span><br><span class="line">[root@ip-172-31-2-108 ~]# tree puppet&#x2F;</span><br><span class="line">puppet&#x2F;</span><br><span class="line">├── manifests</span><br><span class="line">│   └── site.pp</span><br><span class="line">└── modules</span><br><span class="line">    └── jenkins</span><br><span class="line">        ├── files</span><br><span class="line">        │   ├── installPlugins.groovy</span><br><span class="line">        │   ├── jenkins</span><br><span class="line">        │   ├── jenkins.conf</span><br><span class="line">        │   ├── nginx.conf</span><br><span class="line">        │   └── security.groovy</span><br><span class="line">        └── manifests</span><br><span class="line">            ├── config.pp</span><br><span class="line">            ├── init.pp</span><br><span class="line">            ├── install.pp</span><br><span class="line">            └── service.pp</span><br><span class="line">cd puppet</span><br><span class="line">puppet apply --modulepath .&#x2F;modules manifests&#x2F;site.pp</span><br></pre></td></tr></table></figure>
+<h2 id="Creating-build-jobs-from-user-interface-and-scripts"><a href="#Creating-build-jobs-from-user-interface-and-scripts" class="headerlink" title="Creating build jobs from user interface and scripts"></a>Creating build jobs from user interface and scripts</h2><p>1.Create a new freestyle jenkins job called python-job, configure ‘Source Code Management”-&gt;’Git’-&gt; Repo URL <a href="mailto:&#x67;&#105;&#x74;&#x40;&#x67;&#105;&#116;&#104;&#117;&#x62;&#46;&#x63;&#111;&#109;">&#x67;&#105;&#x74;&#x40;&#x67;&#105;&#116;&#104;&#117;&#x62;&#46;&#x63;&#111;&#109;</a>:szhouchoice/python-project.git.<br>“Build” -&gt; Execute shell, command <code>python *test.py</code></p>
+<p>2.<code>mkdir jenkins_cmd; cd jenkins_cmd</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">cp &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;jobs&#x2F;python-job&#x2F;config.xml .</span><br><span class="line">vim config.xml</span><br><span class="line">&lt;publishers&gt;</span><br><span class="line">    &lt;hudson.plugins.ws__cleanup.WsCleanup plugin&#x3D;&quot;ws-cleanup@0.34&quot;&gt;</span><br><span class="line">      &lt;patterns class&#x3D;&quot;empty-list&quot;&#x2F;&gt;</span><br><span class="line">      &lt;deleteDirs&gt;true&lt;&#x2F;deleteDirs&gt;</span><br><span class="line">      &lt;skipWhenFailed&gt;false&lt;&#x2F;skipWhenFailed&gt;</span><br><span class="line">      &lt;cleanWhenSuccess&gt;true&lt;&#x2F;cleanWhenSuccess&gt;</span><br><span class="line">      &lt;cleanWhenUnstable&gt;true&lt;&#x2F;cleanWhenUnstable&gt;</span><br><span class="line">      &lt;cleanWhenFailure&gt;true&lt;&#x2F;cleanWhenFailure&gt;</span><br><span class="line">      &lt;cleanWhenNotBuilt&gt;true&lt;&#x2F;cleanWhenNotBuilt&gt;</span><br><span class="line">      &lt;cleanWhenAborted&gt;true&lt;&#x2F;cleanWhenAborted&gt;</span><br><span class="line">      &lt;notFailBuild&gt;false&lt;&#x2F;notFailBuild&gt;</span><br><span class="line">      &lt;cleanupMatrixParent&gt;false&lt;&#x2F;cleanupMatrixParent&gt;</span><br><span class="line">      &lt;externalDelete&gt;&lt;&#x2F;externalDelete&gt;</span><br><span class="line">    &lt;&#x2F;hudson.plugins.ws__cleanup.WsCleanup&gt;</span><br><span class="line">curl -s &#39;http:&#x2F;&#x2F;localhost:8080&#x2F;crumbIssuer&#x2F;api&#x2F;xml?xpath&#x3D;concat(&#x2F;&#x2F;crumbRequestField,&quot;:&quot;,&#x2F;&#x2F;crumb)&#39; -u admin:admin</span><br><span class="line"></span><br><span class="line">curl -s -XPOST &#39;http:&#x2F;&#x2F;localhost:8080&#x2F;createItem?name&#x3D;python-project-new&#39; -u admin:admin --data-binary @config.xml -H &quot;Jenkins-Crumb:384576fea44a8984fd1afe2474c8e951&quot; -H &quot;Content-Type:text&#x2F;xml&quot;</span><br></pre></td></tr></table></figure>
+<h1 id="High-availability-monitoring-and-management-of-jenkins-deployments"><a href="#High-availability-monitoring-and-management-of-jenkins-deployments" class="headerlink" title="High-availability, monitoring, and management of jenkins deployments"></a>High-availability, monitoring, and management of jenkins deployments</h1><ul>
+<li>High-availability scenario of Jenkins ecosystem and support</li>
+<li>Creating multiple Jenkins master nodes with shared data directory</li>
+<li>Configuring HAProxy as a load balancer for the Jenkins masters</li>
+<li>Testing the setup by failing nodes</li>
+</ul>
+<h2 id="Setting-up-multiple-Jenkins-Master-with-Load-Balancer-for-high-availability"><a href="#Setting-up-multiple-Jenkins-Master-with-Load-Balancer-for-high-availability" class="headerlink" title="Setting up multiple Jenkins Master with Load Balancer for high-availability"></a>Setting up multiple Jenkins Master with Load Balancer for high-availability</h2><p><img src="https://i.imgur.com/YnYwCzR.png" alt="High-Availability Setup"></p>
+<h3 id="1-On-aws-ec2-create-3-instances-with-Centos-7-OS-1-for-haproxy-2-for-jenkins"><a href="#1-On-aws-ec2-create-3-instances-with-Centos-7-OS-1-for-haproxy-2-for-jenkins" class="headerlink" title="1. On aws ec2 create 3 instances with Centos 7 OS. 1 for haproxy 2 for jenkins"></a>1. On aws ec2 create 3 instances with Centos 7 OS. 1 for haproxy 2 for jenkins</h3><h3 id="2-Create-a-efs-on-aws-setup-up-efs-on-two-jenkins-ec2-instances-efs-security-group-need-create-a-new-one-open-nfs-port-to-everywhere"><a href="#2-Create-a-efs-on-aws-setup-up-efs-on-two-jenkins-ec2-instances-efs-security-group-need-create-a-new-one-open-nfs-port-to-everywhere" class="headerlink" title="2. Create a efs on aws, setup up efs on two jenkins ec2 instances. efs security group need create a new one open nfs port to everywhere"></a>2. Create a efs on aws, setup up efs on two jenkins ec2 instances. efs security group need create a new one open nfs port to everywhere</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">yum -y install nfs-utils</span><br><span class="line">vim &#x2F;etc&#x2F;fstab</span><br><span class="line">ap-southeast-2a.fs-foobar.efs.ap-southeast-2.amazonaws.com:&#x2F; &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;jobs nfs defaults 0 0</span><br><span class="line">systemctl stop jenkins</span><br><span class="line">mount &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;jobs</span><br><span class="line">df -h</span><br><span class="line">chown -R jenkins:jenkins &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;jobs</span><br><span class="line">ls -l &#x2F;var&#x2F;lib&#x2F;jenkins&#x2F;</span><br><span class="line">systemctl start jenkins</span><br></pre></td></tr></table></figure>
+<h3 id="3-On-Jenkins-master-passive-node"><a href="#3-On-Jenkins-master-passive-node" class="headerlink" title="3. On Jenkins master passive node"></a>3. On Jenkins master passive node</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">vim &#x2F;opt&#x2F;jenkins_reload.sh</span><br><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">crumb_id&#x3D;$(curl -s &#39;http:&#x2F;&#x2F;localhost:8080&#x2F;crumbIssuer&#x2F;api&#x2F;xml?xpath&#x3D;concat(&#x2F;&#x2F;crumbRequestField,&quot;:&quot;,&#x2F;&#x2F;crumb)&#39; -u admin:admin)</span><br><span class="line">curl -s -XPOST &#39;http:&#x2F;&#x2F;localhost:8080&#x2F;reload&#39; -u admin:admin -H &quot;$crumb_id&quot;</span><br><span class="line">chmod +x &#x2F;opt&#x2F;jenkins_reload.sh</span><br><span class="line">vim &#x2F;etc&#x2F;cron.d&#x2F;jenkins_reload.sh</span><br><span class="line">*&#x2F;1 * * * * root &#x2F;bin&#x2F;bash &#x2F;opt&#x2F;jenkins_reload.sh #run every min</span><br></pre></td></tr></table></figure>
+<h3 id="4-On-HA-Proxy-server"><a href="#4-On-HA-Proxy-server" class="headerlink" title="4. On HA Proxy server"></a>4. On HA Proxy server</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">yum -y install haproxy</span><br><span class="line">cat &#x2F;dev&#x2F;null&gt; &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg</span><br><span class="line">vim &#x2F;etc&#x2F;haproxy&#x2F;haproxy.cfg</span><br><span class="line">defaults</span><br><span class="line">  log  global</span><br><span class="line">  maxconn  2000</span><br><span class="line">  mode  http</span><br><span class="line">  option  redispatch</span><br><span class="line">  option  forwardfor</span><br><span class="line">  option  http-server-close</span><br><span class="line">  retries  3</span><br><span class="line">  timeout  http-request 10s</span><br><span class="line">  timeout  queue 1m</span><br><span class="line">  timeout  connect 10s</span><br><span class="line">  timeout  client 1m</span><br><span class="line">  timeout  server 1m</span><br><span class="line">  timeout  check 10s</span><br><span class="line"></span><br><span class="line">frontend ft_jenkins</span><br><span class="line">  bind *:80</span><br><span class="line">  default_backend  bk_jenkins</span><br><span class="line">  reqadd  X-Forwarded-Proto:\ http</span><br><span class="line"></span><br><span class="line">backend bk_jenkins</span><br><span class="line"> server jenkins1 172.31.2.108:8080 check</span><br><span class="line"> server jenkins2 172.31.2.132:8080 check backup</span><br><span class="line"></span><br><span class="line">systemctl start haproxy</span><br><span class="line">ps-ef|grep haproxy</span><br></pre></td></tr></table></figure>
+<h2 id="Backing-up-and-restoring-Jenkins-data"><a href="#Backing-up-and-restoring-Jenkins-data" class="headerlink" title="Backing up and restoring Jenkins data"></a>Backing up and restoring Jenkins data</h2><h3 id="Steps-of-backup-and-resotre"><a href="#Steps-of-backup-and-resotre" class="headerlink" title="Steps of backup and resotre"></a>Steps of backup and resotre</h3><ul>
+<li>Decide on what to back up (specific directories or everything)</li>
+<li>Set up a dedicated local directory where backups would be stored</li>
+<li>Decide the archiving method to use for the backup (.zip, tar.gz, and so on)</li>
+<li>Set up a schedule for backups to take place</li>
+<li>Configure a highly-available remove location where old backups can be transferred for archiving</li>
+<li>Keep a certain number of the most recent backups to be readily available for restores</li>
+<li>When restoring, unarchive the most recent backup and copy over files<h3 id="Backup-and-Restore-Methods"><a href="#Backup-and-Restore-Methods" class="headerlink" title="Backup and Restore Methods"></a>Backup and Restore Methods</h3></li>
+<li>Use periodic Backup plugin available in Jenkins</li>
+<li>Manually copy and archive files using scripts</li>
+<li>Select a remote location for storing data such as S3, EFS, and so on</li>
+<li>Use local tools such as scp, rsync, s3cmd, and son on to transfer data</li>
+<li>Use specialized open source tools such as Amanda or Bacula to perform backups or enterprise tools such as Netbackup</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p &#x2F;opt&#x2F;jenkins_backups</span><br><span class="line">chown -R jenkins:jenkins &#x2F;opt&#x2F;jenkins_backups&#x2F;</span><br></pre></td></tr></table></figure>
+<p>Install plugin called Periodic Backup Manager, configure it as following:<br><img src="https://i.imgur.com/fvgXK7C.png" alt="periodicbackupconf"></p>
+<p>click button Backup Now!</p>
+<h2 id="Monitoring-Jenkins-components-and-data"><a href="#Monitoring-Jenkins-components-and-data" class="headerlink" title="Monitoring Jenkins components and data"></a>Monitoring Jenkins components and data</h2><h3 id="Install-plugin-monitoring-after-that-under-‘Manage-Jenkins’-will-have-Monitoring-of-Jenkins-master"><a href="#Install-plugin-monitoring-after-that-under-‘Manage-Jenkins’-will-have-Monitoring-of-Jenkins-master" class="headerlink" title="Install plugin monitoring, after that under ‘Manage Jenkins’ will have Monitoring of Jenkins master:"></a>Install plugin monitoring, after that under ‘Manage Jenkins’ will have Monitoring of Jenkins master:</h3><p><img src="https://i.imgur.com/88b0cnX.png" alt="Monitoring"></p>
+<h3 id="install-configure-graphite-grafana"><a href="#install-configure-graphite-grafana" class="headerlink" title="install configure graphite grafana"></a>install configure graphite grafana</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br></pre></td><td class="code"><pre><span class="line">#Install EPEL repo</span><br><span class="line">rpm -ihv https:&#x2F;&#x2F;dl.fedoraproject.org&#x2F;pub&#x2F;epel&#x2F;7&#x2F;x86_64&#x2F;Packages&#x2F;e&#x2F;epel-release-7-11.noarch.rpm</span><br><span class="line"></span><br><span class="line">#Install Graphite and dependencies</span><br><span class="line">yum -y install graphite-web mysql mariadb-server MySQL-python net-tools mlocate wget python-carbon python-pip gcc python-devel libffi python-cffi cairo cairo-devel fontconfig freetype*</span><br><span class="line"></span><br><span class="line">#Start database server</span><br><span class="line">systemctl start mariadb</span><br><span class="line"></span><br><span class="line">#Configure database and perms</span><br><span class="line">mysql -e &quot;CREATE DATABASE graphite;&quot;</span><br><span class="line">mysql -e &quot;GRANT ALL PRIVILEGES ON graphite.* TO &#39;graphite&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;j3nk1nsdb&#39;;&quot;</span><br><span class="line">mysql -e &#39;FLUSH PRIVILEGES;&#39;</span><br><span class="line"></span><br><span class="line">#Edit file</span><br><span class="line">vi &#x2F;etc&#x2F;graphite-web&#x2F;local_settings.py</span><br><span class="line"></span><br><span class="line">#Add content</span><br><span class="line">DATABASES &#x3D; &#123;</span><br><span class="line">    &#39;default&#39;: &#123;</span><br><span class="line">        &#39;NAME&#39;: &#39;graphite&#39;,</span><br><span class="line">        &#39;ENGINE&#39;: &#39;django.db.backends.mysql&#39;,</span><br><span class="line">        &#39;USER&#39;: &#39;graphite&#39;,</span><br><span class="line">        &#39;PASSWORD&#39;: &#39;j3nk1nsdb&#39;,</span><br><span class="line">        &#39;HOST&#39;: &#39;localhost&#39;,</span><br><span class="line">        &#39;PORT&#39;: &#39;3306&#39;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">#Change perms</span><br><span class="line">chown -R apache:apache &#x2F;var&#x2F;lib&#x2F;graphite-web &#x2F;usr&#x2F;share&#x2F;graphite&#x2F;</span><br><span class="line"></span><br><span class="line">#Edit file</span><br><span class="line">vi &#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;graphite-web.conf</span><br><span class="line"></span><br><span class="line">#Add content</span><br><span class="line"></span><br><span class="line">&lt;VirtualHost *:80&gt;</span><br><span class="line">    ServerName graphite-web</span><br><span class="line">    DocumentRoot &quot;&#x2F;usr&#x2F;share&#x2F;graphite&#x2F;webapp&quot;</span><br><span class="line">    ErrorLog &#x2F;var&#x2F;log&#x2F;httpd&#x2F;graphite-web-error.log</span><br><span class="line">    CustomLog &#x2F;var&#x2F;log&#x2F;httpd&#x2F;graphite-web-access.log common</span><br><span class="line"></span><br><span class="line">    # Header set Access-Control-Allow-Origin &quot;*&quot;</span><br><span class="line">    # Header set Access-Control-Allow-Methods &quot;GET, OPTIONS&quot;</span><br><span class="line">    # Header set Access-Control-Allow-Headers &quot;origin, authorization, accept&quot;</span><br><span class="line">    # Header set Access-Control-Allow-Credentials true</span><br><span class="line"></span><br><span class="line">    WSGIScriptAlias &#x2F; &#x2F;usr&#x2F;share&#x2F;graphite&#x2F;graphite-web.wsgi</span><br><span class="line">    WSGIImportScript &#x2F;usr&#x2F;share&#x2F;graphite&#x2F;graphite-web.wsgi process-group&#x3D;%&#123;GLOBAL&#125; application-group&#x3D;%&#123;GLOBAL&#125;</span><br><span class="line"></span><br><span class="line">    &lt;Location &quot;&#x2F;content&#x2F;&quot;&gt;</span><br><span class="line">        SetHandler None</span><br><span class="line">    &lt;&#x2F;Location&gt;</span><br><span class="line"></span><br><span class="line">    Alias &#x2F;media&#x2F; &quot;&#x2F;usr&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;django&#x2F;contrib&#x2F;admin&#x2F;media&#x2F;&quot;</span><br><span class="line">    &lt;Location &quot;&#x2F;media&#x2F;&quot;&gt;</span><br><span class="line">        SetHandler None</span><br><span class="line">    &lt;&#x2F;Location&gt;</span><br><span class="line"></span><br><span class="line">   &lt;Directory &quot;&#x2F;usr&#x2F;share&#x2F;graphite&#x2F;&quot;&gt;</span><br><span class="line">    Require all granted</span><br><span class="line">    Order allow,deny</span><br><span class="line">    Allow from all</span><br><span class="line">   &lt;&#x2F;Directory&gt;</span><br><span class="line">&lt;&#x2F;VirtualHost&gt;</span><br><span class="line"></span><br><span class="line">#Edit file</span><br><span class="line">vi &#x2F;etc&#x2F;graphite-web&#x2F;local_settings.py</span><br><span class="line"></span><br><span class="line">#Add content</span><br><span class="line">SECRET_KEY &#x3D; &#39;jenkinsapp&#39;</span><br><span class="line"></span><br><span class="line">#Run command</span><br><span class="line">&#x2F;usr&#x2F;lib&#x2F;python2.7&#x2F;site-packages&#x2F;graphite&#x2F;manage.py syncdb</span><br><span class="line"># user admin password admin</span><br><span class="line"></span><br><span class="line">#Edit file</span><br><span class="line">vi &#x2F;etc&#x2F;yum.repos.d&#x2F;grafana.repo</span><br><span class="line"></span><br><span class="line">#Add content</span><br><span class="line">[grafana]</span><br><span class="line">name&#x3D;grafana</span><br><span class="line">baseurl&#x3D;https:&#x2F;&#x2F;packagecloud.io&#x2F;grafana&#x2F;stable&#x2F;el&#x2F;6&#x2F;$basearch</span><br><span class="line">repo_gpgcheck&#x3D;1</span><br><span class="line">enabled&#x3D;1</span><br><span class="line">gpgcheck&#x3D;1</span><br><span class="line">gpgkey&#x3D;https:&#x2F;&#x2F;packagecloud.io&#x2F;gpg.key https:&#x2F;&#x2F;grafanarel.s3.amazonaws.com&#x2F;RPM-GPG-KEY-grafana</span><br><span class="line">sslverify&#x3D;1</span><br><span class="line">sslcacert&#x3D;&#x2F;etc&#x2F;pki&#x2F;tls&#x2F;certs&#x2F;ca-bundle.crt</span><br><span class="line"></span><br><span class="line">#Install grafana</span><br><span class="line">yum -y install grafana</span><br><span class="line"></span><br><span class="line">#Start services</span><br><span class="line">systemctl start carbon-cache</span><br><span class="line">systemctl start httpd</span><br><span class="line">systemctl start grafana-server</span><br></pre></td></tr></table></figure>
+<p>1.Install jenkins plugin call ‘Metrics Graphite Reporting’<br>2.Go to Manage Jenkins -&gt; Configure Sytem-&gt; Graphite metrics report input Hostname ipaddress Port 2003 Prefix jenkins.<br>3.Access grafana server ipaddress:3000 -&gt; Add Graphite -&gt; http settings url <a target="_blank" rel="noopener" href="http://localhost/">http://localhost</a><br>4.Import grafana dashboard: go to grafana.com/dashboards search for Jenkins: Performance and health overview-&gt; copy id<br>5.<img src="https://i.imgur.com/jeagEZ9.png" alt="import dashboard"> Options grahite choose jenkins-test</p>
+<h3 id="Install-monit"><a href="#Install-monit" class="headerlink" title="Install monit"></a>Install monit</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">yum install -y monit</span><br><span class="line">vim &#x2F;etc&#x2F;monitrc</span><br><span class="line">set mailserver smtp.gmail.com port 587</span><br><span class="line">    username &quot;EMAIL&quot; password &quot;PASSWORD&quot;</span><br><span class="line">    using tlsv12</span><br><span class="line">vim &#x2F;etc&#x2F;monit.d&#x2F;jenkins</span><br><span class="line">check system $HOST</span><br><span class="line">    if loadavg (5min) &gt; 3 then alert</span><br><span class="line">    if loadavg (15min) &gt; 1 then alert</span><br><span class="line">    if memory usage &gt; 80% for 4 cycles then alert</span><br><span class="line">    if swap usage &gt; 20% for 4 cycles then alert</span><br><span class="line">    if cpu usage (user) &gt; 80% for 2 cycles then alert</span><br><span class="line">    if cpu usage (system) &gt; 20% for 2 cycles then alert</span><br><span class="line">    if cpu usage (wait) &gt; 80% for 2 cycles then alert</span><br><span class="line">    if cpu usage &gt; 200% for 4 cycles then alert</span><br><span class="line"></span><br><span class="line">check process jenkins with pidfile &#x2F;var&#x2F;run&#x2F;jenkins.pid</span><br><span class="line">    start program &#x3D; &quot;&#x2F;bin&#x2F;systemctl start jenkins&quot;</span><br><span class="line">    stop program  &#x3D; &quot;&#x2F;bin&#x2F;systemctl stop jenkins&quot;</span><br><span class="line">    if failed host 192.168.33.200 port 8080 then restart</span><br><span class="line"></span><br><span class="line">check process nginx with pidfile &#x2F;var&#x2F;run&#x2F;nginx.pid</span><br><span class="line">    start program &#x3D; &quot;&#x2F;bin&#x2F;systemctl start nginx&quot;</span><br><span class="line">    stop program  &#x3D; &quot;&#x2F;bin&#x2F;systemctl stop nginx&quot;</span><br><span class="line">    if failed host 192.168.33.200 port 80 then restart</span><br><span class="line"></span><br><span class="line">check filesystem jenkins_mount with path &#x2F;dev&#x2F;sda2</span><br><span class="line">    start program  &#x3D; &quot;&#x2F;bin&#x2F;mount &#x2F;var&#x2F;lib&#x2F;jenkins&quot;</span><br><span class="line">    stop program  &#x3D; &quot;&#x2F;bin&#x2F;umount &#x2F;var&#x2F;lib&#x2F;jenkins&quot;</span><br><span class="line">    if space usage &gt; 80% for 3 times within 5 cycles then alert</span><br><span class="line">    if space usage &gt; 99% then stop</span><br><span class="line">    if inode usage &gt; 30000 then alert</span><br><span class="line">    if inode usage &gt; 99% then stop</span><br><span class="line"></span><br><span class="line">check directory jenkins_home with path &#x2F;var&#x2F;lib&#x2F;jenkins</span><br><span class="line">    if failed permission 755 then exec &quot;&#x2F;bin&#x2F;chmod 755 &#x2F;var&#x2F;lib&#x2F;jenkins&quot;</span><br></pre></td></tr></table></figure>
+<p>Enable gmail account Allow less secure apps to ‘on’</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">systemctl start monit</span><br><span class="line">tail -f &#x2F;var&#x2F;log&#x2F;monit.log</span><br><span class="line"># test by systemctl stop jenkins</span><br></pre></td></tr></table></figure>
+<p><img src="https://i.imgur.com/gG5igvY.png" alt="monit"></p>
+<h2 id="Implementing-security-and-roles-for-Jenkins"><a href="#Implementing-security-and-roles-for-Jenkins" class="headerlink" title="Implementing security and roles for Jenkins"></a>Implementing security and roles for Jenkins</h2><h3 id="Jenkins-Security-best-practices"><a href="#Jenkins-Security-best-practices" class="headerlink" title="Jenkins Security best practices"></a>Jenkins Security best practices</h3><ul>
+<li>Disable job execution on the mater and use slave nodes for builds</li>
+<li>Use job restrictions plugin to confine specific jobs to specific nodes irrespective of the label used<br>install plugin job restrictions-&gt; Manage Jenkins-&gt; Manage Nodes<br><img src="https://imgur.com/1gwJ4gM.png" alt="restrict jobs execution at node"></li>
+<li>Enable CSRF protection and update scripts to use crumbs<br><img src="https://i.imgur.com/9q0FIpP.png" alt="configure csrf"></li>
+<li>Enable the slave to master access control<br><img src="https://i.imgur.com/lPoxSai.png" alt="config"></li>
+<li>For large encironments, use role and matrix based authorization strategies to isolate project access<br>install plugin Role-based Authorization Strategy<br><img src="https://i.imgur.com/H0bz6rU.png" alt="Project-based Matrix Authorization Strategy"><br><img src="https://i.imgur.com/YkFDXf5.png" alt="Enable project-based security"><h3 id="use-LDAP-server-and-role-based-strategy"><a href="#use-LDAP-server-and-role-based-strategy" class="headerlink" title="use LDAP server and role-based strategy"></a>use LDAP server and role-based strategy</h3></li>
+</ul>
+<p>1.ldap server config on centos 7</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br></pre></td><td class="code"><pre><span class="line">yum -y install openldap-servers openldap-clients</span><br><span class="line">cp &#x2F;usr&#x2F;share&#x2F;openldap-servers&#x2F;DB_CONFIG.example &#x2F;var&#x2F;lib&#x2F;ldap&#x2F;DB_CONFIG</span><br><span class="line">chown ldap. &#x2F;var&#x2F;lib&#x2F;ldap&#x2F;DB_CONFIG</span><br><span class="line">systemctl start slapd</span><br><span class="line"></span><br><span class="line">slappasswd -&gt; Enter new password twice -&gt; GENERATED_PASSWORD</span><br><span class="line"></span><br><span class="line">#New file</span><br><span class="line">config.ldif</span><br><span class="line"></span><br><span class="line">#Add content</span><br><span class="line">dn: olcDatabase&#x3D;&#123;0&#125;config,cn&#x3D;config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcRootPW</span><br><span class="line">olcRootPW: GENERATED_PASSWORD</span><br><span class="line"></span><br><span class="line">#Run commands</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:&#x2F;&#x2F;&#x2F; -f config.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:&#x2F;&#x2F;&#x2F; -f &#x2F;etc&#x2F;openldap&#x2F;schema&#x2F;cosine.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:&#x2F;&#x2F;&#x2F; -f &#x2F;etc&#x2F;openldap&#x2F;schema&#x2F;nis.ldif</span><br><span class="line">ldapadd -Y EXTERNAL -H ldapi:&#x2F;&#x2F;&#x2F; -f &#x2F;etc&#x2F;openldap&#x2F;schema&#x2F;inetorgperson.ldif</span><br><span class="line"></span><br><span class="line">#New file</span><br><span class="line">domain.ldif</span><br><span class="line"></span><br><span class="line">#Add content</span><br><span class="line">dn: olcDatabase&#x3D;&#123;1&#125;monitor,cn&#x3D;config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcAccess</span><br><span class="line">olcAccess: &#123;0&#125;to * by dn.base&#x3D;&quot;gidNumber&#x3D;0+uidNumber&#x3D;0,cn&#x3D;peercred,cn&#x3D;external,cn&#x3D;auth&quot;</span><br><span class="line">  read by dn.base&#x3D;&quot;cn&#x3D;Manager,dc&#x3D;practicaljenkins,dc&#x3D;com&quot; read by * none</span><br><span class="line"></span><br><span class="line">dn: olcDatabase&#x3D;&#123;2&#125;hdb,cn&#x3D;config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcSuffix</span><br><span class="line">olcSuffix: dc&#x3D;practicaljenkins,dc&#x3D;com</span><br><span class="line"></span><br><span class="line">dn: olcDatabase&#x3D;&#123;2&#125;hdb,cn&#x3D;config</span><br><span class="line">changetype: modify</span><br><span class="line">replace: olcRootDN</span><br><span class="line">olcRootDN: cn&#x3D;Manager,dc&#x3D;practicaljenkins,dc&#x3D;com</span><br><span class="line"></span><br><span class="line">dn: olcDatabase&#x3D;&#123;2&#125;hdb,cn&#x3D;config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcRootPW</span><br><span class="line">olcRootPW: &#123;SSHA&#125;mviTD7um1R+LygfAN01MzQOtK4ezm1ob</span><br><span class="line"></span><br><span class="line">dn: olcDatabase&#x3D;&#123;2&#125;hdb,cn&#x3D;config</span><br><span class="line">changetype: modify</span><br><span class="line">add: olcAccess</span><br><span class="line">olcAccess: &#123;0&#125;to attrs&#x3D;userPassword,shadowLastChange by</span><br><span class="line">  dn&#x3D;&quot;cn&#x3D;Manager,dc&#x3D;practicaljenkins,dc&#x3D;com&quot; write by anonymous auth by self write by * none</span><br><span class="line">olcAccess: &#123;1&#125;to dn.base&#x3D;&quot;&quot; by * read</span><br><span class="line">olcAccess: &#123;2&#125;to * by dn&#x3D;&quot;cn&#x3D;Manager,dc&#x3D;practicaljenkins,dc&#x3D;com&quot; write by * read</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#Run command</span><br><span class="line">ldapmodify -Y EXTERNAL -H ldapi:&#x2F;&#x2F;&#x2F; -f domain.ldif</span><br><span class="line"></span><br><span class="line">systemctl restart slapd</span><br><span class="line"></span><br><span class="line">#New file</span><br><span class="line">base.ldif</span><br><span class="line"></span><br><span class="line">#Add content</span><br><span class="line">dn: dc&#x3D;practicaljenkins,dc&#x3D;com</span><br><span class="line">objectClass: top</span><br><span class="line">objectClass: dcObject</span><br><span class="line">objectclass: organization</span><br><span class="line">o: practicaljenkins</span><br><span class="line">dc: practicaljenkins</span><br><span class="line"></span><br><span class="line">dn: cn&#x3D;Manager,dc&#x3D;practicaljenkins,dc&#x3D;com</span><br><span class="line">objectClass: organizationalRole</span><br><span class="line">cn: Manager</span><br><span class="line">description: Directory Manager</span><br><span class="line"></span><br><span class="line">dn: ou&#x3D;users,dc&#x3D;practicaljenkins,dc&#x3D;com</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">ou: users</span><br><span class="line"></span><br><span class="line">dn: ou&#x3D;groups,dc&#x3D;practicaljenkins,dc&#x3D;com</span><br><span class="line">objectClass: organizationalUnit</span><br><span class="line">ou: groups</span><br><span class="line"></span><br><span class="line">#Run command - enter password of slappasswd command when asked</span><br><span class="line"></span><br><span class="line">ldapadd -x -D cn&#x3D;Manager,dc&#x3D;practicaljenkins,dc&#x3D;com -W -f base.ldif</span><br><span class="line"></span><br><span class="line">## configure phpldapadmin</span><br><span class="line">yum -y install httpd php php-mbstring php-pear</span><br><span class="line">systemctl start httpd</span><br><span class="line">yum -y install epel-release</span><br><span class="line">yum clean all &amp;&amp; yum makecache fast &amp;&amp; yum update</span><br><span class="line">vim &#x2F;etc&#x2F;phpldapadmin&#x2F;config.php</span><br><span class="line">&lt;?php</span><br><span class="line">$config-&gt;custom-&gt;session[&#39;blowfish&#39;] &#x3D; &#39;d7458abe84f9622a42ce3f9e45dfc457&#39;;  # Autogenerated for ip-172-31-4-228.ap-southeast-2.compute.internal</span><br><span class="line"></span><br><span class="line">$config-&gt;custom-&gt;commands[&#39;cmd&#39;] &#x3D; array(</span><br><span class="line">	&#39;entry_internal_attributes_show&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;entry_refresh&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;oslinks&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;switch_template&#39; &#x3D;&gt; true</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line">$config-&gt;custom-&gt;commands[&#39;script&#39;] &#x3D; array(</span><br><span class="line">	&#39;add_attr_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;add_oclass_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;add_value_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;collapse&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;compare&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;compare_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;copy&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;copy_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;create&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;create_confirm&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;delete&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;delete_attr&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;delete_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;draw_tree_node&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;expand&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;export&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;export_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;import&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;import_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;login&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;logout&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;login_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;mass_delete&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;mass_edit&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;mass_update&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;modify_member_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;monitor&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;purge_cache&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;query_engine&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;rename&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;rename_form&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;rdelete&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;refresh&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;schema&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;server_info&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;show_cache&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;template_engine&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;update_confirm&#39; &#x3D;&gt; true,</span><br><span class="line">	&#39;update&#39; &#x3D;&gt; true</span><br><span class="line">);</span><br><span class="line">$servers &#x3D; new Datastore();</span><br><span class="line">$servers-&gt;newServer(&#39;ldap_pla&#39;);</span><br><span class="line">$servers-&gt;setValue(&#39;server&#39;,&#39;name&#39;,&#39;Stan Local LDAP Server&#39;);</span><br><span class="line">$servers-&gt;setValue(&#39;server&#39;,&#39;host&#39;,&#39;172.31.4.228&#39;);</span><br><span class="line">$servers-&gt;setValue(&#39;appearance&#39;,&#39;password_hash&#39;,&#39;&#39;);</span><br><span class="line">$servers-&gt;setValue(&#39;login&#39;,&#39;attr&#39;,&#39;dn&#39;);</span><br><span class="line">$servers-&gt;setValue(&#39;login&#39;,&#39;class&#39;,array(&#39;dc&#x3D;practicaljenkins,dc&#x3D;com&#39;));</span><br><span class="line">?&gt;</span><br><span class="line"></span><br><span class="line">systemctl restart httpd</span><br><span class="line">vim &#x2F;etc&#x2F;httpd&#x2F;conf.d&#x2F;phpldapadmin.conf</span><br><span class="line">#</span><br><span class="line">#  Web-based tool for managing LDAP servers</span><br><span class="line">#</span><br><span class="line"></span><br><span class="line">Alias &#x2F;phpldapadmin &#x2F;usr&#x2F;share&#x2F;phpldapadmin&#x2F;htdocs</span><br><span class="line">Alias &#x2F;ldapadmin &#x2F;usr&#x2F;share&#x2F;phpldapadmin&#x2F;htdocs</span><br><span class="line"></span><br><span class="line">&lt;Directory &#x2F;usr&#x2F;share&#x2F;phpldapadmin&#x2F;htdocs&gt;</span><br><span class="line">  &lt;IfModule mod_authz_core.c&gt;</span><br><span class="line">    # Apache 2.4</span><br><span class="line">    #Require local</span><br><span class="line">    Require all granted</span><br><span class="line">  &lt;&#x2F;IfModule&gt;</span><br><span class="line">  &lt;IfModule !mod_authz_core.c&gt;</span><br><span class="line">    # Apache 2.2</span><br><span class="line">    Order Deny,Allow</span><br><span class="line">    Deny from all</span><br><span class="line">    Allow from 127.0.0.1</span><br><span class="line">    Allow from ::1</span><br><span class="line">  &lt;&#x2F;IfModule&gt;</span><br><span class="line">&lt;&#x2F;Directory&gt;</span><br><span class="line">cat &#x2F;etc&#x2F;selinux&#x2F;config</span><br><span class="line"></span><br><span class="line"># This file controls the state of SELinux on the system.</span><br><span class="line"># SELINUX&#x3D; can take one of these three values:</span><br><span class="line">#     enforcing - SELinux security policy is enforced.</span><br><span class="line">#     permissive - SELinux prints warnings instead of enforcing.</span><br><span class="line">#     disabled - No SELinux policy is loaded.</span><br><span class="line">SELINUX&#x3D;disabled</span><br><span class="line"># SELINUXTYPE&#x3D; can take one of three values:</span><br><span class="line">#     targeted - Targeted processes are protected,</span><br><span class="line">#     minimum - Modification of targeted policy. Only selected processes are protected.</span><br><span class="line">#     mls - Multi Level Security protection.</span><br><span class="line">#SELINUXTYPE&#x3D;targeted</span><br><span class="line"></span><br><span class="line">systemctl restart httpd</span><br><span class="line">systemctl enable slapd</span><br><span class="line">systemctl enable httpd</span><br><span class="line">netstat -atnulp</span><br></pre></td></tr></table></figure>
+<p>Login to ipaddress/phpldapadmin<br>Ligin DN: cn=Manager,dc=practialjenkins.dc=com<br>Password: </p>
+<p>Under ou=groups create a child entry-&gt; Generic: Posix Group<br>3 groups: admins, developers, devops</p>
+<p>Under ou=users create Generic: User Account a b c</p>
+<p>Under cn=admins Add new attribue mumberUid a<br>same for other groups</p>
+<p>Configure Global Security<br><img src="https://i.imgur.com/JM1wDEf.png" alt="ldap config"><br>Group membership filter -&gt; (| (member={0}) (uniqueMember={0}) (memberUid={1}))</p>
+<p>Under Authorization choose Role-Based Strategy</p>
+<p>Under Manage Jenkins click Mange and Assign Roles -&gt; Manage Role-&gt; Role to add “admins, developers and devops”<br><img src="https://i.imgur.com/l1wUQY3.png" alt="managerole"></p>
+<p>Assign Roles-&gt; User/group to add-&gt; admins, developers, and devops<br><img src="https://i.imgur.com/10Cbmz6.png" alt="assignrole"></p>
+<p>User different user for login:<br><img src="https://i.imgur.com/R8fVL74.png" alt="login"></p>
+<h2 id="Using-the-jenkinss-api-and-automating-plugin-management"><a href="#Using-the-jenkinss-api-and-automating-plugin-management" class="headerlink" title="Using the jenkinss api and automating plugin management"></a>Using the jenkinss api and automating plugin management</h2><p>get API token from ‘People’&gt; admin-&gt; configure-&gt;API Token</p>
+<p>Automatically tirgger the build by:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">curl -u admin:20fda2a6ed2ff7a8cf9db9dd50a0c2b0 &quot;http:&#x2F;&#x2F;localhost:8080&#x2F;api&#x2F;json?pretty&#x3D;true&quot;</span><br><span class="line">curl -s &#39;http:&#x2F;&#x2F;localhost:8080&#x2F;crumbIssuer&#x2F;api&#x2F;xml?xpath&#x3D;concat(&#x2F;&#x2F;crumbRequestField,&quot;:&quot;,&#x2F;&#x2F;crumb)&#39; -u admin:admin</span><br><span class="line">curl -X POST -u admin:20fda2a6ed2ff7a8cf9db9dd50a0c2b0 &quot;http:&#x2F;&#x2F;localhost:8080&#x2F;job&#x2F;python-job&#x2F;build&quot; -H &quot;Jenkins-Crumb:f40b9f1084de9e60cca87085b30e6159&quot;&#96;&#96;&#96;</span><br><span class="line">Jenkins CLI:</span><br></pre></td></tr></table></figure>
+<p>wget –auth-no-challenge “<a target="_blank" rel="noopener" href="http://localhost:8080/jnlpJars/jenkins-cli.jar&quot;">http://localhost:8080/jnlpJars/jenkins-cli.jar&quot;</a><br>java -jar jenkins-cli.jar -auth admin:20fda2a6ed2ff7a8cf9db9dd50a0c2b0 -s <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> help<br>java -jar jenkins-cli.jar -auth admin:20fda2a6ed2ff7a8cf9db9dd50a0c2b0 -s <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> install-plugin aws-codebuild -deploy<br>java -jar jenkins-cli.jar -auth admin:20fda2a6ed2ff7a8cf9db9dd50a0c2b0 -s <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> install-plugin <a target="_blank" rel="noopener" href="http://updates.jenkins-ci.org/latest/ansicolor.hpi">http://updates.jenkins-ci.org/latest/ansicolor.hpi</a> -deploy<br>java -jar jenkins-cli.jar -auth admin:20fda2a6ed2ff7a8cf9db9dd50a0c2b0 -s <a target="_blank" rel="noopener" href="http://localhost:8080/">http://localhost:8080</a> install-plugin <a target="_blank" rel="noopener" href="http://updates.jenkins-ci.org/download/plugins/beaker-builder/1.6/beaker-builder.hpi">http://updates.jenkins-ci.org/download/plugins/beaker-builder/1.6/beaker-builder.hpi</a> -deploy</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"># Integrating Jenkins with external services</span><br><span class="line">## Integrating with Github</span><br><span class="line">![workflow](https:&#x2F;&#x2F;i.imgur.com&#x2F;hkwPMqG.png)</span><br><span class="line"></span><br><span class="line">- Preparing Github and configuring Jenkins to work together</span><br><span class="line">Github-&gt;Setting-&gt;Developer setting-&gt;Personal access tokens-&gt; Genere a new token-&gt; select scopes (repo:all |admin:repo_hook all| admin:org_hook)-&gt;copy token</span><br><span class="line"></span><br><span class="line">Jenkins-&gt;Add credentials-&gt; Kind username with password |scope global| username szhouchoice| password access token|id jenkins-secret</span><br><span class="line">add another credentials-&gt; kind secret test-&gt; secret token|id jenkins-token-&gt;save</span><br><span class="line"></span><br><span class="line">Username with password will use for multi-branch pipeline</span><br><span class="line">secret text will be use in Global configuration for github server</span><br><span class="line">![github server setting](https:&#x2F;&#x2F;i.imgur.com&#x2F;u4OVbH2.png)</span><br><span class="line"></span><br><span class="line">Install GitHub Branch Source Plugin</span><br><span class="line"></span><br><span class="line">- Configuring the Pipeline to create a code build workflow</span><br><span class="line">[project](https:&#x2F;&#x2F;github.com&#x2F;practicaljenkins&#x2F;sample-php-project)</span><br></pre></td></tr></table></figure>
+<p>git add -A<br>git commit -m “adding code”<br>git push origin master<br>git checkout -b develop<br>git push orgin develop</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In Jenkins-&gt; Create new Multibranch Pipeline-&gt;</span><br><span class="line">![Branch sources setting](https:&#x2F;&#x2F;i.imgur.com&#x2F;Tn2maPQ.png)</span><br><span class="line"></span><br><span class="line">- Testing the pipelines with different scenarios</span><br></pre></td></tr></table></figure>
+<p>git checkout -b feature-001<br>vim src/ConnectTest.php</p>
+<pre><code>push feature branch to github
+![merge in github](https://i.imgur.com/JOkzC9O.png)
+will trigger the build in Jenkins
+## Integrating with Sonarqube
+- setting up Sonarqube prerequisites for Jenkins
+- Install and configure Sonarqube plugin
+- Configure Jenkins pipeline for Sonarqube action
+- Generate Sonarqube analysis report from Jenkins pipeline
+</code></pre>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Jenkins/">Jenkins</a><a href="/tags/Devops/">Devops</a><a href="/tags/CD-CI/">CD/CI</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://cwzhou.win/2019/06/24/practical-jenkins/" data-title="practical jenkins | Stan Zhou&#39;s Hexo Technical Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/06/28/ansible/" title="ansible">
+  <strong>上一篇：</strong><br/>
+  <span>
+  ansible</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/06/19/useful-commands/"  title="useful commands">
+ <strong>下一篇：</strong><br/> 
+ <span>useful commands
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Practical-Jenkins-for-Production-Deployments"><span class="toc-number">1.</span> <span class="toc-text">Practical Jenkins for Production Deployments</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-Development-Stages"><span class="toc-number">2.</span> <span class="toc-text">The Development Stages</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-Continuous-Integration"><span class="toc-number">3.</span> <span class="toc-text">What is Continuous Integration?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-Continous-Delivery"><span class="toc-number">4.</span> <span class="toc-text">What is Continous Delivery?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#What-is-Continous-Deployment"><span class="toc-number">5.</span> <span class="toc-text">What is Continous Deployment?</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Setting-up-git-code-repositories-and-dependencies-for-Jenkins"><span class="toc-number">6.</span> <span class="toc-text">Setting up git, code repositories, and dependencies for Jenkins</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Storage-for-Jenkins-Data"><span class="toc-number">6.1.</span> <span class="toc-text">Storage for Jenkins Data</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Installation-of-Jenkins-from-Packages-and-WAR-Files"><span class="toc-number">6.2.</span> <span class="toc-text">Installation of Jenkins from Packages and WAR Files</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Configuring-reverse-proxy-and-setting-up-user-interface-for-jenkins"><span class="toc-number">6.3.</span> <span class="toc-text">Configuring reverse proxy and setting up user interface for jenkins</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Automating-the-Jenkins-Installation-and-Configuration-Process"><span class="toc-number">6.4.</span> <span class="toc-text">Automating the Jenkins Installation and Configuration Process</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#install-puppet"><span class="toc-number">6.5.</span> <span class="toc-text">install puppet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Creating-build-jobs-from-user-interface-and-scripts"><span class="toc-number">6.6.</span> <span class="toc-text">Creating build jobs from user interface and scripts</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#High-availability-monitoring-and-management-of-jenkins-deployments"><span class="toc-number">7.</span> <span class="toc-text">High-availability, monitoring, and management of jenkins deployments</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Setting-up-multiple-Jenkins-Master-with-Load-Balancer-for-high-availability"><span class="toc-number">7.1.</span> <span class="toc-text">Setting up multiple Jenkins Master with Load Balancer for high-availability</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-On-aws-ec2-create-3-instances-with-Centos-7-OS-1-for-haproxy-2-for-jenkins"><span class="toc-number">7.1.1.</span> <span class="toc-text">1. On aws ec2 create 3 instances with Centos 7 OS. 1 for haproxy 2 for jenkins</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-Create-a-efs-on-aws-setup-up-efs-on-two-jenkins-ec2-instances-efs-security-group-need-create-a-new-one-open-nfs-port-to-everywhere"><span class="toc-number">7.1.2.</span> <span class="toc-text">2. Create a efs on aws, setup up efs on two jenkins ec2 instances. efs security group need create a new one open nfs port to everywhere</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-On-Jenkins-master-passive-node"><span class="toc-number">7.1.3.</span> <span class="toc-text">3. On Jenkins master passive node</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-On-HA-Proxy-server"><span class="toc-number">7.1.4.</span> <span class="toc-text">4. On HA Proxy server</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Backing-up-and-restoring-Jenkins-data"><span class="toc-number">7.2.</span> <span class="toc-text">Backing up and restoring Jenkins data</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Steps-of-backup-and-resotre"><span class="toc-number">7.2.1.</span> <span class="toc-text">Steps of backup and resotre</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Backup-and-Restore-Methods"><span class="toc-number">7.2.2.</span> <span class="toc-text">Backup and Restore Methods</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Monitoring-Jenkins-components-and-data"><span class="toc-number">7.3.</span> <span class="toc-text">Monitoring Jenkins components and data</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-plugin-monitoring-after-that-under-%E2%80%98Manage-Jenkins%E2%80%99-will-have-Monitoring-of-Jenkins-master"><span class="toc-number">7.3.1.</span> <span class="toc-text">Install plugin monitoring, after that under ‘Manage Jenkins’ will have Monitoring of Jenkins master:</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#install-configure-graphite-grafana"><span class="toc-number">7.3.2.</span> <span class="toc-text">install configure graphite grafana</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Install-monit"><span class="toc-number">7.3.3.</span> <span class="toc-text">Install monit</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Implementing-security-and-roles-for-Jenkins"><span class="toc-number">7.4.</span> <span class="toc-text">Implementing security and roles for Jenkins</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Jenkins-Security-best-practices"><span class="toc-number">7.4.1.</span> <span class="toc-text">Jenkins Security best practices</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#use-LDAP-server-and-role-based-strategy"><span class="toc-number">7.4.2.</span> <span class="toc-text">use LDAP server and role-based strategy</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-the-jenkinss-api-and-automating-plugin-management"><span class="toc-number">7.5.</span> <span class="toc-text">Using the jenkinss api and automating plugin management</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/K8s/" title="K8s">K8s<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="Stan Zhou">Stan Zhou</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

@@ -1,0 +1,985 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>docker | Stan Zhou&#39;s Hexo Technical Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Stan Zhou">
+    
+
+    
+    <meta name="description" content="what is docker  Open platform Build, ship, and run applications Popular because: Flexible Lightweight Interchangeable Portable ScalableList Docker CLI commands    1234567891011121314151617181920212223">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker">
+<meta property="og:url" content="http://cwzhou.win/2019/05/05/docker/index.html">
+<meta property="og:site_name" content="Stan Zhou&#39;s Hexo Technical Blog">
+<meta property="og:description" content="what is docker  Open platform Build, ship, and run applications Popular because: Flexible Lightweight Interchangeable Portable ScalableList Docker CLI commands    1234567891011121314151617181920212223">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.imgur.com/KKfsLxn.png">
+<meta property="og:image" content="https://i.imgur.com/rWfUi8x.png">
+<meta property="og:image" content="https://i.imgur.com/7bpoPrj.png">
+<meta property="og:image" content="https://i.imgur.com/FAExCVU.png">
+<meta property="og:image" content="https://i.imgur.com/LtTRrfD.png">
+<meta property="og:image" content="https://i.imgur.com/KjgJtA0.png">
+<meta property="article:published_time" content="2019-05-05T06:47:47.000Z">
+<meta property="article:modified_time" content="2021-04-12T14:06:50.000Z">
+<meta property="article:author" content="Stan Zhou">
+<meta property="article:tag" content="docker">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.imgur.com/KKfsLxn.png">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Stan Zhou&#39;s Hexo Technical Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Stan Zhou&#39;s Hexo Technical Blog" title="Stan Zhou&#39;s Hexo Technical Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Stan Zhou&#39;s Hexo Technical Blog">Stan Zhou&#39;s Hexo Technical Blog</a></h1>
+				<h2 class="blog-motto">Innovation Evangelist</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:cwzhou.win">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/05/05/docker/" title="docker" itemprop="url">docker</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2019-05-05T06:47:47.000Z" itemprop="datePublished"> Published 2019-05-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#List-Docker-CLI-commands"><span class="toc-number">1.</span> <span class="toc-text">List Docker CLI commands</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Beginning-Devops-with-Docker"><span class="toc-number"></span> <span class="toc-text">Beginning Devops with Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-Images-and-Containers"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1. Images and Containers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-compose"><span class="toc-number">2.</span> <span class="toc-text">Docker-compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kubernetes"><span class="toc-number">3.</span> <span class="toc-text">Kubernetes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-ps-command"><span class="toc-number">4.</span> <span class="toc-text">Docker ps command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-networking"><span class="toc-number">5.</span> <span class="toc-text">Docker networking</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#upload-that-new-image-to-dockerhub"><span class="toc-number"></span> <span class="toc-text">upload that new image to dockerhub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon-web-services-and-docker-development"><span class="toc-number"></span> <span class="toc-text">Amazon web services and docker development</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-ecs-throught-the-aws-cli"><span class="toc-number">0.1.</span> <span class="toc-text">Working with ecs throught the aws cli</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-registry"><span class="toc-number">1.</span> <span class="toc-text">Docker registry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error"><span class="toc-number">2.</span> <span class="toc-text">Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Security"><span class="toc-number">3.</span> <span class="toc-text">Container Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Containers-inside-VMs"><span class="toc-number">3.1.</span> <span class="toc-text">Containers inside VMs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Logging-and-Monitoring"><span class="toc-number">4.</span> <span class="toc-text">Container Logging and Monitoring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-EC2-Variations"><span class="toc-number">5.</span> <span class="toc-text">Docker + EC2 Variations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ECS-managed-policies"><span class="toc-number">6.</span> <span class="toc-text">ECS managed policies</span></a></li></ol>
+		
+		</div>
+		
+		<p><strong>what is docker</strong></p>
+<ul>
+<li>Open platform</li>
+<li>Build, ship, and run applications</li>
+<li>Popular because:<ul>
+<li>Flexible</li>
+<li>Lightweight</li>
+<li>Interchangeable</li>
+<li>Portable</li>
+<li>Scalable<h2 id="List-Docker-CLI-commands"><a href="#List-Docker-CLI-commands" class="headerlink" title="List Docker CLI commands"></a>List Docker CLI commands</h2></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">docker</span><br><span class="line">docker container --<span class="built_in">help</span></span><br><span class="line"></span><br><span class="line"><span class="comment">## Display Docker version and info</span></span><br><span class="line">docker --version</span><br><span class="line">docker version</span><br><span class="line">docker info</span><br><span class="line"></span><br><span class="line"><span class="comment">## Execute Docker image</span></span><br><span class="line">docker run hello-world</span><br><span class="line"></span><br><span class="line"><span class="comment">## List Docker images</span></span><br><span class="line">docker image ls</span><br><span class="line"></span><br><span class="line"><span class="comment">## List Docker containers (running, all, all in quiet mode)</span></span><br><span class="line">docker container ls</span><br><span class="line">docker container ls --all</span><br><span class="line">docker container ls -aq</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker build -t friendlyhello .  <span class="comment"># Create image using this directory&#x27;s Dockerfile</span></span><br><span class="line">docker run -p 4000:80 friendlyhello  <span class="comment"># Run &quot;friendlyhello&quot; mapping port 4000 to 80</span></span><br><span class="line">docker run -d -p 4000:80 friendlyhello         <span class="comment"># Same thing, but in detached mode</span></span><br><span class="line">docker container ls                                <span class="comment"># List all running containers</span></span><br><span class="line">docker container ls -a             <span class="comment"># List all containers, even those not running</span></span><br><span class="line">docker container stop &lt;<span class="built_in">hash</span>&gt;           <span class="comment"># Gracefully stop the specified container</span></span><br><span class="line">docker container <span class="built_in">kill</span> &lt;<span class="built_in">hash</span>&gt;         <span class="comment"># Force shutdown of the specified container</span></span><br><span class="line">docker container rm &lt;<span class="built_in">hash</span>&gt;        <span class="comment"># Remove specified container from this machine</span></span><br><span class="line">docker container rm $(docker container ls -a -q)         <span class="comment"># Remove all containers</span></span><br><span class="line">docker image ls -a                             <span class="comment"># List all images on this machine</span></span><br><span class="line">docker image rm &lt;image id&gt;            <span class="comment"># Remove specified image from this machine</span></span><br><span class="line">docker image rm $(docker image ls -a -q)   <span class="comment"># Remove all images from this machine</span></span><br><span class="line">docker rm   <span class="comment"># deletes a stopped container</span></span><br><span class="line">docker rmi  <span class="comment"># deletes a container image</span></span><br><span class="line">docker login             <span class="comment"># Log in this CLI session using your Docker credentials</span></span><br><span class="line">docker tag &lt;image&gt; username/repository:tag  <span class="comment"># Tag &lt;image&gt; for upload to registry</span></span><br><span class="line">docker push username/repository:tag            <span class="comment"># Upload tagged image to registry</span></span><br><span class="line">docker run username/repository:tag                   <span class="comment"># Run image from a registry</span></span><br><span class="line">docker system prune -fa <span class="comment">#will remove any container images that are not tied to an existing runningcontainer, along with any other resources in your Docker environment</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="Beginning-Devops-with-Docker"><a href="#Beginning-Devops-with-Docker" class="headerlink" title="Beginning Devops with Docker"></a>Beginning Devops with Docker</h1><h2 id="Chapter-1-Images-and-Containers"><a href="#Chapter-1-Images-and-Containers" class="headerlink" title="Chapter 1. Images and Containers"></a>Chapter 1. Images and Containers</h2><p><strong>Virtualization versus Containerization</strong><br><img src="https://i.imgur.com/KKfsLxn.png" alt="virtual machine block diagram"><br>In virtual machines, the physical hardware is abstracted, therefore we have may server running on one server. Virtual machines do sometimes take time to start up and are expensive in capacity (they can be GBs in size), although the greatest advantage they have over containers is the ability to run different Linux distributions such as CentOS instead of just Ubuntu.</p>
+<p><img src="https://i.imgur.com/rWfUi8x.png" alt="containerization"><br>In containerization, it is only the app layer (where code and dependencies are packaged) that is abstracted, making it possible for many containers to run on the same OS kernel but on separate user space.</p>
+<p>Containers use less space and boot fast.</p>
+<ul>
+<li>Describe how Docker improves a DevOps workflow<br>Normally, we have two pieces to a working application: the project code base and the provisioning script. The code base is the application code. It is managed by version control and hosted in GitHub, among other platforms.<br><img src="https://i.imgur.com/7bpoPrj.png" alt="Docker implements"><br>The <strong>Dockerfile</strong> takes the place of the provisioning script. The two combined (project code and Dockerfile) make a <strong>Docker image</strong>. A Docker image can be run as an application. This running application sourced from a Docker image is called a <strong>Docker container</strong>.</li>
+</ul>
+<p><strong>Basic Docker Terminal Commands</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">docker info ## displays system-wide information</span><br><span class="line">docker search &lt;term&gt; (foir example. docker search ubuntu) ##searches Docker Hub for Images</span><br><span class="line">docker pull ## pulls an image from the registry to your local machine eg docker pull ubuntu</span><br><span class="line">docker images ## lists the Docker images we have locally</span><br><span class="line">docker run &lt;image&gt; #will check whether the image by the name hello-world exists locally,if the image is</span><br><span class="line">not local, it will be pulled form the default registry, Docker Hub, and run as a container, by default</span><br><span class="line"></span><br><span class="line">docker ps ## lists the running containers</span><br><span class="line">docker stop &lt;container ID&gt;  ## stop the container </span><br><span class="line">docker rm &lt;container ID&gt; ## Delete the container and the image</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Interpret Dockerfile syntax</li>
+<li>Build images</li>
+<li>Set up containers and images</li>
+<li>Set up a local dynamic environment</li>
+<li>Run applications in Docker containers</li>
+<li>Obtain a basic overview of how Docker manages images via Docker Hub</li>
+<li>Deploy a Docker image to Docker Hub</li>
+</ul>
+<p><strong>The Dockerfile</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">FROM openjdk:8-jre-alpine</span><br><span class="line"></span><br><span class="line">ENV SPRING_OUTPUT_ANSI_ENABLED&#x3D;ALWAYS \</span><br><span class="line">    JHIPSTER_SLEEP&#x3D;0 \</span><br><span class="line">    JAVA_OPTS&#x3D;&quot;&quot;</span><br><span class="line"></span><br><span class="line">CMD echo &quot;The application will start in $&#123;JHIPSTER_SLEEP&#125;s...&quot; &amp;&amp; \</span><br><span class="line">    sleep $&#123;JHIPSTER_SLEEP&#125; &amp;&amp; \</span><br><span class="line">    java $&#123;JAVA_OPTS&#125; -Djava.security.egd&#x3D;file:&#x2F;dev&#x2F;.&#x2F;urandom -jar &#x2F;app.war</span><br><span class="line"></span><br><span class="line">EXPOSE 8080 5701&#x2F;udp</span><br><span class="line"></span><br><span class="line">ADD *.war &#x2F;app.war</span><br></pre></td></tr></table></figure>
+<p>The <strong>FROM</strong> instruction specifies the base image to use while initializing the build. Here, we specify open JDK 8 as our Java runtime.</p>
+<p>The <strong>ENV</strong> instruction is used to set environment variables, and the <strong>CMD</strong> instruction is used to specify commands to be executed.</p>
+<p>The <strong>EXPOSE</strong> instruction is used to specify the port that the container listens to during runtime.</p>
+<p><strong>useful commands for Docker and Docker compose</strong><br><img src="https://i.imgur.com/FAExCVU.png" alt="commands1"><br><img src="https://i.imgur.com/LtTRrfD.png" alt="commands2"></p>
+<h2 id="Docker-compose"><a href="#Docker-compose" class="headerlink" title="Docker-compose"></a>Docker-compose</h2><p><strong>Sample docker-compose file that will start a Rdis database on port 5000</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">version: &#39;3&#39;</span><br><span class="line">services:</span><br><span class="line">  web:</span><br><span class="line">    build: .</span><br><span class="line">    ports:</span><br><span class="line">     - &quot;5000:5000&quot;</span><br><span class="line">  redis:</span><br><span class="line">    image: &quot;redis:alpine&quot;</span><br></pre></td></tr></table></figure>
+<p>The first line of the <em>docker-compose</em> file should be the version of the <em>docker-compose</em> tool. </p>
+<p>Then we need to specify all the necessary services that we need for our application to run. They should be defined in the <em>services:</em> section.</p>
+<p>We can also define multiple services inside here, giving a name to each (<em>web</em> and <em>redis</em>).</p>
+<p>This is followed by how to build the <em>service</em> (either via a command to build or referring a Dockerfile). </p>
+<p>If the application needs any port access, we can configure it using <em>5000:5000</em> (that is internal port: external port). </p>
+<p>Then, we have to specify the volume information. This basically tells <em>docker-compose</em> to serve the files from the location specified.   </p>
+<p>Once we have specified the services required for our application, then we can start the application via <em>docker-compose</em>. This will start your entire application along with the services, and expose the <em>services</em> on the port specified. </p>
+<p>With <em>docker-compose</em>, we can perform the following operations:</p>
+<ul>
+<li><p><strong>Start</strong>: docker-compose -f <docker_file> up</p>
+</li>
+<li><p><strong>Stop</strong>: docker-compose -f <docker_file> down<br>We can also perform the following operations:</p>
+</li>
+<li><p><strong>List the running services and their status</strong>: <em>docker ps</em></p>
+</li>
+<li><p><strong>Logs</strong>: <em>docker log <container_id></em></p>
+</li>
+</ul>
+<h2 id="Kubernetes"><a href="#Kubernetes" class="headerlink" title="Kubernetes"></a>Kubernetes</h2><p>A single deployable component is called a <strong>pod</strong> in Kubernetes. This can be as simple as a running process in the container. A group of pods can be combined together to form a <strong>deployment</strong>. </p>
+<p>The following code is a sample Kubernetes file that will start a Nginx server:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">apiVersion: v1</span><br><span class="line">kind: Service</span><br><span class="line">metadata:</span><br><span class="line">  name: nginxsvc</span><br><span class="line">  labels:</span><br><span class="line">    app: nginx</span><br><span class="line">spec:</span><br><span class="line">  type: NodePort</span><br><span class="line">  ports:</span><br><span class="line">  - port: 80</span><br><span class="line">    protocol: TCP</span><br><span class="line">    name: http</span><br><span class="line">  - port: 443</span><br><span class="line">    protocol: TCP</span><br><span class="line">    name: https</span><br><span class="line">  selector:</span><br><span class="line">    app: nginx</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p>Start with an <em>apiVersion</em> in a Kubernetes deployment file.</p>
+</li>
+<li><p>Followed by the type, which takes either a pod, deployment, namespace, ingress (load balancing the pods), role, and many more.</p>
+</li>
+</ol>
+<p>Ingress forms a layer between the services and the internet so that all the inbound connections are controlled or configured with the ingress controller before sending them to Kubernetes services on the cluster. On the other hand, the egress controller controls or configures services going out of the Kubernetes cluster.</p>
+<ol start="3">
+<li><p>This is followed by the metadata information, such as the type of environments, the application name (nginxsvc), and labels (Kubernetes uses this information to identify and segregate the pods). Kubernetes uses this metadata information to identify the particular pods or a group of pods, and we can manage the instances with this metadata. This is one of the key differences with docker-compose, where docker-compose doesn’t have the flexibility of defining the metadata about the containers.</p>
+</li>
+<li><p>This is followed by the spec, where we define the specification of the images or our application. We can also define the pull strategy for our images as well as define the environment variables along with the exposed ports. We can define the resource limitations on the machine (or VM) for a particular service. They provide health checks, that is, each service is monitored for the health and when some services fail, they are immediately replaced by newer ones. They also provide service discovery out of the box, by assigning each pod an IP, which makes it easier for the services to identify and interact with them. They also provide a better dashboard, to visualize your architecture and the status of the application. You can do most of the management via this dashboard, such as checking the status, logs, scale up, or down the services, and so on.</p>
+</li>
+</ol>
+<h2 id="Docker-ps-command"><a href="#Docker-ps-command" class="headerlink" title="Docker ps command"></a>Docker ps command</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">docker ps --format <span class="string">&quot;table &#123;&#123;.ID&#125;&#125; \t &#123;&#123;.Image&#125;&#125; \t &#123;&#123;.Ports&#125;&#125; \t &#123;&#123;.Names&#125;&#125;&quot;</span></span><br><span class="line">CONTAINER ID         IMAGE                   PORTS                                                NAMES</span><br><span class="line">7d3a6d518e8e         jenkinsci/blueocean     0.0.0.0:8080-&gt;8080/tcp, 0.0.0.0:50000-&gt;50000/tcp     jenkins</span><br><span class="line">9655eb0e836e         alpine                                                                       quotes</span><br><span class="line">root@stan-OptiPlex-380:~|⇒  docker ps --format <span class="string">&quot;table &#123;&#123;.ID&#125;&#125; \t &#123;&#123;.Names &#125;&#125; \t &#123;&#123;.Status&#125;&#125;&quot;</span></span><br><span class="line">CONTAINER ID         NAMES               STATUS</span><br><span class="line">7d3a6d518e8e         jenkins             Up 2 minutes</span><br><span class="line">9655eb0e836e         quotes              Up 4 hours</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-networking"><a href="#Docker-networking" class="headerlink" title="Docker networking"></a>Docker networking</h2><p>-Mostly used types</p>
+<ul>
+<li>Bridge networks<ul>
+<li>The default network driver</li>
+<li>Applications run in standalone containers that need to communicate</li>
+</ul>
+</li>
+<li>Overlay networks:<ul>
+<li>Connect multiple Docker daemons together</li>
+<li>Enable swarm services to communicate with each other</li>
+</ul>
+</li>
+</ul>
+<p><strong>Docker basic networking</strong></p>
+<ul>
+<li>Step 1: create a network and volume</li>
+</ul>
+<p>Listing and creating a network:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker network ls</span><br><span class="line">docker network create net1</span><br></pre></td></tr></table></figure>
+<p>Listing and creating a volume:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker volume ls</span><br><span class="line">docker volume create --driver&#x3D;local --name&#x3D;volume1</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Step 2: start docker containers<ul>
+<li>Starting docker containers:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name&#x3D;container1 -v volume1:&#x2F;opt --network&#x3D;net1 busybox sh</span><br><span class="line">docker run -it --name&#x3D;container2 -v volume1:&#x2F;opt --network&#x3D;net1 busybox sh</span><br><span class="line">#-t is used for interactive session and t will give you the terminal</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li>Step 3: test connectivity between these containers<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># ping container2</span><br><span class="line">PING container2 (172.19.0.3): 56 data bytes</span><br><span class="line">64 bytes from 172.19.0.3: seq&#x3D;0 ttl&#x3D;64 time&#x3D;0.170 ms</span><br><span class="line">64 bytes from 172.19.0.3: seq&#x3D;1 ttl&#x3D;64 time&#x3D;0.134 ms</span><br><span class="line">64 bytes from 172.19.0.3: seq&#x3D;2 ttl&#x3D;64 time&#x3D;0.133 ms</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p><strong>Overlay networking</strong></p>
+<p><strong>What does an overlay network do?</strong></p>
+<ul>
+<li><p>Containers only connect to other containers on the same network </p>
+</li>
+<li><p>Connecting to containers on other hosts requires that the container publish the needed port </p>
+</li>
+<li><p>Overlay network allows containers running on different hosts to connect on a private network<br><img src="https://i.imgur.com/KjgJtA0.png" alt="overlay networking"></p>
+</li>
+<li><p>Step 1: Initiate docker swarm</p>
+<blockquote>
+<p>Host1: Check networks and initiate docker swarm:<br> docker network ls<br> docker swarm init<br>Host2: Initiate swarm worker and check its networks:<br> docker swarm join –toaken foobar 192.168.10.91:2377<br> docker network ls</p>
+</blockquote>
+</li>
+<li><p>Step 2: Create overlay network and spin a docker container on host1</p>
+<blockquote>
+<p>Create an overlay network:<br> docker network create -d overlay –atachable=true swarmnet</p>
+</blockquote>
+<ul>
+<li>List networks:<br>docker network ls</li>
+<li>Spin a Docker container:<br>docker run -itd –name container1 –network swarmnet busybox</li>
+</ul>
+</li>
+<li><p>Step 3: Spin a container on host2 and check its networks</p>
+<blockquote>
+<p>List networks:<br> docker network ls</p>
+</blockquote>
+<ul>
+<li>Spin a Docker container:<br>docker run -itd –name container2 –network swarmnet busybox</li>
+<li>List networks and see new network:<br>docker network ls</li>
+</ul>
+</li>
+<li><p>Step 4: Login to the containers check its networks and sing each other</p>
+<blockquote>
+<p>Host1: Log in to the container, check IPs, and ping container on Host2:<br>   docker exec -it container1 sh<br>   ifconfig<br>   ping container2<br>Host2:  Log in to the container, check IPs, and ping container on Host1:<br>   docker exec -it container2 sh<br>   ifconfig<br>   ping container1</p>
+</blockquote>
+</li>
+</ul>
+<h1 id="upload-that-new-image-to-dockerhub"><a href="#upload-that-new-image-to-dockerhub" class="headerlink" title="upload that new image to dockerhub"></a>upload that new image to dockerhub</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker tag helloworld stanosaka&#x2F;helloworld</span><br><span class="line">docker push stanosaka&#x2F;helloworld</span><br></pre></td></tr></table></figure>
+
+<p>Cleaning up containers:We can clean up everything by stopping and removing all containers with these two handy one-line commands:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ docker stop $(docker ps -a -q)</span><br><span class="line">$ docker system prune</span><br></pre></td></tr></table></figure>
+<h1 id="Amazon-web-services-and-docker-development"><a href="#Amazon-web-services-and-docker-development" class="headerlink" title="Amazon web services and docker development"></a>Amazon web services and docker development</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br><span class="line">apt-get install     apt-transport-https     ca-certificates     curl</span><br><span class="line">curl -fsSL https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;ubuntu&#x2F;gpg | sudo apt-key</span><br><span class="line">add-apt-repository    &quot;deb [arch&#x3D;amd64] https:&#x2F;&#x2F;download.docker.com&#x2F;linux&#x2F;ubuntu \</span><br><span class="line">   $(lsb_release -cs) \</span><br><span class="line">   stable&quot;</span><br><span class="line">apt update</span><br><span class="line">apt-get install docker-ce docker-ce-cli containerd.io</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl status docker</span><br><span class="line"></span><br><span class="line">root@ip-172-31-6-219:~# cat dockerfile</span><br><span class="line">FROM ubuntu:16.04</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">RUN apt update</span><br><span class="line">RUN apt install -y apache2</span><br><span class="line">RUN echo &quot;Welcome to my web site&quot; &gt; &#x2F;var&#x2F;www&#x2F;html&#x2F;index.html</span><br><span class="line">CMD &#x2F;usr&#x2F;sbin&#x2F;apache2ctl -D FOREGROUND</span><br><span class="line">EXPOSE 80</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">docker info</span><br><span class="line">docker run -it --detach&#x3D;true ubuntu bash</span><br><span class="line">docker ps</span><br><span class="line">docker renmae nervous_visvesvaraya newname</span><br><span class="line">docker network inspect newnet|less</span><br><span class="line">docker network connect newnet newname</span><br><span class="line">docker inspect newname|less</span><br><span class="line">ping 172.18.0.2</span><br><span class="line">ping 172.17.0.2</span><br><span class="line">docker build -t &quot;webserver&quot; .</span><br><span class="line">docker images</span><br><span class="line">docker run -d -p 80:80 webserver &#x2F;usr&#x2F;sbin&#x2F;apache2ctl -D FOREGROUND</span><br><span class="line">docker ps</span><br><span class="line">curl localhost</span><br><span class="line"> aws iam create-service-linked-role --aws-service-name ecs.amazonaws.com</span><br><span class="line">&#123;</span><br><span class="line">    &quot;Role&quot;: &#123;</span><br><span class="line">        &quot;AssumeRolePolicyDocument&quot;: &#123;</span><br><span class="line">            &quot;Version&quot;: &quot;2012-10-17&quot;,</span><br><span class="line">            &quot;Statement&quot;: [</span><br><span class="line">                &#123;</span><br><span class="line">                    &quot;Action&quot;: [</span><br><span class="line">                        &quot;sts:AssumeRole&quot;</span><br><span class="line">                    ],</span><br><span class="line">                    &quot;Effect&quot;: &quot;Allow&quot;,</span><br><span class="line">                    &quot;Principal&quot;: &#123;</span><br><span class="line">                        &quot;Service&quot;: [</span><br><span class="line">                            &quot;ecs.amazonaws.com&quot;</span><br><span class="line">                        ]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;RoleId&quot;: &quot;AROAYYRUPCKTK7Z2M2PLO&quot;,</span><br><span class="line">        &quot;CreateDate&quot;: &quot;2019-09-02T02:28:51Z&quot;,</span><br><span class="line">        &quot;RoleName&quot;: &quot;AWSServiceRoleForECS&quot;,</span><br><span class="line">        &quot;Path&quot;: &quot;&#x2F;aws-service-role&#x2F;ecs.amazonaws.com&#x2F;&quot;,</span><br><span class="line">        &quot;Arn&quot;: &quot;arn:aws:iam::602479202982:role&#x2F;aws-service-role&#x2F;ecs.amazonaws.com&#x2F;AWSServiceRoleForECS&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Working-with-ecs-throught-the-aws-cli"><a href="#Working-with-ecs-throught-the-aws-cli" class="headerlink" title="Working with ecs throught the aws cli"></a>Working with ecs throught the aws cli</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">aws ecs list-clusters</span><br><span class="line">aws ecs describe-clusters</span><br><span class="line">aws ecs create-cluster --cluster-name newcluster</span><br></pre></td></tr></table></figure>
+<p><strong>Configure ECS to authenticate with Docker Hub</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#1.ssh to ecs server</span><br><span class="line">cd &#x2F;etc&#x2F;ecs</span><br><span class="line">[root@ip-172-31-13-18 ecs]# vim ecs.config</span><br><span class="line">ECS_ENGINE_AUTH_TYPE&#x3D;docker</span><br><span class="line">ECS_ENGINE_AUTH_DATA&#x3D;&#123;&quot;https:&#x2F;&#x2F;index.docker.io&#x2F;v1&#x2F;&quot;:&#123;&quot;username&quot;:&quot;foobar&quot;,&quot;password&quot;:&quot;badpassword&quot;,&quot;email&quot;:&quot;foo.bar@gmail.com&quot;&#125;&#125;</span><br><span class="line">[root@ip-172-31-13-18 ecs]# stop ecs</span><br><span class="line">ecs stop&#x2F;waiting</span><br><span class="line">[root@ip-172-31-13-18 ecs]# start ecs</span><br><span class="line">ecs start&#x2F;running, process 4996</span><br><span class="line">[root@ip-172-31-13-18 ecs]# docker inspect ecs-agent|grep ECS_DATADIR</span><br><span class="line">                &quot;ECS_DATADIR&#x3D;&#x2F;data&quot;,</span><br><span class="line">#2. make repo private in docker hub</span><br><span class="line">#3. configure in aws console about ecs</span><br></pre></td></tr></table></figure>
+
+<p><strong>working with ec2 container registry (ECR)</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">aws ecr get-login help</span><br><span class="line">docker login -u AWS -p badpassword https:&#x2F;&#x2F;602479202982.dkr.ecr.ap-southeast-2.amazonaws.com</span><br><span class="line">docker images</span><br><span class="line">docker tag c0a44e0f3831 602479202982.dkr.ecr.ap-southeast-2.amazonaws.com&#x2F;myrepo</span><br><span class="line">docker push 602479202982.dkr.ecr.ap-southeast-2.amazonaws.com&#x2F;myrepo</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-registry"><a href="#Docker-registry" class="headerlink" title="Docker registry"></a>Docker registry</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 5000:5000 --restart always --name registry registry:2</span><br><span class="line">docker pull hello-world</span><br><span class="line">docker tag hello-world localhost:5000&#x2F;hello-world</span><br><span class="line">docker push localhost:5000&#x2F;hello-world</span><br><span class="line">docker exec -it registry &#x2F;bin&#x2F;sh</span><br><span class="line">docker images</span><br><span class="line">docker rmi hello-world</span><br><span class="line">docker rmi localhost:5000&#x2F;hello-world</span><br><span class="line">docker images</span><br><span class="line">docker pull localhost:5000&#x2F;hello-world</span><br><span class="line">docker run \</span><br><span class="line">  -d \</span><br><span class="line">  -e ENV_DOCKER_REGISTRY_HOST&#x3D;registry \</span><br><span class="line">  -e ENV_DOCKER_REGISTRY_PORT&#x3D;5000 \</span><br><span class="line">  -p 8080:80 \</span><br><span class="line">  --link registry:registry \</span><br><span class="line">  konradkleine&#x2F;docker-registry-frontend:v2</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Error"><a href="#Error" class="headerlink" title="Error"></a>Error</h2><ol>
+<li><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> docker login 127.0.0.1:5000</span><br><span class="line">Username: myuser</span><br><span class="line">Password:</span><br><span class="line">** Message: 17:25:24.126: Remote error from secret service: org.freedesktop.Secret.Error.IsLocked: Cannot create an item in a locked collection</span><br><span class="line">Error saving credentials: error storing credentials - err: exit status 1, out: &#96;Cannot create an item in a locked collection&#96;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>Fix by:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">docker logout</span><br><span class="line">Removing login credentials for https:&#x2F;&#x2F;index.docker.io&#x2F;v1&#x2F;</span><br><span class="line">➜  outyet git:(master) mv ~&#x2F;.docker&#x2F;config.json ~&#x2F;.docker&#x2F;config_old.json</span><br><span class="line">➜  outyet git:(master) docke login</span><br><span class="line">zsh: command not found: docke</span><br><span class="line">➜  outyet git:(master) docker login 127.0.0.1:5000</span><br><span class="line">Username: myuser</span><br><span class="line">Password:</span><br><span class="line">WARNING! Your password will be stored unencrypted in &#x2F;home&#x2F;stan&#x2F;.docker&#x2F;config.json.</span><br><span class="line">Configure a credential helper to remove this warning. See</span><br><span class="line">https:&#x2F;&#x2F;docs.docker.com&#x2F;engine&#x2F;reference&#x2F;commandline&#x2F;login&#x2F;#credentials-store</span><br><span class="line"></span><br><span class="line">Login Succeeded</span><br></pre></td></tr></table></figure>
+<h2 id="Container-Security"><a href="#Container-Security" class="headerlink" title="Container Security"></a>Container Security</h2><h3 id="Containers-inside-VMs"><a href="#Containers-inside-VMs" class="headerlink" title="Containers inside VMs"></a>Containers inside VMs</h3><ul>
+<li>To get the benefits of containers and VMs, you can run all your containers inside a VM.</li>
+<li>This gives you the hypervisor layers you need to separate mission-critical pieces of your app.</li>
+<li>Docker, VMware, and other companies build super-fast hypervisor layers for containers.</li>
+</ul>
+<p>Some security best practices:</p>
+<ul>
+<li>only run verified images so that so attacker can inject their image into your system</li>
+<li>have an image registry for your company which let you build, share, track, and run your image.<br>Image registries like Docker Hub and Docker Trusted Registry implement a tool called Docker Content Trust which lets you sign your images and define exactly what images are allowed to be run on your system.<br>In addition, there are security scanning tools like Atomic Scan and Docker Security Scanning which you can run on your images once they’ve been built.</li>
+</ul>
+<p>These can be automated and implemented as a part of your continuous integration or testing processes.</p>
+<p>When creating your images, it’s important that they follow the principle of least privilege.<br>The container should have the least amount of privileges it needs to do its job.<br>For many containers, this means implementing read-only file systems. Even if an attacker gets full access to that container, they won’t be able to write anything to the underlying system.</p>
+<p>Limit resources for each containers so they can’t be hijacked for other purposes.</p>
+<p>Don’t run your processes in the container as a root user.</p>
+<p>Use runtime threat detection systems like Aqua Security and Red Hat OpenShfit.</p>
+<p>If it seems unusual activity or traffic, you can set up rules so they alert you, shut the system down, or take other steps.</p>
+<p><strong>Other Security Measures</strong></p>
+<ul>
+<li>Security scanning happends during the build stage, make sure that containers are secure<ul>
+<li>Tools include Atomic Scan and Docker Secuiry Scanning.</li>
+</ul>
+</li>
+<li>Create container images following <strong>the rule of least privilege</strong></li>
+<li>Runtime threat detection uses machine learning to monitor your app during normal running. then detect “abnormal” traffic or activity.<ul>
+<li>Tools include Aqua Security and Red Hat OpenShift.</li>
+</ul>
+</li>
+</ul>
+<h2 id="Container-Logging-and-Monitoring"><a href="#Container-Logging-and-Monitoring" class="headerlink" title="Container Logging and Monitoring"></a>Container Logging and Monitoring</h2><p>Monitoring the Health of Your System</p>
+<ul>
+<li>Lots of orchestration software has monitoring build in.</li>
+<li>Kubernetes Heaspster aggregates all K8s data to one spot.</li>
+<li>cAdvisor, InfluxDB, and other tools can be used to display data, build graphs, and even build monitoring dashboards from this data.</li>
+<li>Third-party cloud services can also plug in and track data from orchestration using APIs.</li>
+<li>Offers same alerting, graphing, and dashboard tools as on-prem solutions.</li>
+<li>Datadog and Sysdig</li>
+</ul>
+<h2 id="Docker-EC2-Variations"><a href="#Docker-EC2-Variations" class="headerlink" title="Docker + EC2 Variations"></a>Docker + EC2 Variations</h2><ul>
+<li>Docker out of the box + Vanilla EC2 instances<ul>
+<li>Existing docker tools<ul>
+<li>docker-machine, docker swarm, docker-compose, and docker</li>
+</ul>
+</li>
+<li>Infrastructure as a service (IaaS)</li>
+</ul>
+</li>
+<li>Amazon Elastic Beanstalk + Docker container format<ul>
+<li>Beanstalk application delivery<ul>
+<li>Java with Glashfish, Python with uWSGI</li>
+</ul>
+</li>
+<li>Platform as a service (PaaS)</li>
+</ul>
+</li>
+<li>Docker Datacenter (DDC) for AWS<ul>
+<li>Containers as a service (CaaS)</li>
+</ul>
+</li>
+<li>Docker for AWS<h2 id="ECS-managed-policies"><a href="#ECS-managed-policies" class="headerlink" title="ECS managed policies"></a>ECS managed policies</h2></li>
+<li>AmazonEC2ContainerServiceFullAccess<ul>
+<li>Added to the ECS Administrator Role</li>
+</ul>
+</li>
+<li>AmazonEC2ContainerServiceforEC2Role<ul>
+<li>Added to the ECS Container Instance Role</li>
+</ul>
+</li>
+<li>AmazonEC2ContainerServiceRole<ul>
+<li>Added to the ECS Container Scheduler Role<ul>
+<li>Applied to ELB load balancers</li>
+<li>Register and deregister container instances with load balancers</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AmazonEC2ContainerServiceAutoscaleRole<ul>
+<li>Added to ECS Auto Scaling Role<ul>
+<li>Used by Application Auto Scale Service</li>
+<li>Scale service’s desired count in response to CloudWatch alarms</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>AmazonEC2ContainerServiceTaskRole<ul>
+<li>Added to ECS Task Role<ul>
+<li>Used by AWS APIs</li>
+<li>Access AWS Resources</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/docker/">docker</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://cwzhou.win/2019/05/05/docker/" data-title="docker | Stan Zhou&#39;s Hexo Technical Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/05/05/amazon-linux2/" title="amazon linux 2">
+  <strong>上一篇：</strong><br/>
+  <span>
+  amazon linux 2</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2019/02/24/pipeline/"  title="pipeline">
+ <strong>下一篇：</strong><br/> 
+ <span>pipeline
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#List-Docker-CLI-commands"><span class="toc-number">1.</span> <span class="toc-text">List Docker CLI commands</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Beginning-Devops-with-Docker"><span class="toc-number"></span> <span class="toc-text">Beginning Devops with Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-Images-and-Containers"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1. Images and Containers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-compose"><span class="toc-number">2.</span> <span class="toc-text">Docker-compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kubernetes"><span class="toc-number">3.</span> <span class="toc-text">Kubernetes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-ps-command"><span class="toc-number">4.</span> <span class="toc-text">Docker ps command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-networking"><span class="toc-number">5.</span> <span class="toc-text">Docker networking</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#upload-that-new-image-to-dockerhub"><span class="toc-number"></span> <span class="toc-text">upload that new image to dockerhub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon-web-services-and-docker-development"><span class="toc-number"></span> <span class="toc-text">Amazon web services and docker development</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-ecs-throught-the-aws-cli"><span class="toc-number">0.1.</span> <span class="toc-text">Working with ecs throught the aws cli</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-registry"><span class="toc-number">1.</span> <span class="toc-text">Docker registry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error"><span class="toc-number">2.</span> <span class="toc-text">Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Security"><span class="toc-number">3.</span> <span class="toc-text">Container Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Containers-inside-VMs"><span class="toc-number">3.1.</span> <span class="toc-text">Containers inside VMs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Logging-and-Monitoring"><span class="toc-number">4.</span> <span class="toc-text">Container Logging and Monitoring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-EC2-Variations"><span class="toc-number">5.</span> <span class="toc-text">Docker + EC2 Variations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ECS-managed-policies"><span class="toc-number">6.</span> <span class="toc-text">ECS managed policies</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/K8s/" title="K8s">K8s<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="Stan Zhou">Stan Zhou</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
