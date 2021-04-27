@@ -1,0 +1,791 @@
+
+ <!DOCTYPE HTML>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>python for devops | Stan Zhou&#39;s Hexo Technical Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Stan Zhou">
+    
+
+    
+    <meta name="description" content="RE PackageCharacter setsThe + after an item in a regular expression matches one or more of it. A number in brackets matches an exact number of characters. 123456789In [6]: print cc_listEzra Koenig &amp;lt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python for devops">
+<meta property="og:url" content="http://cwzhou.win/2021/04/17/python4devops/index.html">
+<meta property="og:site_name" content="Stan Zhou&#39;s Hexo Technical Blog">
+<meta property="og:description" content="RE PackageCharacter setsThe + after an item in a regular expression matches one or more of it. A number in brackets matches an exact number of characters. 123456789In [6]: print cc_listEzra Koenig &amp;lt">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-17T00:26:06.000Z">
+<meta property="article:modified_time" content="2021-04-17T00:26:06.000Z">
+<meta property="article:author" content="Stan Zhou">
+<meta property="article:tag" content="devops">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:creator" content="@stanosaka">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Stan Zhou&#39;s Hexo Technical Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/toad.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/toadman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/toadman.jpg">
+    
+    
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/%02.css">
+<link rel="stylesheet" href="/.css">
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/toadman.png" alt="Stan Zhou&#39;s Hexo Technical Blog" title="Stan Zhou&#39;s Hexo Technical Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Stan Zhou&#39;s Hexo Technical Blog">Stan Zhou&#39;s Hexo Technical Blog</a></h1>
+				<h2 class="blog-motto">Innovation Evangelist</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:cwzhou.win">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2021/04/17/python4devops/" title="python for devops" itemprop="url">python for devops</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2021-04-17T00:26:06.000Z" itemprop="datePublished"> Published 2021-04-17</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RE-Package"><span class="toc-number">1.</span> <span class="toc-text">RE Package</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Character-sets"><span class="toc-number">1.1.</span> <span class="toc-text">Character sets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Character-Classes"><span class="toc-number">1.2.</span> <span class="toc-text">Character Classes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Groups"><span class="toc-number">1.3.</span> <span class="toc-text">Groups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Named-Groups"><span class="toc-number">1.4.</span> <span class="toc-text">Named Groups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-IPython-to-run-unix-shell-commands"><span class="toc-number">1.5.</span> <span class="toc-text">Using IPython to run unix shell commands</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Package-Management"><span class="toc-number">2.</span> <span class="toc-text">Package Management</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Descriptive-Versioning"><span class="toc-number">2.1.</span> <span class="toc-text">Descriptive Versioning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-changelog"><span class="toc-number">2.2.</span> <span class="toc-text">The changelog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Packaging-solutions"><span class="toc-number">2.3.</span> <span class="toc-text">Packaging solutions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Native-Python-packaging"><span class="toc-number">2.4.</span> <span class="toc-text">Native Python packaging</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-python-package-index"><span class="toc-number">2.4.1.</span> <span class="toc-text">The python package index</span></a></li></ol></li></ol></li></ol>
+		
+		</div>
+		
+		<h1 id="RE-Package"><a href="#RE-Package" class="headerlink" title="RE Package"></a>RE Package</h1><h2 id="Character-sets"><a href="#Character-sets" class="headerlink" title="Character sets"></a>Character sets</h2><p>The <em>+</em> after an item in a regular expression matches one or more of it. A number in brackets matches an exact number of characters.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">In [6]: print cc_list</span><br><span class="line">Ezra Koenig &lt;ekoenig@vpwk.com&gt;,</span><br><span class="line">Rostam Batmanglij &lt;rostam@vpwk.com&gt;,</span><br><span class="line">Chris Tomson &lt;ctomson@vpwk.com,</span><br><span class="line">Bobbi Baio &lt;bbaio@vpwk.com</span><br><span class="line"></span><br><span class="line">&gt;&gt;&gt; re.search(r&#39;[A-Za-z]&#123;6&#125;&#39;, cc_list)</span><br><span class="line">&lt;_sre.SRE_Match object; span&#x3D;(5, 11), match&#x3D;&#39;Koenig&#39;&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>The <em>.</em> character has a special meaning. It is a wildcard and matches any character. To match against the actual <em>.</em> character, you must escape it using a backslash:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; re.search(r&#39;[A-Za-z]+@[a-z]+\.[a-z]+&#39;, cc_list)</span><br><span class="line">&lt;_sre.SRE_Match object; span&#x3D;(13, 29), match&#x3D;&#39;ekoenig@vpwk.com&#39;&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Character-Classes"><a href="#Character-Classes" class="headerlink" title="Character Classes"></a>Character Classes</h2><p>Python’s re offers character classes. These are pre-made characters sets. Some commonly used ones are \w, which is equivalent to [a-zA-Z0-9_] and \d which is equivalent to [0-9]. You can use the + modifier to match for multiple characters:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; re.search(r&#39;\w+&#39;, cc_list)</span><br><span class="line">&lt;_sre.SRE_Match object; span&#x3D;(0, 4), match&#x3D;&#39;Ezra&#39;&gt;</span><br><span class="line">&gt;&gt;&gt; re.search(r&#39;\w+\@\w+\.\w+&#39;, cc_list)</span><br><span class="line">&lt;_sre.SRE_Match object; span&#x3D;(13, 29), match&#x3D;&#39;ekoenig@vpwk.com&#39;&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h2 id="Groups"><a href="#Groups" class="headerlink" title="Groups"></a>Groups</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; matched &#x3D; re.search(r&#39;(\w+)\@(\w+)\.(\w+)&#39;, cc_list)</span><br><span class="line">&gt;&gt;&gt; matched.group(0)</span><br><span class="line">&#39;ekoenig@vpwk.com&#39;</span><br><span class="line">&gt;&gt;&gt; matched.group(1)</span><br><span class="line">&#39;ekoenig&#39;</span><br><span class="line">&gt;&gt;&gt; matched.group(2)</span><br><span class="line">&#39;vpwk&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="Named-Groups"><a href="#Named-Groups" class="headerlink" title="Named Groups"></a>Named Groups</h2><p>You can also supply names for the groups by adding <strong>?P<NAME></strong> in the group definition. Then you can access the groups by name instead of number:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; matched &#x3D; re.search(r&#39;(?P&lt;name&gt;\w+)\@(?P&lt;SLD&gt;\w+)\.(?P&lt;TLD&gt;\w+)&#39;, cc_list)</span><br><span class="line">&gt;&gt;&gt; matched.group(&#39;name&#39;)</span><br><span class="line">&#39;ekoenig&#39;</span><br><span class="line">&gt;&gt;&gt; matched.group(&#39;SLD&#39;)</span><br><span class="line">&#39;vpwk&#39;</span><br></pre></td></tr></table></figure>
+<h2 id="Using-IPython-to-run-unix-shell-commands"><a href="#Using-IPython-to-run-unix-shell-commands" class="headerlink" title="Using IPython to run unix shell commands"></a>Using IPython to run unix shell commands</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">In [5]: ls &#x3D; !ls -l &#x2F;usr&#x2F;bin</span><br><span class="line"></span><br><span class="line">In [6]: ls.grep(&quot;kill&quot;)</span><br><span class="line">Out[6]:</span><br><span class="line">[&#39;-rwxr-xr-x 1 root root        1812 Sep 11  2018 cinnamon-killer-daemon&#39;,</span><br><span class="line"> &#39;-rwxr-xr-x 1 root root       27768 Dec 12  2018 killall&#39;,</span><br><span class="line"> &#39;lrwxrwxrwx 1 root root           5 May 14  2018 pkill -&gt; pgrep&#39;,</span><br><span class="line"> &#39;-rwxr-xr-x 1 root root       26704 May 14  2018 skill&#39;,</span><br><span class="line"> &#39;lrwxrwxrwx 1 root root           5 May 14  2018 snice -&gt; skill&#39;,</span><br><span class="line"> &#39;-rwxr-xr-x 1 root root       14328 Apr 22  2017 xkill&#39;]</span><br></pre></td></tr></table></figure>
+<p><strong>Using ipython magic commands</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">In [7]: %%bash</span><br><span class="line">   ...: uname -a</span><br><span class="line">   ...:</span><br><span class="line">Linux stan-OptiPlex-380 4.15.0-20-generic #21-Ubuntu SMP Tue Apr 24 06:16:15 UTC 2018 x86_64 x86_64 x86_64 GNU&#x2F;Linux</span><br></pre></td></tr></table></figure>
+<p>The <strong>%%writefile</strong> is pretty tricky because you can write and test Python or Bash scripts on the fly, using IPython to execute them.  Not a bad party trick at all:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">In [8]: %%writefile print_time.py</span><br><span class="line">   ...: #!&#x2F;usr&#x2F;bin&#x2F;env python</span><br><span class="line">   ...: import datetime</span><br><span class="line">   ...: print(datetime.datetime.now().time())</span><br><span class="line">   ...:</span><br><span class="line">Writing print_time.py</span><br><span class="line"></span><br><span class="line">In [9]: cat print_time.py</span><br><span class="line">#!&#x2F;usr&#x2F;bin&#x2F;env python</span><br><span class="line">import datetime</span><br><span class="line">print(datetime.datetime.now().time())</span><br><span class="line">In [10]: !python print_time.py</span><br><span class="line">16:49:14.836331</span><br></pre></td></tr></table></figure>
+<p>Another very useful command, %who, will show you what is loaded into memory.  It comes in quite handy when you have been working in a terminal that has been running for a long time:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">In [11]: %who</span><br><span class="line">ls       var_ls</span><br></pre></td></tr></table></figure>
+<h1 id="Package-Management"><a href="#Package-Management" class="headerlink" title="Package Management"></a>Package Management</h1><h2 id="Descriptive-Versioning"><a href="#Descriptive-Versioning" class="headerlink" title="Descriptive Versioning"></a>Descriptive Versioning</h2><p>Most commonly in Python packages the following two variants: major.minor or major.minor.micro</p>
+<ul>
+<li>0.0.1</li>
+<li>1.0</li>
+<li>2.1.1</li>
+</ul>
+<p>A commonly accepted format for releases is: for <strong>major.minor.micro</strong> (used by the <a target="_blank" rel="noopener" href="https://semver.org/">Semantic Versioning scheme</a></p>
+<ul>
+<li>major for backwards-incompatible changes</li>
+<li>minor adds features that are also backward-compatible</li>
+<li>micro adds backwards-compatible bug fxes</li>
+</ul>
+<p>Assuming the current released version of the project under development is 1.0.0, it means the following outcomes are possible:</p>
+<ul>
+<li>If the release has backward-incompatible changes, the version is: 2.0.0</li>
+<li>Adding features that do not break compatibility: 1.1.0</li>
+<li>Fixing issues that also do not break compatibility: 1.0.1</li>
+</ul>
+<h2 id="The-changelog"><a href="#The-changelog" class="headerlink" title="The changelog"></a>The changelog</h2><p>The below example is an actual portion of a <strong>changelog</strong> file in a production Python tool:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">1.1.3  </span><br><span class="line">-----  </span><br><span class="line">22-Mar-2019  </span><br><span class="line">* No code changes - adding packaging files for Debian  </span><br><span class="line"></span><br><span class="line">1.1.2  -----  </span><br><span class="line">3-Mar-2019</span><br><span class="line"></span><br><span class="line">* Try a few different executables (not only &#96;&#96;python&#96;&#96;) to check for a working one, in order of preference, starting with &#96;&#96;python3&#96;&#96; and ultimately falling    back to the connection interpreter</span><br></pre></td></tr></table></figure>
+<p>The example has four essential items that are providing information:</p>
+<ol>
+<li>The lastest version number released</li>
+<li>Is the latest release a backward-compatible one</li>
+<li>What was the release date of the last version</li>
+<li>Changes included in the release</li>
+</ol>
+<h2 id="Packaging-solutions"><a href="#Packaging-solutions" class="headerlink" title="Packaging solutions"></a>Packaging solutions</h2><p>A small Python project:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hello-world</span><br><span class="line">── hello_world   </span><br><span class="line">   ├── __init__.py   </span><br><span class="line">   └── main.py</span><br><span class="line"></span><br><span class="line">1 directory, 2 files</span><br></pre></td></tr></table></figure>
+<h2 id="Native-Python-packaging"><a href="#Native-Python-packaging" class="headerlink" title="Native Python packaging"></a>Native Python packaging</h2><p>Like the rest of the other packaging strategies, the project requires some files used by setuptools.<br>To continue, create a new virtual environment and then activate:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ python3 -m venv &#x2F;tmp&#x2F;packaging</span><br><span class="line">$ source &#x2F;tmp&#x2F;packaging&#x2F;bin&#x2F;activate</span><br></pre></td></tr></table></figure>
+<p>Setuptools is a requirement to produce a native Python package. It is a collection of tools and helpers to create and distribute Python packages.</p>
+<p>Once the virtual environment is active,  the following dependencies exist:</p>
+<ol>
+<li><p>setuptools A set of utilities for packaging</p>
+</li>
+<li><p>twine A tool for registering and uploading packages</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ pip install setuptools twine</span><br></pre></td></tr></table></figure>
+<p><strong>Package files</strong><br>The file that describes the package to setuptools is named setup.py. It exists at the top level directory. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">cat setup.py</span><br><span class="line">from setuptools import setup, find_packages</span><br><span class="line"></span><br><span class="line">setup(</span><br><span class="line">    name&#x3D;&quot;hello-world&quot;,</span><br><span class="line">    version&#x3D;&quot;0.0.1&quot;,</span><br><span class="line">    author&#x3D;&quot;Example Author&quot;,</span><br><span class="line">    author_email&#x3D;&quot;author@example.com&quot;,</span><br><span class="line">    url&#x3D;&quot;example.com&quot;,</span><br><span class="line">    description&#x3D;&quot;A hello-world example pacakge&quot;,</span><br><span class="line">    packages&#x3D;find_packages(),</span><br><span class="line">    classifiers&#x3D;[</span><br><span class="line">       &quot;Programming Language :: Python :: 3&quot;,</span><br><span class="line">       &quot;License :: OSI Approved :: MIT License&quot;,</span><br><span class="line">       &quot;Operating System :: OS Independent&quot;,</span><br><span class="line">    ],</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+<p>The setup.py file will import two helpers from the setuptools module: setup, and find_packages. The setup function is what requires the rich description about the package, and the find_packages function is a utility to automatically detect where the Python files are, lastly, the classifiers describes certain aspects of the package like the license, operating systems supported, and Python versions. These classifiers are called trove classifiers and the Python Package Index has a detailed description of other classifiers available. Detailed descriptions make a package get discovered when uploaded to PyPI.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> hello-world tree</span><br><span class="line">.</span><br><span class="line">├── hello-world</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   └── main.py</span><br><span class="line">├── README</span><br><span class="line">└── setup.py</span><br></pre></td></tr></table></figure>
+<p>To produce the source distribution from it, run the following command:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"> hello-world python3 setup.py sdist</span><br><span class="line">running sdist</span><br><span class="line">running egg_info</span><br><span class="line">creating hello_world.egg-info</span><br><span class="line">writing hello_world.egg-info&#x2F;PKG-INFO</span><br><span class="line">writing dependency_links to hello_world.egg-info&#x2F;dependency_links.txt</span><br><span class="line">writing top-level names to hello_world.egg-info&#x2F;top_level.txt</span><br><span class="line">writing manifest file &#39;hello_world.egg-info&#x2F;SOURCES.txt&#39;</span><br><span class="line">reading manifest file &#39;hello_world.egg-info&#x2F;SOURCES.txt&#39;</span><br><span class="line">writing manifest file &#39;hello_world.egg-info&#x2F;SOURCES.txt&#39;</span><br><span class="line">running check</span><br><span class="line">creating hello-world-0.0.1</span><br><span class="line">creating hello-world-0.0.1&#x2F;hello-world</span><br><span class="line">creating hello-world-0.0.1&#x2F;hello_world.egg-info</span><br><span class="line">copying files to hello-world-0.0.1...</span><br><span class="line">copying README -&gt; hello-world-0.0.1</span><br><span class="line">copying setup.py -&gt; hello-world-0.0.1</span><br><span class="line">copying hello-world&#x2F;__init__.py -&gt; hello-world-0.0.1&#x2F;hello-world</span><br><span class="line">copying hello-world&#x2F;main.py -&gt; hello-world-0.0.1&#x2F;hello-world</span><br><span class="line">copying hello_world.egg-info&#x2F;PKG-INFO -&gt; hello-world-0.0.1&#x2F;hello_world.egg-info</span><br><span class="line">copying hello_world.egg-info&#x2F;SOURCES.txt -&gt; hello-world-0.0.1&#x2F;hello_world.egg-info</span><br><span class="line">copying hello_world.egg-info&#x2F;dependency_links.txt -&gt; hello-world-0.0.1&#x2F;hello_world.egg-info</span><br><span class="line">copying hello_world.egg-info&#x2F;top_level.txt -&gt; hello-world-0.0.1&#x2F;hello_world.egg-info</span><br><span class="line">Writing hello-world-0.0.1&#x2F;setup.cfg</span><br><span class="line">creating dist</span><br><span class="line">Creating tar archive</span><br><span class="line">removing &#39;hello-world-0.0.1&#39; (and everything under it)</span><br><span class="line">hello-world tree</span><br><span class="line">.</span><br><span class="line">├── dist</span><br><span class="line">│   └── hello-world-0.0.1.tar.gz</span><br><span class="line">├── hello-world</span><br><span class="line">│   ├── __init__.py</span><br><span class="line">│   └── main.py</span><br><span class="line">├── hello_world.egg-info</span><br><span class="line">│   ├── dependency_links.txt</span><br><span class="line">│   ├── PKG-INFO</span><br><span class="line">│   ├── SOURCES.txt</span><br><span class="line">│   └── top_level.txt</span><br><span class="line">├── README</span><br><span class="line">└── setup.py</span><br><span class="line"></span><br><span class="line">3 directories, 9 files</span><br></pre></td></tr></table></figure>
+<p>The newly created tar.gz file is an installable package! This package can now be uploaded to the Python Package Index for others to install right from it. By following the version schema, it allows installers to ask for a specific version (0.0.1 in this case), and the extra metadata passed into the setup() function enables other tools to discover it and show information about it like the author, description, and version.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"> hello-world pip install dist&#x2F;hello-world-0.0.1.tar.gz</span><br><span class="line">Processing .&#x2F;dist&#x2F;hello-world-0.0.1.tar.gz</span><br><span class="line">  Requirement already satisfied (use --upgrade to upgrade): hello-world&#x3D;&#x3D;0.0.1 from file:&#x2F;&#x2F;&#x2F;home&#x2F;stan&#x2F;Learning&#x2F;python4devops&#x2F;hello-world&#x2F;dist&#x2F;hello-world-0.0.1.tar.gz in &#x2F;tmp&#x2F;packaging&#x2F;lib&#x2F;python3.6&#x2F;site-packages</span><br><span class="line">Building wheels for collected packages: hello-world</span><br><span class="line">  Running setup.py bdist_wheel for hello-world ... done</span><br><span class="line">  Stored in directory: &#x2F;home&#x2F;stan&#x2F;.cache&#x2F;pip&#x2F;wheels&#x2F;09&#x2F;67&#x2F;3a&#x2F;398ce8c37594dc628e00ad661230c0ed20a2f3b0f421601264</span><br><span class="line">Successfully built hello-world</span><br></pre></td></tr></table></figure>
+<h3 id="The-python-package-index"><a href="#The-python-package-index" class="headerlink" title="The python package index"></a>The python package index</h3><p>PyPI is a repository of Python software that allows users to host Python pakcages and also install from it.</p>
+<p><a target="_blank" rel="noopener" href="https://test.pypi.org/account/register/">Register online</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">hello-world twine upload --repository-url https:&#x2F;&#x2F;test.pypi.org&#x2F;legacy&#x2F; dist&#x2F;hello-world-0.0.1.tar.gz</span><br><span class="line">Enter your username: foobar</span><br><span class="line">Enter your password:</span><br><span class="line">Uploading distributions to https:&#x2F;&#x2F;test.pypi.org&#x2F;legacy&#x2F;</span><br><span class="line">Uploading hello-world-0.0.1.tar.gz</span><br><span class="line">100%|████████████████████████████████████| 3.86k&#x2F;3.86k [00:01&lt;00:00, 3.27kB&#x2F;s]&#96;&#96;&#96;</span><br><span class="line">Be helpful to create a Makefile and put a make command in it automatically deploys your project and build the documentation for you.</span><br></pre></td></tr></table></figure>
+<p>deploy-pypi:<br>      pandoc –from=markdown –to=rst README.md -o README.rst<br>      python setup.py check –restructuredtext –strict –metadata<br>      rm -rf dist<br>      python setup.py sdist<br>      twine upload dist/*<br>      rm -f README.rst</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">### Hosting an internal package index</span><br><span class="line">If package A , is hosted internally and has requirements on packages B and C, all those three need to exist (along with their required versions) in the same instance.</span><br><span class="line"></span><br><span class="line">**note**</span><br><span class="line">A highly recommended full-featured tool for hosting an internal PyPI is devpi. It has features like mirroring, staging, replication, and Jenkins integration. The [project documentation](http:&#x2F;&#x2F;doc.devpi.net&#x2F;) has great examples and detailed information.</span><br><span class="line"></span><br><span class="line">Now copy the tar.gz file into the hello-world directory. The final version of this directory structure should look like this:</span><br></pre></td></tr></table></figure>
+<p>(packaging) ➜  pypi tree<br>.<br>├── hello-world<br>│   └── hello-world-0.0.1.tar.gz<br>└── hello-world1<br>    └── hello-world1-0.0.1.tar.gz<br> pypi pwd<br>/home/stan/Learning/python4devops/pypi</p>
+<p>pypi python3 -m http.server<br>Serving HTTP on 0.0.0.0 port 8000 (<a target="_blank" rel="noopener" href="http://0.0.0.0:8000/">http://0.0.0.0:8000/</a>) …<br>127.0.0.1 - - [01/Sep/2019 16:46:27] “GET /hello-world1/ HTTP/1.1” 200 -<br>127.0.0.1 - - [01/Sep/2019 16:46:27] “GET /hello-world1/hello-world1-0.0.1.tar.gz HTTP/1.1” 200 -</p>
+<p>$ python3 -m venv /tmp/local-pypi<br>$ source /tmp/local-pypi/bin/activate<br>pip3 install -i <a target="_blank" rel="noopener" href="http://localhost:8000/">http://localhost:8000/</a> hello-world1<br>Requirement already satisfied: hello-world1 in /tmp/local-pypi/lib/python3.6/site-packages</p>
+<pre><code>## Debina packaging
+
+</code></pre>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/devops/">devops</a><a href="/tags/python/">python</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://cwzhou.win/2021/04/17/python4devops/" data-title="python for devops | Stan Zhou&#39;s Hexo Technical Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2021/03/20/modern-system-admin/"  title="modern system administration">
+ <strong>下一篇：</strong><br/> 
+ <span>modern system administration
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RE-Package"><span class="toc-number">1.</span> <span class="toc-text">RE Package</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Character-sets"><span class="toc-number">1.1.</span> <span class="toc-text">Character sets</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Character-Classes"><span class="toc-number">1.2.</span> <span class="toc-text">Character Classes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Groups"><span class="toc-number">1.3.</span> <span class="toc-text">Groups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Named-Groups"><span class="toc-number">1.4.</span> <span class="toc-text">Named Groups</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Using-IPython-to-run-unix-shell-commands"><span class="toc-number">1.5.</span> <span class="toc-text">Using IPython to run unix shell commands</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Package-Management"><span class="toc-number">2.</span> <span class="toc-text">Package Management</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Descriptive-Versioning"><span class="toc-number">2.1.</span> <span class="toc-text">Descriptive Versioning</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#The-changelog"><span class="toc-number">2.2.</span> <span class="toc-text">The changelog</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Packaging-solutions"><span class="toc-number">2.3.</span> <span class="toc-text">Packaging solutions</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Native-Python-packaging"><span class="toc-number">2.4.</span> <span class="toc-text">Native Python packaging</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#The-python-package-index"><span class="toc-number">2.4.1.</span> <span class="toc-text">The python package index</span></a></li></ol></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+<div class="github-card">
+<p class="asidetitle">Github Card</p>
+<div class="github-card" data-github="stanosaka" data-theme="medium"></div>
+<script type="text/javascript" src="//cdn.jsdelivr.net/github-cards/latest/widget.js" ></script>
+</div>
+
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/devops/" title="devops">devops<sup>17</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Linux/" title="Linux">Linux<sup>7</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/aws/" title="aws">aws<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/CICD/" title="CICD">CICD<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/centos/" title="centos">centos<sup>5</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Jenkins/" title="Jenkins">Jenkins<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql/" title="mysql">mysql<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/K8s/" title="K8s">K8s<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SRE/" title="SRE">SRE<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/azure/" title="azure">azure<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/tomcat/" title="tomcat">tomcat<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/kubernetes/" title="kubernetes">kubernetes<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/saltstack/" title="saltstack">saltstack<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/zabbix/" title="zabbix">zabbix<sup>3</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/python/" title="python">python<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/ec2/" title="ec2">ec2<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://github.com/kahun/awesome-sysadmin" target="_blank" title="Awesome-sysadmin">Awesome-sysadmin</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/crazy-canux/awesome-monitoring" target="_blank" title="Awesome-monitoring">Awesome-monitoring</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.opsschool.org/index.html" target="_blank" title="Ops School Curriculum">Ops School Curriculum</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kupczynski.info/2018/04/18/spacemacs.html" target="_blank" title="Learning Spacemacs">Learning Spacemacs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://landing.google.com/sre/books/" target="_blank" title="SRE Books">SRE Books</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/aws-samples" target="_blank" title="AWS Samples">AWS Samples</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/bikrambora/devlab-launchpad" target="_blank" title="Welcome to Dev Labs">Dev Labs</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/ansible/ansible-examples" target="_blank" title="Ansible GitHub repo">Ansible GitHub repo</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.ansible.com/ansible/latest/user_guide/playbooks_best_practices.html" target="_blank" title="Ansible Best Practices">Ansible Best Practices</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://kubernetes.io/docs/reference/kubectl/cheatsheet/" target="_blank" title="kubectl cheat sheet">kubectl cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://rogerdudler.github.io/git-guide" target="_blank" title="Git commands">Git commands</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.docker.com/engine/reference/builder/" target="_blank" title="Dockerfile reference">Dockerfile reference</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2mTQr8l" target="_blank" title="Linux Command line cheat sheet">Linux Command line cheat sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://bit.ly/2EPHxze" target="_blank" title="PowerShell Basic Cheat Sheet">PowerShell Basic Cheat Sheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://sed.sourceforge.net/sed1line_zh-CN.html" target="_blank" title="sed cheatsheet">sed cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://obsavus1p.bkt.clouddn.com/vim_cheat_sheet_for_programmers_print.png" target="_blank" title="vim cheatsheet">vim cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.gitbook.com/book/yeasy/docker_practice/details" target="_blank" title="Learn Docker">Learn Docker</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.unixhot.com/page/ops" target="_blank" title="运维知识体系">运维知识体系</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.tecmint.com/" target="_blank" title="tecmint">tecmint</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.lib.uts.edu.au" target="_blank" title="shoujin.wang@student.uts.edu.au">UTS Library</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://7esl.com" target="_blank" title="ESL">ESL</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://stanchou.wordpress.com" target="_blank" title="Stan&#39;s wordpress">Stan&#39;s wordpress</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://docs.00root.com" target="_blank" title="Stan&#39;s gitbook">Stan&#39;s gitbook</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://api.ipify.org" target="_blank" title="Your IP address">Your IP address</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/stanosaka/oreilly_sql_fundamentals_for_data/blob/master/notes_and_slides/sql_fundamentals_notes.md" target="_blank" title="sql fundamentials">sql fundamentials</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://www.nerdfonts.com" target="_blank" title="Nred Fonts">Nred Fonts</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://cb.vu/unixtoolbox.xhtml" target="_blank" title="UNIX TOOLBOX">UNIX TOOLBOX</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://github.com/Ben-PH/spacemacs-cheatsheet" target="_blank" title="spacemacs-cheatsheet">spacemacs-cheatsheet</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://rubular.com/" target="_blank" title="Regular expression editor 1">Regular expression editor 1</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="https://pythex.org/" target="_blank" title="Regular expression editor 2">Regular expression editor 2</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Stan. <br/>
+			I am a Site Reliability Engineer working and living in Sydney.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		<a href="https://github.com/stanosaka" target="_blank" class="icon-github" title="github"></a>
+		
+		
+		<a href="http://stackoverflow.com/users/6724938" target="_blank" class="icon-stack-overflow" title="stackoverflow"></a>
+		
+		
+		<a href="https://twitter.com/stanosaka" target="_blank" class="icon-twitter" title="twitter"></a>
+		
+		
+		<a href="https://www.facebook.com/stan.osaka" target="_blank" class="icon-facebook" title="facebook"></a>
+		
+		
+		<a href="https://www.linkedin.com/in/00root" target="_blank" class="icon-linkedin" title="linkedin"></a>
+		
+		
+		<a href="https://www.douban.com/people/btw01v" target="_blank" class="icon-douban" title="豆瓣"></a>
+		
+		
+		<a href="http://www.zhihu.com/people/stan-22-82" target="_blank" class="icon-zhihu" title="知乎"></a>
+		
+		
+		
+		<a href="mailto:devops@cwzhou.win" target="_blank" class="icon-email" title="Email Me"></a>
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2021 
+		
+		<a href="/about" target="_blank" title="Stan Zhou">Stan Zhou</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

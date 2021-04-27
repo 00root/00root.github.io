@@ -89,6 +89,67 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2019/05/05/amazon-linux2/" title="amazon linux 2" itemprop="url">amazon linux 2</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2019-05-05T10:46:16.000Z" itemprop="datePublished"> Published 2019-05-05</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="Amazon-Linux-2"><a href="#Amazon-Linux-2" class="headerlink" title="Amazon Linux 2"></a>Amazon Linux 2</h3><p>Change hostname use init-cloud:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/cloud/cloud.cfg.d/11_changehostname.cfg</span><br><span class="line"><span class="comment">#cloud-config</span></span><br><span class="line">preserve_hostname: <span class="literal">false</span></span><br><span class="line">hostname: myhostname</span><br><span class="line">fqdn: myhostname.example.com</span><br><span class="line">manage_etc_hosts: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>By Command:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname foobar.localdomain</span><br><span class="line">sed -i <span class="string">&#x27;1s/localhost/foobar/1&#x27;</span> /etc/hosts|sed -i <span class="string">&#x27;1s/localhost/foobar/2&#x27;</span> /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<p>Extra Library:</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[ec2-user ~]$ amazon-linux-extras list</span><br><span class="line">[ec2-user ~]$ sudo amazon-linux-extras install topic=version topic=version</span><br></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/aws/">aws</a><a href="/tags/Linux/">Linux</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2019/05/05/docker/" title="docker" itemprop="url">docker</a>
   </h1>
   <p class="article-author">By
@@ -1636,95 +1697,6 @@ Config files(s) are all that is required<br>Declarative not imperative</li>
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/10/10/web-security/" title="web security" itemprop="url">web security</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
-		
-  <p class="article-time">
-    <time datetime="2016-10-10T00:03:50.000Z" itemprop="datePublished"> Published 2016-10-10</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="web安全"><a href="#web安全" class="headerlink" title="web安全"></a>web安全</h1><h3 id="Table-of-contents"><a href="#Table-of-contents" class="headerlink" title="Table of contents"></a>Table of contents</h3><p>You can insert a table of contents using the marker <code>[TOC]</code>:</p>
-<p>[TOC]</p>
-<h2 id="使用iptables防护网站安全"><a href="#使用iptables防护网站安全" class="headerlink" title="使用iptables防护网站安全"></a>使用iptables防护网站安全</h2><blockquote>
-<p><strong>只允许特定流量通过，禁用其他流量</strong></p>
-</blockquote>
-<blockquote>
-<ul>
-<li>permit ssh</li>
-</ul>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -p tcp --dport 22 -j ACCEPT</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>permit DNS</li>
-</ul>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">iptables -l INPUT 1 -p tcp --sport 53 -j ACCEPT</span><br><span class="line">iptables -l INPUT 1 -p udp --sport 53 -j ACCEPT</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>permit service</li>
-</ul>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -l INPUT 1 -p tcp --dport 80 -j ACCEPT</span><br></pre></td></tr></table></figure>
-<blockquote>
-<ul>
-<li>forbid all others</li>
-</ul>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iptables -A INPUT -j DROP</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[root@toad ~]<span class="comment"># netstat -tn</span></span><br><span class="line">Active Internet connections (w/o servers)</span><br><span class="line">Proto Recv-Q Send-Q Local Address               Foreign Address             State</span><br><span class="line">tcp        0      0 192.168.199.231:61094       101.200.31.147:443          TIME_WAIT</span><br><span class="line">tcp        0     64 192.168.199.231:22          60.186.174.98:61241         ESTABLISHED</span><br><span class="line">tcp        0      0 192.168.199.231:41795       192.168.199.1:445           ESTABLISHED</span><br><span class="line">tcp        0      0 192.168.199.231:22          60.186.174.98:50722         ESTABLISHED</span><br><span class="line">tcp        0      0 ::1:19187                   ::1:10010                   TIME_WAIT</span><br><span class="line"></span><br><span class="line">[root@toad ~]<span class="comment"># netstat -tn|grep 192.168.199.231|awk &#x27;&#123;print $5&#125;&#x27;|awk -F &quot;:&quot; &#x27;&#123;print $1&#125;&#x27;|sort|uniq -c|sort -r -n</span></span><br><span class="line">      2 60.186.174.98</span><br><span class="line">      2 101.200.31.147</span><br><span class="line">      1 192.168.199.1</span><br><span class="line">[root@toad ~]<span class="comment"># iptables -l INPUT 1 -s 60.186.174.98 -j DROP</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h2 id="AIDE入侵检测系统"><a href="#AIDE入侵检测系统" class="headerlink" title="AIDE入侵检测系统"></a>AIDE入侵检测系统</h2><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#install aide</span></span><br><span class="line">yum install -y aide</span><br><span class="line"></span><br><span class="line"><span class="comment">#config aide</span></span><br><span class="line">vim /etc/aide.conf</span><br><span class="line"></span><br><span class="line"><span class="comment">#init aide database</span></span><br><span class="line">aide --init</span><br><span class="line">mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz</span><br><span class="line"></span><br><span class="line"><span class="comment">#check monitor file</span></span><br><span class="line">aide --check</span><br><span class="line"></span><br><span class="line"><span class="comment">#update aide database</span></span><br><span class="line">aide --update</span><br><span class="line"></span><br><span class="line"><span class="comment">#setup cron job</span></span><br><span class="line">crontab -e</span><br><span class="line">* 3 * * * /usr/sbin/aide --check|mail -s <span class="string">&quot;AIDE report &quot;</span> sizemore@gmail.com</span><br></pre></td></tr></table></figure>
-
-
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Linux/">Linux</a><a href="/tags/web-security/">web security</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/4/">&lt;span&gt;&lt;&#x2F;span&gt;Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Next&lt;span&gt;&lt;&#x2F;span&gt;</a>
@@ -1754,7 +1726,7 @@ Config files(s) are all that is required<br>Declarative not imperative</li>
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+				<li><a href="/tags/devops/" title="devops">devops<sup>17</sup></a></li>
 			
 		
 			
@@ -1782,6 +1754,10 @@ Config files(s) are all that is required<br>Declarative not imperative</li>
 			
 		
 			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/K8s/" title="K8s">K8s<sup>3</sup></a></li>
 			
 		
@@ -1795,10 +1771,6 @@ Config files(s) are all that is required<br>Declarative not imperative</li>
 		
 			
 				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
 			
 		
 			
@@ -1818,6 +1790,10 @@ Config files(s) are all that is required<br>Declarative not imperative</li>
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
 			
 		
@@ -1827,10 +1803,6 @@ Config files(s) are all that is required<br>Declarative not imperative</li>
 		
 			
 				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
 			
 		
 		</ul>

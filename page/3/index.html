@@ -89,6 +89,66 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2019/08/16/effective-devops-with-aws/" title="effective devops with aws" itemprop="url">effective devops with aws</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
+		
+  <p class="article-time">
+    <time datetime="2019-08-15T14:15:29.000Z" itemprop="datePublished"> Published 2019-08-16</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p><strong>Code</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/stanosaka/ansible">source code ansible</a><br><a target="_blank" rel="noopener" href="https://github.com/00root/helloworld">source code helloworld</a></p>
+<h1 id="Continuous-Delivery"><a href="#Continuous-Delivery" class="headerlink" title="Continuous Delivery"></a>Continuous Delivery</h1><p><img src="https://i.imgur.com/QOYWSYb.png" alt="codepipline01"><br><img src="https://i.imgur.com/an0PPjD.png" alt="codepipline02"><br><img src="https://i.imgur.com/P7gdZBo.png" alt="Source"><br><img src="https://i.imgur.com/O6LNT3M.png" alt="Test"><br><img src="https://i.imgur.com/gD0EYZ7.png" alt="Deploy"><br><img src="https://i.imgur.com/uAnMDQk.png" alt="Approval"><br><img src="https://i.imgur.com/OoeILa2.png" alt="Production"><br><img src="https://i.imgur.com/Mz3RM0I.png" alt="Jenkins01"><br><img src="https://i.imgur.com/88C8zGu.png" alt="Jenkins02"><br><img src="https://i.imgur.com/7YXnt5L.png" alt="Jenkins03"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry http:&#x2F;&#x2F;registry.npmjs.org&#x2F; </span><br><span class="line">npm install</span><br><span class="line">.&#x2F;node_modules&#x2F;mocha&#x2F;bin&#x2F;mocha    </span><br></pre></td></tr></table></figure>
+<p><strong>Creating the new cloudformation stack for production</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">aws cloudformation create-stack --capabilities CAPABILITY_IAM --stack-name helloworld-production --template-body file:&#x2F;&#x2F;nodeserver-cf.template --parameters ParameterKey&#x3D;KeyPair,ParameterValue&#x3D;EffectiveDevOpsAWS</span><br><span class="line">aws cloudformation wait stack-create-complete --stack-name helloworld-production</span><br><span class="line">arn&#x3D;$(aws deploy get-deployment-group --application-name helloworld --deployment-group-name staging --query &#39;deploymentGroupInfo.serviceRoleArn&#39;)</span><br><span class="line">aws deploy create-deployment-group --application-name helloworld --ec2-tag-filters Key&#x3D;aws:cloudformation:stack-name,Type&#x3D;KEY_AND_VALUE,Value&#x3D;helloworld-production --deployment-group-name production --service-role-arn $arn</span><br><span class="line">aws deploy create-deployment-group --application-name helloworld --ec2-tag-filters Key&#x3D;aws:cloudformation:stack-name,Type&#x3D;KEY_AND_VALUE,Value&#x3D;helloworld-production --deployment-group-name production --service-role-arn arn:aws:iam::012152306932:role&#x2F;CodeDeployRole</span><br><span class="line">aws deploy list-deployment-groups --application-name helloworld</span><br><span class="line">aws sns create-topic --name production-deploy-approval</span><br><span class="line">aws sns subscribe --topic-arn arn:aws:sns:ap-southeast-2:012152306932:production-deploy-approval --protocol email --notification-endpoint foobar@gmail.com</span><br></pre></td></tr></table></figure>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/devops/">devops</a><a href="/tags/CICD/">CICD</a><a href="/tags/aws/">aws</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2019/08/03/vagrant/" title="vagrant" itemprop="url">vagrant</a>
   </h1>
   <p class="article-author">By
@@ -424,7 +484,7 @@ The code line unstash ‘build-test-artifacts’ downloads the previously stashe
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/devops/">devops</a><a href="/tags/Jenkins/">Jenkins</a><a href="/tags/CICD/">CICD</a><a href="/tags/Pipeline/">Pipeline</a><a href="/tags/Blue-Ocean/">Blue Ocean</a>
+  <span></span> <a href="/tags/devops/">devops</a><a href="/tags/Jenkins/">Jenkins</a><a href="/tags/Pipeline/">Pipeline</a><a href="/tags/CICD/">CICD</a><a href="/tags/Blue-Ocean/">Blue Ocean</a>
   </div>
 
 </div>
@@ -646,7 +706,7 @@ The code line unstash ‘build-test-artifacts’ downloads the previously stashe
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -q haproxy</span><br></pre></td></tr></table></figure>
 <p>Show the log file which is last written to:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd &#x2F;var&#x2F;log</span><br><span class="line">ls -lrt</span><br></pre></td></tr></table></figure>
-<h1 id="ssh-tunnel"><a href="#ssh-tunnel" class="headerlink" title="ssh tunnel"></a>ssh tunnel</h1><p>Stan@Company     <a href="mailto:&#114;&#x6f;&#x6f;&#x74;&#64;&#x74;&#x6f;&#x61;&#x64;&#x2e;&#x63;&#119;&#122;&#104;&#x6f;&#117;&#46;&#119;&#105;&#x6e;">&#114;&#x6f;&#x6f;&#x74;&#64;&#x74;&#x6f;&#x61;&#x64;&#x2e;&#x63;&#119;&#122;&#104;&#x6f;&#117;&#46;&#119;&#105;&#x6e;</a> ||  root@Kali</p>
+<h1 id="ssh-tunnel"><a href="#ssh-tunnel" class="headerlink" title="ssh tunnel"></a>ssh tunnel</h1><p>Stan@Company     <a href="mailto:&#114;&#111;&#111;&#116;&#x40;&#x74;&#x6f;&#x61;&#100;&#46;&#99;&#x77;&#122;&#x68;&#111;&#x75;&#46;&#x77;&#105;&#110;">&#114;&#111;&#111;&#116;&#x40;&#x74;&#x6f;&#x61;&#100;&#46;&#99;&#x77;&#122;&#x68;&#111;&#x75;&#46;&#x77;&#105;&#110;</a> ||  root@Kali</p>
 <ol>
 <li><p>From Kalia connect to Toad</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">root@Kalia:~# ssh -R 2222:localhost:22 root@toad.cwzhou.win</span><br><span class="line"></span><br><span class="line">root@Toad:~# while [1]; do date; sleep 300; done</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
@@ -791,7 +851,7 @@ Use the vertical bar character | to create a pipe: <code>ls|wc</code></li>
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/programming/">programming</a><a href="/tags/systemadmin/">systemadmin</a><a href="/tags/python/">python</a>
+  <span></span> <a href="/tags/python/">python</a><a href="/tags/programming/">programming</a><a href="/tags/systemadmin/">systemadmin</a>
   </div>
 
 </div>
@@ -2342,154 +2402,6 @@ Debug mode:<figure class="highlight plain"><table><tr><td class="gutter"><pre><s
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2019/07/04/devops-as-a-service/" title="Devops As A Service" itemprop="url">Devops As A Service</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="Stan Zhou" target="_blank" itemprop="author">Stan Zhou</a>
-		
-  <p class="article-time">
-    <time datetime="2019-07-03T23:54:43.000Z" itemprop="datePublished"> Published 2019-07-04</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><img src="https://i.imgur.com/5ci7g2C.png" alt="Imgur"><br>Business Requirements</p>
-<ul>
-<li>Start with business requirements</li>
-<li>DevOps is about doing the work right</li>
-<li>What about doing the right work? See<ul>
-<li>(Agile) Portfolio Management- making sure the work you are doing is funded and delivering business value, and</li>
-<li>Lean Control - making sure you get early engagement with control functions in your organisation (Audit, Compliance, Security, Architecture,<br>Accessibility, Marketing, etc.)</li>
-</ul>
-</li>
-<li>Work/Requirements are comprised of<ul>
-<li>features of business value (2-3 months), divided into …</li>
-<li>sprints (2-3 weeks) and the sprints are made up of …</li>
-<li>tasks (2-3 days of work)</li>
-</ul>
-</li>
-</ul>
-<p>Tasks</p>
-<ul>
-<li>2-3 days of work</li>
-<li>Developers pull tasks off of a sprint queue</li>
-<li>Sprint goals to demo working software at the end of each sprint</li>
-</ul>
-<p>Code</p>
-<ul>
-<li>Integrated continuously, Build continuously</li>
-<li>All code is reviewed by another team member before committing</li>
-<li>Feature branching or trunk-based development?</li>
-<li>No long lived code branches</li>
-</ul>
-<p>Continuous Integration</p>
-<ul>
-<li>Code built continuously (multiple times per day)</li>
-<li>Fast feedback -continous builds are very fast (&lt; 5mins)</li>
-<li>Best practice build patterns/chains<ul>
-<li>Compile, unit test, integration test, deploy artefacts</li>
-</ul>
-</li>
-</ul>
-<p>Metrics</p>
-<ul>
-<li>Code quality is vital</li>
-<li>Code coverage measures test automation</li>
-<li>Gold/silver/bronze accreditation</li>
-</ul>
-<p>Artifacts</p>
-<ul>
-<li>Green builds produce shippable artefacts (.jar, .dll, .exe, docker image)</li>
-<li>Single store for all internal and external artefacts and libraries</li>
-<li>Security policies around 3rd party libraries and external access</li>
-</ul>
-<p>Infrastructure as Code</p>
-<ul>
-<li>Operations roles change</li>
-<li>Infrastructure provisioning and configuration is automated</li>
-<li>Orchestration tools to provision infrastructure (Terraform, Cloud Formation for AWS)</li>
-<li>Configuration management tools to install and manage software on provisioned infrastructure (Chef, Puppet, Ansible)</li>
-<li>IaC is stored, tested and versioned in source code control</li>
-<li>Organisational Change, move to Site Reliability Engineering (SRE)</li>
-</ul>
-<p>Service Mangement</p>
-<ul>
-<li>Approvals and change are automated</li>
-<li>Products with higher levels of accreditation have lower change management overheads (more automation)</li>
-</ul>
-<p>Continous Deployment</p>
-<ul>
-<li>Infrastructure provisioned automatically</li>
-<li>Configuration automated</li>
-<li>Change approvals automated</li>
-<li>Push button deployment to production</li>
-</ul>
-<p>Monitoring</p>
-<ul>
-<li>Observability driven design</li>
-<li>Monitoring, logging, dash boarding early in the life-cycle</li>
-<li>Issues and observations feed back to developers</li>
-</ul>
-<p>Security</p>
-<ul>
-<li>“Shift Left” security</li>
-<li>“average total cost of a breach ranges from $2.2 million to $6.9 million”</li>
-<li>Code vulnerability scanning in the build pipeline</li>
-<li>Build fail if major/critical issues</li>
-<li>Tools- CheckMarx, Fortify</li>
-<li>Artefact scanning for security vulnerabilities</li>
-<li>Firewalls to protect against 3rd party vulnerabilities</li>
-<li>Tools - Nexus Lifecycle/Fiewall, BackDuck</li>
-<li>Image scanning dof Docker images</li>
-<li>Tools- AquaSec, Twistlock, Tennable, OpenSCAP</li>
-</ul>
-<p>Evolving DevOps @ Scale</p>
-<p>Shadow DevOps -&gt; Enterprise DevOps -&gt; DevOps as a Service</p>
-<p>10 years age -&gt; 5 years ago  -&gt; the future</p>
-<p><img src="https://i.imgur.com/6Ei88Zz.jpg" alt="Enterprise Devops"><br><img src="https://i.imgur.com/jRJvY69.jpg" alt="Devops as a Service"><br><img src="https://i.imgur.com/kQNGOfS.jpg" alt="GitOps"><br><img src="https://i.imgur.com/Vvmeafo.jpg" alt="AWS DevOps"><br><img src="https://i.imgur.com/lwpUXVf.jpg" alt="Azure DevOps"></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/devops/">devops</a><a href="/tags/aws/">aws</a><a href="/tags/azure/">azure</a><a href="/tags/git/">git</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/">&lt;span&gt;&lt;&#x2F;span&gt;Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/4/">Next&lt;span&gt;&lt;&#x2F;span&gt;</a>
@@ -2519,7 +2431,7 @@ Debug mode:<figure class="highlight plain"><table><tr><td class="gutter"><pre><s
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/devops/" title="devops">devops<sup>16</sup></a></li>
+				<li><a href="/tags/devops/" title="devops">devops<sup>17</sup></a></li>
 			
 		
 			
@@ -2547,6 +2459,10 @@ Debug mode:<figure class="highlight plain"><table><tr><td class="gutter"><pre><s
 			
 		
 			
+				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/K8s/" title="K8s">K8s<sup>3</sup></a></li>
 			
 		
@@ -2560,10 +2476,6 @@ Debug mode:<figure class="highlight plain"><table><tr><td class="gutter"><pre><s
 		
 			
 				<li><a href="/tags/git/" title="git">git<sup>3</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/docker/" title="docker">docker<sup>3</sup></a></li>
 			
 		
 			
@@ -2583,6 +2495,10 @@ Debug mode:<figure class="highlight plain"><table><tr><td class="gutter"><pre><s
 			
 		
 			
+				<li><a href="/tags/python/" title="python">python<sup>2</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/IaC/" title="IaC">IaC<sup>2</sup></a></li>
 			
 		
@@ -2592,10 +2508,6 @@ Debug mode:<figure class="highlight plain"><table><tr><td class="gutter"><pre><s
 		
 			
 				<li><a href="/tags/backup/" title="backup">backup<sup>2</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/github/" title="github">github<sup>2</sup></a></li>
 			
 		
 		</ul>
