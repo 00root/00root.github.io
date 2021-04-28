@@ -505,3 +505,15 @@ Monitoring the Health of Your System
   - Added to ECS Task Role
     - Used by AWS APIs
     - Access AWS Resources
+## virtual machine and Docker container difference
+| Virtual Machine                            | Docker Container                                           |
+|--------------------------------------------|------------------------------------------------------------|
+| Hardware-level process isolation           | OS level process isolation                                 |
+| Each VM has a separate OS                  | Each container can share OS                                |
+| Boots in minutes                           | Boots in seconds                                           |
+| VMs are of few GBs                         | Containers are lightweight (KBs/MBs)                       |
+| Ready-made VMs are difficult to find       | Pre-built docker containers are easily available           |
+| VMs can move to new host easily            | Containers are destroyed and re-created rather than moving |
+| Creating VM takes a relatively longer time | Containers can be created in seconds                       |
+| More resource usage                        | Less resource usage                                        |
+|                                            |                                                            |

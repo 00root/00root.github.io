@@ -92,3 +92,14 @@ HostMin:   13.75.0.1            00001101.01001011. 00000000.00000001
 HostMax:   13.75.255.254        00001101.01001011. 11111111.11111110
 Broadcast: 13.75.255.255        00001101.01001011. 11111111.11111111
 Hosts/Net: 65534                 Class A
+
+## Gateway
+![gateway](https://i.imgur.com/Qff5lIV.png "gateway")
+![system c wants send packets to system b](https://i.imgur.com/IbQoOgD.png "route table need apply")
+![route to internet](https://i.imgur.com/TuMpZY0.png "ip route add 172.217.194.0/24 via 192.168.2.1") 
+
+**Default Gateway**
+```
+ip route add default via 192.168.2.1
+```
+![multiple router](https://i.imgur.com/dkgyJRa.png "mutiple router")
