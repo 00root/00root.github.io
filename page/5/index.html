@@ -412,7 +412,51 @@
 <li>AmazonEC2ContainerServiceTaskRole<ul>
 <li>Added to ECS Task Role<ul>
 <li>Used by AWS APIs</li>
-<li>Access AWS Resources</li>
+<li>Access AWS Resources<h2 id="virtual-machine-and-Docker-container-difference"><a href="#virtual-machine-and-Docker-container-difference" class="headerlink" title="virtual machine and Docker container difference"></a>virtual machine and Docker container difference</h2><table>
+<thead>
+<tr>
+<th>Virtual Machine</th>
+<th>Docker Container</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hardware-level process isolation</td>
+<td>OS level process isolation</td>
+</tr>
+<tr>
+<td>Each VM has a separate OS</td>
+<td>Each container can share OS</td>
+</tr>
+<tr>
+<td>Boots in minutes</td>
+<td>Boots in seconds</td>
+</tr>
+<tr>
+<td>VMs are of few GBs</td>
+<td>Containers are lightweight (KBs/MBs)</td>
+</tr>
+<tr>
+<td>Ready-made VMs are difficult to find</td>
+<td>Pre-built docker containers are easily available</td>
+</tr>
+<tr>
+<td>VMs can move to new host easily</td>
+<td>Containers are destroyed and re-created rather than moving</td>
+</tr>
+<tr>
+<td>Creating VM takes a relatively longer time</td>
+<td>Containers can be created in seconds</td>
+</tr>
+<tr>
+<td>More resource usage</td>
+<td>Less resource usage</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
 </ul>
 </li>
 </ul>

@@ -25,7 +25,7 @@
 <meta property="og:image" content="https://i.imgur.com/LtTRrfD.png">
 <meta property="og:image" content="https://i.imgur.com/KjgJtA0.png">
 <meta property="article:published_time" content="2019-05-05T06:47:47.000Z">
-<meta property="article:modified_time" content="2021-04-12T14:06:50.000Z">
+<meta property="article:modified_time" content="2021-04-28T04:41:31.000Z">
 <meta property="article:author" content="Stan Zhou">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
@@ -110,7 +110,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#List-Docker-CLI-commands"><span class="toc-number">1.</span> <span class="toc-text">List Docker CLI commands</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Beginning-Devops-with-Docker"><span class="toc-number"></span> <span class="toc-text">Beginning Devops with Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-Images-and-Containers"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1. Images and Containers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-compose"><span class="toc-number">2.</span> <span class="toc-text">Docker-compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kubernetes"><span class="toc-number">3.</span> <span class="toc-text">Kubernetes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-ps-command"><span class="toc-number">4.</span> <span class="toc-text">Docker ps command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-networking"><span class="toc-number">5.</span> <span class="toc-text">Docker networking</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#upload-that-new-image-to-dockerhub"><span class="toc-number"></span> <span class="toc-text">upload that new image to dockerhub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon-web-services-and-docker-development"><span class="toc-number"></span> <span class="toc-text">Amazon web services and docker development</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-ecs-throught-the-aws-cli"><span class="toc-number">0.1.</span> <span class="toc-text">Working with ecs throught the aws cli</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-registry"><span class="toc-number">1.</span> <span class="toc-text">Docker registry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error"><span class="toc-number">2.</span> <span class="toc-text">Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Security"><span class="toc-number">3.</span> <span class="toc-text">Container Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Containers-inside-VMs"><span class="toc-number">3.1.</span> <span class="toc-text">Containers inside VMs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Logging-and-Monitoring"><span class="toc-number">4.</span> <span class="toc-text">Container Logging and Monitoring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-EC2-Variations"><span class="toc-number">5.</span> <span class="toc-text">Docker + EC2 Variations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ECS-managed-policies"><span class="toc-number">6.</span> <span class="toc-text">ECS managed policies</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#List-Docker-CLI-commands"><span class="toc-number">1.</span> <span class="toc-text">List Docker CLI commands</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Beginning-Devops-with-Docker"><span class="toc-number"></span> <span class="toc-text">Beginning Devops with Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-Images-and-Containers"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1. Images and Containers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-compose"><span class="toc-number">2.</span> <span class="toc-text">Docker-compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kubernetes"><span class="toc-number">3.</span> <span class="toc-text">Kubernetes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-ps-command"><span class="toc-number">4.</span> <span class="toc-text">Docker ps command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-networking"><span class="toc-number">5.</span> <span class="toc-text">Docker networking</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#upload-that-new-image-to-dockerhub"><span class="toc-number"></span> <span class="toc-text">upload that new image to dockerhub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon-web-services-and-docker-development"><span class="toc-number"></span> <span class="toc-text">Amazon web services and docker development</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-ecs-throught-the-aws-cli"><span class="toc-number">0.1.</span> <span class="toc-text">Working with ecs throught the aws cli</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-registry"><span class="toc-number">1.</span> <span class="toc-text">Docker registry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error"><span class="toc-number">2.</span> <span class="toc-text">Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Security"><span class="toc-number">3.</span> <span class="toc-text">Container Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Containers-inside-VMs"><span class="toc-number">3.1.</span> <span class="toc-text">Containers inside VMs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Logging-and-Monitoring"><span class="toc-number">4.</span> <span class="toc-text">Container Logging and Monitoring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-EC2-Variations"><span class="toc-number">5.</span> <span class="toc-text">Docker + EC2 Variations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ECS-managed-policies"><span class="toc-number">6.</span> <span class="toc-text">ECS managed policies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#virtual-machine-and-Docker-container-difference"><span class="toc-number">7.</span> <span class="toc-text">virtual machine and Docker container difference</span></a></li></ol>
 		
 		</div>
 		
@@ -363,7 +363,51 @@
 <li>AmazonEC2ContainerServiceTaskRole<ul>
 <li>Added to ECS Task Role<ul>
 <li>Used by AWS APIs</li>
-<li>Access AWS Resources</li>
+<li>Access AWS Resources<h2 id="virtual-machine-and-Docker-container-difference"><a href="#virtual-machine-and-Docker-container-difference" class="headerlink" title="virtual machine and Docker container difference"></a>virtual machine and Docker container difference</h2><table>
+<thead>
+<tr>
+<th>Virtual Machine</th>
+<th>Docker Container</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Hardware-level process isolation</td>
+<td>OS level process isolation</td>
+</tr>
+<tr>
+<td>Each VM has a separate OS</td>
+<td>Each container can share OS</td>
+</tr>
+<tr>
+<td>Boots in minutes</td>
+<td>Boots in seconds</td>
+</tr>
+<tr>
+<td>VMs are of few GBs</td>
+<td>Containers are lightweight (KBs/MBs)</td>
+</tr>
+<tr>
+<td>Ready-made VMs are difficult to find</td>
+<td>Pre-built docker containers are easily available</td>
+</tr>
+<tr>
+<td>VMs can move to new host easily</td>
+<td>Containers are destroyed and re-created rather than moving</td>
+</tr>
+<tr>
+<td>Creating VM takes a relatively longer time</td>
+<td>Containers can be created in seconds</td>
+</tr>
+<tr>
+<td>More resource usage</td>
+<td>Less resource usage</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
 </ul>
 </li>
 </ul>
@@ -428,7 +472,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#List-Docker-CLI-commands"><span class="toc-number">1.</span> <span class="toc-text">List Docker CLI commands</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Beginning-Devops-with-Docker"><span class="toc-number"></span> <span class="toc-text">Beginning Devops with Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-Images-and-Containers"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1. Images and Containers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-compose"><span class="toc-number">2.</span> <span class="toc-text">Docker-compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kubernetes"><span class="toc-number">3.</span> <span class="toc-text">Kubernetes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-ps-command"><span class="toc-number">4.</span> <span class="toc-text">Docker ps command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-networking"><span class="toc-number">5.</span> <span class="toc-text">Docker networking</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#upload-that-new-image-to-dockerhub"><span class="toc-number"></span> <span class="toc-text">upload that new image to dockerhub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon-web-services-and-docker-development"><span class="toc-number"></span> <span class="toc-text">Amazon web services and docker development</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-ecs-throught-the-aws-cli"><span class="toc-number">0.1.</span> <span class="toc-text">Working with ecs throught the aws cli</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-registry"><span class="toc-number">1.</span> <span class="toc-text">Docker registry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error"><span class="toc-number">2.</span> <span class="toc-text">Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Security"><span class="toc-number">3.</span> <span class="toc-text">Container Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Containers-inside-VMs"><span class="toc-number">3.1.</span> <span class="toc-text">Containers inside VMs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Logging-and-Monitoring"><span class="toc-number">4.</span> <span class="toc-text">Container Logging and Monitoring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-EC2-Variations"><span class="toc-number">5.</span> <span class="toc-text">Docker + EC2 Variations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ECS-managed-policies"><span class="toc-number">6.</span> <span class="toc-text">ECS managed policies</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#List-Docker-CLI-commands"><span class="toc-number">1.</span> <span class="toc-text">List Docker CLI commands</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Beginning-Devops-with-Docker"><span class="toc-number"></span> <span class="toc-text">Beginning Devops with Docker</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Chapter-1-Images-and-Containers"><span class="toc-number">1.</span> <span class="toc-text">Chapter 1. Images and Containers</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-compose"><span class="toc-number">2.</span> <span class="toc-text">Docker-compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kubernetes"><span class="toc-number">3.</span> <span class="toc-text">Kubernetes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-ps-command"><span class="toc-number">4.</span> <span class="toc-text">Docker ps command</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-networking"><span class="toc-number">5.</span> <span class="toc-text">Docker networking</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#upload-that-new-image-to-dockerhub"><span class="toc-number"></span> <span class="toc-text">upload that new image to dockerhub</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Amazon-web-services-and-docker-development"><span class="toc-number"></span> <span class="toc-text">Amazon web services and docker development</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Working-with-ecs-throught-the-aws-cli"><span class="toc-number">0.1.</span> <span class="toc-text">Working with ecs throught the aws cli</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-registry"><span class="toc-number">1.</span> <span class="toc-text">Docker registry</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Error"><span class="toc-number">2.</span> <span class="toc-text">Error</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Security"><span class="toc-number">3.</span> <span class="toc-text">Container Security</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Containers-inside-VMs"><span class="toc-number">3.1.</span> <span class="toc-text">Containers inside VMs</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Container-Logging-and-Monitoring"><span class="toc-number">4.</span> <span class="toc-text">Container Logging and Monitoring</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-EC2-Variations"><span class="toc-number">5.</span> <span class="toc-text">Docker + EC2 Variations</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ECS-managed-policies"><span class="toc-number">6.</span> <span class="toc-text">ECS managed policies</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#virtual-machine-and-Docker-container-difference"><span class="toc-number">7.</span> <span class="toc-text">virtual machine and Docker container difference</span></a></li></ol>
  
   </div>
 
